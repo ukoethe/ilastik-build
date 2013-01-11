@@ -25,7 +25,7 @@ ExternalProject_Add(${zlib_NAME}
     URL                 ${zlib_URL}
     URL_MD5             ${zlib_MD5}
     UPDATE_COMMAND      ""
-    PATCH_COMMAND      ${zlib_PATCH}
+    PATCH_COMMAND       ${zlib_PATCH}
 
     # zlib has a CMakeLists build, but it is broken on Mac OS X
     # Must use the configure script.
