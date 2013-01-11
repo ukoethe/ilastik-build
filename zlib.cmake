@@ -14,7 +14,8 @@ external_source (zlib
     1.2.7
     zlib-1.2.7.tar.gz
     60df6a37c56e7c1366cca812414f7b85
-    http://zlib.net)
+    http://zlib.net
+    FORCE)
 
 set (zlib_PATCH python ${PROJECT_SOURCE_DIR}/patches/zlib.py ${zlib_SRC_DIR})
         
@@ -24,7 +25,7 @@ ExternalProject_Add(${zlib_NAME}
     URL                 ${zlib_URL}
     URL_MD5             ${zlib_MD5}
     UPDATE_COMMAND      ""
-    PATCH_COMMAND      ${zlib_PATCH} #install(TARGETS zlib zlibstatic
+    PATCH_COMMAND      ${zlib_PATCH}
 
     # zlib has a CMakeLists build, but it is broken on Mac OS X
     # Must use the configure script.

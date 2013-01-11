@@ -19,5 +19,7 @@ SET(CMAKE_MODULE_PATH  ${CMAKE_MODULE_PATH}  ${ilastik_SOURCE_DIR})
 
 ADD_CUSTOM_TARGET(ilastik)
 include(zlib)
+include(jpeg)
 
 ADD_DEPENDENCIES(ilastik ${zlib_NAME})
+ADD_DEPENDENCIES(ilastik ${jpeg_NAME})
