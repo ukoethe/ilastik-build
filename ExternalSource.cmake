@@ -3,13 +3,13 @@
 #
 # A 5th optional parameter is an external download URL.  If this is provided
 # and the 6th optional parameter is "FORCE", only this external download URL
-# will be used and the default FlyEM cache will be ignored.
+# will be used and the default ilastik cache will be ignored.
 #
 # Uses the following CMake variables:
 #
 #    USE_PROJECT_DOWNLOAD   A list of project abbreviations that should use
 #                               original project links instead of our cached
-#                               FlyEM downloads.
+#                               ilastik downloads.
 #
 # Sets the following variable if not already set:
 #    DEFAULT_CACHE_URL      URL of cache for required software tarballs

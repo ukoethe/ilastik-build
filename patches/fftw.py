@@ -5,8 +5,7 @@ archive  = 'fftw-3.3-libs-visual-studio-2010.zip'
 url      = "ftp://ftp.fftw.org/pub/fftw/"
 fftwdir  = sys.argv[1]
 builddir = fftwdir + "/fftw-3.3-libs"
-filename = builddir + "/fftw-3.3-libs.sln"
-print "    patching ", filename
+print "    patching ", builddir
 
 os.chdir(fftwdir)
 urllib.urlretrieve(url + archive, archive)
@@ -17,6 +16,14 @@ for proj in [builddir + "/libfftw-3.3/libfftw-3.3.vcxproj", builddir + "/libfftw
     s = open(proj).read()
     s = re.sub(r'\<PlatformToolset\>.+\</PlatformToolset\>', '<PlatformToolset>v100</PlatformToolset>', s)
     open(proj, "w").write(s)
+
+# create a CMake script for building
+s = '''
+execute_process(COMMAND devenv fftw-3.3-libs.sln /build Release /project libfftw-3.3)
+execute_process(COMMAND devenv fftw-3.3-libs.sln /build Release /project libfftwf-3.3)
+''' % {'p': sys.argv[2], 's': fftwdir, 'b': builddir + "/x64/Release"}
+
+open(fftwdir + '/cmake_build.cmake', "w").write(s)
 
 # create a CMake script for installation
 s = '''
@@ -35,4 +42,4 @@ FILE(INSTALL DESTINATION "%(p)s/bin" TYPE SHARED_LIBRARY FILES
     )
 ''' % {'p': sys.argv[2], 's': fftwdir, 'b': builddir + "/x64/Release"}
 
-open(sys.argv[1] + '/cmake_install.cmake', "w").write(s)
+open(fftwdir + '/cmake_install.cmake', "w").write(s)
