@@ -20,6 +20,7 @@ set (tiff_PATCH python ${PROJECT_SOURCE_DIR}/patches/tiff.py ${tiff_SRC_DIR} ${I
         
 message ("Installing ${tiff_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${tiff_NAME}
+    DEPENDS             ${zlib_NAME} ${jpeg_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${tiff_URL}
     URL_MD5             ${tiff_MD5}
@@ -28,7 +29,7 @@ ExternalProject_Add(${tiff_NAME}
     CONFIGURE_COMMAND   ""
     BUILD_COMMAND       nmake /f Makefile.vc
     BUILD_IN_SOURCE     1
-    INSTALL_COMMAND     ${CMAKE_COMMAND} -P ${ILASTIK_DEPENDENCY_DIR}/src/${tiff_NAME}/cmake-install.cmake
+    INSTALL_COMMAND     ${CMAKE_COMMAND} -P ${ILASTIK_DEPENDENCY_DIR}/src/${tiff_NAME}/cmake_install.cmake
 )
 
 set_target_properties(${tiff_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)

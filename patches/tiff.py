@@ -37,4 +37,4 @@ FILE(INSTALL DESTINATION "%(p)s/bin" TYPE SHARED_LIBRARY FILES
     )
 ''' % {'p': prefix, 's': sys.argv[1]}
 
-open(sys.argv[1] + '/cmake-install.cmake', "w").write(s)
+open(sys.argv[1] + '/cmake_install.cmake', "w").write(s)

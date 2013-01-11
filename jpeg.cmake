@@ -22,6 +22,7 @@ external_source (jpeg
         
 message ("Installing ${jpeg_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${jpeg_NAME}
+    DEPENDS             ${nasm_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${jpeg_URL}
     URL_MD5             ${jpeg_MD5}
@@ -35,8 +36,6 @@ ExternalProject_Add(${jpeg_NAME}
     BUILD_COMMAND       devenv libjpeg-turbo.sln /build Release /project simd /project jpeg /project jpeg-static
     INSTALL_COMMAND     devenv libjpeg-turbo.sln /build Release /project INSTALL
 )
-
-ADD_DEPENDENCIES(${jpeg_NAME} ${nasm_NAME})
 
 set_target_properties(${jpeg_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 

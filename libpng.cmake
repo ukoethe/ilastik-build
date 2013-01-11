@@ -18,6 +18,7 @@ external_source (libpng
 
 message ("Installing ${libpng_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${libpng_NAME}
+    DEPENDS             ${zlib_NAME} ${jpeg_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${libpng_URL}
     URL_MD5             ${libpng_MD5}
