@@ -20,6 +20,7 @@ ExternalProject_Add(${nasm_NAME}
     PATCH_COMMAND       "" # ${nasm_PATCH}
     CONFIGURE_COMMAND   ""
     BUILD_COMMAND       ""
+    BUILD_IN_SOURCE     1
     INSTALL_COMMAND     ${CMAKE_COMMAND} -E copy ${ILASTIK_DEPENDENCY_DIR}/src/${nasm_NAME}/nasm.exe ${ILASTIK_DEPENDENCY_DIR}/bin
 )
 

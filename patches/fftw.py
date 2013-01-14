@@ -21,7 +21,7 @@ for proj in [builddir + "/libfftw-3.3/libfftw-3.3.vcxproj", builddir + "/libfftw
 s = '''
 execute_process(COMMAND devenv fftw-3.3-libs.sln /build Release /project libfftw-3.3)
 execute_process(COMMAND devenv fftw-3.3-libs.sln /build Release /project libfftwf-3.3)
-''' % {'p': sys.argv[2], 's': fftwdir, 'b': builddir + "/x64/Release"}
+'''
 
 open(fftwdir + '/cmake_build.cmake', "w").write(s)
 
