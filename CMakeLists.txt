@@ -25,11 +25,17 @@ include(libpng)
 include(fftw)
 include(hdf5)
 include(boost)
+include(python)
+include(python_virtualenv)
 
-ADD_DEPENDENCIES(ilastik ${zlib_NAME})
-ADD_DEPENDENCIES(ilastik ${jpeg_NAME})
-ADD_DEPENDENCIES(ilastik ${tiff_NAME})
-ADD_DEPENDENCIES(ilastik ${libpng_NAME})
-ADD_DEPENDENCIES(ilastik ${fftw_NAME})
-ADD_DEPENDENCIES(ilastik ${hdf5_NAME})
-ADD_DEPENDENCIES(ilastik ${boost_NAME})
+ADD_DEPENDENCIES(ilastik 
+        ${zlib_NAME}
+        ${jpeg_NAME}
+        ${tiff_NAME}
+        ${libpng_NAME}
+        ${fftw_NAME}
+        ${hdf5_NAME}
+        ${boost_NAME}
+        ${python_NAME}
+        ${python_virtualenv_NAME}
+)
