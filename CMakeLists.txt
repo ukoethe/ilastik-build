@@ -24,6 +24,7 @@ SET(CMAKE_MODULE_PATH  ${CMAKE_MODULE_PATH}  ${ilastik_SOURCE_DIR})
 
 ADD_CUSTOM_TARGET(ilastik)
 include(python)
+include(python_packages)
 # include(numpy)
 include(zlib)
 include(jpeg)
@@ -36,6 +37,7 @@ include(boost)
 
 ADD_DEPENDENCIES(ilastik 
         ${python_NAME}
+        ${python_packages_NAME}
         # ${numpy_NAME}
         ${zlib_NAME}
         ${jpeg_NAME}
