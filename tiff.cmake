@@ -17,7 +17,7 @@ external_source (tiff
     http://download.osgeo.org/libtiff
     FORCE)
 
-set (tiff_PATCH ${PYTHON_WIN_EXE} ${PROJECT_SOURCE_DIR}/patches/tiff.py ${tiff_SRC_DIR} ${ILASTIK_DEPENDENCY_DIR})
+set (tiff_PATCH ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/patches/tiff.py ${tiff_SRC_DIR} ${ILASTIK_DEPENDENCY_DIR})
         
 message ("Installing ${tiff_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${tiff_NAME}

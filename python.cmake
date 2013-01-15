@@ -57,7 +57,6 @@ ExternalProject_Add(${python_NAME}
 set (PYTHON_INCLUDE_PATH ${PYTHON_PREFIX}/include)
 set (PYTHON_LIBRARY_FILE ${PYTHON_PREFIX}/libs/python27.lib)
 set (PYTHON_EXE ${PYTHON_PREFIX}/python.exe)
-file(TO_NATIVE_PATH ${PYTHON_EXE} PYTHON_WIN_EXE)
 
 set_target_properties(${python_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 

@@ -17,7 +17,7 @@ external_source (zlib
     http://zlib.net
     FORCE)
 
-set (zlib_PATCH ${PYTHON_WIN_EXE} ${PROJECT_SOURCE_DIR}/patches/zlib.py ${zlib_SRC_DIR})
+set (zlib_PATCH ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/patches/zlib.py ${zlib_SRC_DIR})
         
 message ("Installing ${zlib_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${zlib_NAME}

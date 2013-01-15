@@ -17,7 +17,7 @@ external_source (fftw
     http://www.fftw.org
     FORCE)
 
-set (fftw_PATCH ${PYTHON_WIN_EXE} ${PROJECT_SOURCE_DIR}/patches/fftw.py ${fftw_SRC_DIR})
+set (fftw_PATCH ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/patches/fftw.py ${fftw_SRC_DIR})
 
 SET(fftw_BUILD_DIR ${fftw_SRC_DIR}/fftw-3.3-libs)
 SET(fftw_INSTALL ${ILASTIK_DEPENDENCY_DIR}/tmp/fftw_install.cmake)
