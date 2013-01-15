@@ -38,6 +38,7 @@ SET(python_INSTALL ${ILASTIK_DEPENDENCY_DIR}/tmp/python_install.cmake)
 FILE(WRITE   ${python_INSTALL} "file(INSTALL amd64/python.exe amd64/python27.dll DESTINATION ${PYTHON_PREFIX})\n")
 FILE(APPEND  ${python_INSTALL} "file(INSTALL ../Include/ ../PC/pyconfig.h DESTINATION ${PYTHON_PREFIX}/include)\n")
 FILE(APPEND  ${python_INSTALL} "file(INSTALL amd64/ DESTINATION ${PYTHON_PREFIX}/DLLs FILES_MATCHING PATTERN *.pyd)\n")
+FILE(APPEND  ${python_INSTALL} "file(INSTALL amd64/sqlite3.dll DESTINATION ${PYTHON_PREFIX}/DLLs/)\n")
 FILE(APPEND  ${python_INSTALL} "file(INSTALL amd64/ DESTINATION ${PYTHON_PREFIX}/libs FILES_MATCHING PATTERN *.lib)\n")
 FILE(APPEND  ${python_INSTALL} "file(INSTALL ../Lib DESTINATION ${PYTHON_PREFIX})\n")
 
@@ -59,6 +60,7 @@ ExternalProject_Add(${python_NAME}
                         \ndevenv PCbuild.sln /build Release|x64 /project _multiprocessing
                         \ndevenv PCbuild.sln /build Release|x64 /project _socket
                         \ndevenv PCbuild.sln /build Release|x64 /project select
+                        \ndevenv PCbuild.sln /build Release|x64 /project _sqlite3
                         \ndevenv PCbuild.sln /build Release|x64 /project unicodedata
                         \namd64\\python.exe ${PROJECT_SOURCE_DIR}/patches/python.py ../Lib/distutils/msvc9compiler.py
     INSTALL_COMMAND     ${CMAKE_COMMAND} -P ${python_INSTALL}

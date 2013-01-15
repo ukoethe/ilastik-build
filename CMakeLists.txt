@@ -18,11 +18,14 @@ FILE(MAKE_DIRECTORY ${ILASTIK_DEPENDENCY_DIR}/bin
                     ${ILASTIK_DEPENDENCY_DIR}/include
                     ${ILASTIK_DEPENDENCY_DIR}/tmp )
 
+INCLUDE_DIRECTORIES(${ILASTIK_DEPENDENCY_DIR}/include)
+
 ############################################################################
 
 SET(CMAKE_MODULE_PATH  ${CMAKE_MODULE_PATH}  ${ilastik_SOURCE_DIR})
 
 ADD_CUSTOM_TARGET(ilastik)
+include(sqlite)
 include(python)
 include(python_packages)
 # include(numpy)
@@ -36,6 +39,7 @@ include(boost)
 # include(vigra)
 
 ADD_DEPENDENCIES(ilastik 
+        ${sqlite_NAME}
         ${python_NAME}
         ${python_packages_NAME}
         # ${numpy_NAME}
