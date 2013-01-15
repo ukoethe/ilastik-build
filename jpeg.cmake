@@ -18,8 +18,6 @@ external_source (jpeg
     http://sourceforge.net/projects/libjpeg-turbo/files/1.2.1
     FORCE)
 
-#set (jpeg_PATCH python ${PROJECT_SOURCE_DIR}/patches/jpeg.py ${jpeg_SRC_DIR})
-        
 message ("Installing ${jpeg_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${jpeg_NAME}
     DEPENDS             ${nasm_NAME}
@@ -27,13 +25,14 @@ ExternalProject_Add(${jpeg_NAME}
     URL                 ${jpeg_URL}
     URL_MD5             ${jpeg_MD5}
     UPDATE_COMMAND      ""
-    PATCH_COMMAND       "" # ${jpeg_PATCH}
+    PATCH_COMMAND       ""
     CONFIGURE_COMMAND   ${CMAKE_COMMAND} ${jpeg_SRC_DIR}
-         -G ${CMAKE_GENERATOR} 
-         -DCMAKE_INSTALL_PREFIX=${ILASTIK_DEPENDENCY_DIR}
-         -DNASM=${nasm_EXECUTABLE}
-
-    BUILD_COMMAND       devenv libjpeg-turbo.sln /build Release /project simd /project jpeg /project jpeg-static
+                         -G ${CMAKE_GENERATOR} 
+                         -DCMAKE_INSTALL_PREFIX=${ILASTIK_DEPENDENCY_DIR}
+                         -DNASM=${nasm_EXE}
+    BUILD_COMMAND       devenv libjpeg-turbo.sln /build Release /project simd
+                      \ndevenv libjpeg-turbo.sln /build Release /project jpeg
+                      \ndevenv libjpeg-turbo.sln /build Release /project jpeg-static
     INSTALL_COMMAND     devenv libjpeg-turbo.sln /build Release /project INSTALL
 )
 

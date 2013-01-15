@@ -36,7 +36,8 @@ ExternalProject_Add(${hdf5_NAME}
         -DZLIB_INCLUDE_DIR=${ILASTIK_DEPENDENCY_DIR}/include
         -DZLIB_LIBRARY=${ILASTIK_DEPENDENCY_DIR}/lib/zlib.lib
         -DCMAKE_INSTALL_PREFIX=${ILASTIK_DEPENDENCY_DIR}
-    BUILD_COMMAND       devenv HDF5.sln /build Release /project hdf5 /project hdf5_hl
+    BUILD_COMMAND       devenv HDF5.sln /build Release /project hdf5
+                      \ndevenv HDF5.sln /build Release /project hdf5_hl
     INSTALL_COMMAND     devenv HDF5.sln /build Release /project INSTALL
 )
 

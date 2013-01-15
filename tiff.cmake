@@ -8,6 +8,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 include (ExternalProject)
 include (ExternalSource)
+include (python)
 
 external_source (tiff
     4.0.1
@@ -16,11 +17,11 @@ external_source (tiff
     http://download.osgeo.org/libtiff
     FORCE)
 
-set (tiff_PATCH python ${PROJECT_SOURCE_DIR}/patches/tiff.py ${tiff_SRC_DIR} ${ILASTIK_DEPENDENCY_DIR})
+set (tiff_PATCH ${PYTHON_WIN_EXE} ${PROJECT_SOURCE_DIR}/patches/tiff.py ${tiff_SRC_DIR} ${ILASTIK_DEPENDENCY_DIR})
         
 message ("Installing ${tiff_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${tiff_NAME}
-    DEPENDS             ${zlib_NAME} ${jpeg_NAME}
+    DEPENDS             ${python_NAME} ${zlib_NAME} ${jpeg_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${tiff_URL}
     URL_MD5             ${tiff_MD5}

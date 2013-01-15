@@ -13,11 +13,18 @@ endif ()
 
 message ("ilastik downloads and builds will be placed here: ${ILASTIK_DEPENDENCY_DIR}")
 
+FILE(MAKE_DIRECTORY ${ILASTIK_DEPENDENCY_DIR}/bin 
+                    ${ILASTIK_DEPENDENCY_DIR}/lib 
+                    ${ILASTIK_DEPENDENCY_DIR}/include
+                    ${ILASTIK_DEPENDENCY_DIR}/tmp )
+
 ############################################################################
 
 SET(CMAKE_MODULE_PATH  ${CMAKE_MODULE_PATH}  ${ilastik_SOURCE_DIR})
 
 ADD_CUSTOM_TARGET(ilastik)
+include(python)
+# include(numpy)
 include(zlib)
 include(jpeg)
 include(tiff)
@@ -25,10 +32,11 @@ include(libpng)
 include(fftw)
 include(hdf5)
 include(boost)
-include(python)
-include(python_virtualenv)
+# include(vigra)
 
 ADD_DEPENDENCIES(ilastik 
+        ${python_NAME}
+        # ${numpy_NAME}
         ${zlib_NAME}
         ${jpeg_NAME}
         ${tiff_NAME}
@@ -36,6 +44,5 @@ ADD_DEPENDENCIES(ilastik
         ${fftw_NAME}
         ${hdf5_NAME}
         ${boost_NAME}
-        ${python_NAME}
-        ${python_virtualenv_NAME}
+        # ${vigra_NAME}
 )
