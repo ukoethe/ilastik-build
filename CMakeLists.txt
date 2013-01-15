@@ -33,6 +33,7 @@ include(tiff)
 include(libpng)
 include(fftw)
 include(hdf5)
+include(h5py)
 include(boost)
 # include(vigra)
 
@@ -47,6 +48,7 @@ ADD_DEPENDENCIES(ilastik
         ${libpng_NAME}
         ${fftw_NAME}
         ${hdf5_NAME}
+        ${h5py_NAME}
         ${boost_NAME}
         # ${vigra_NAME}
 )
