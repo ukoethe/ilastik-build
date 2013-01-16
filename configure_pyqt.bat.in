@@ -1,0 +1,3 @@
+set PATH=${QTDIR}\bin;%PATH%
+set QTDIR=${QTDIR}
+${PYTHON_EXE} ${pyqt_SRC_DIR}/configure.py --confirm-license
