@@ -18,3 +18,11 @@ for filename in find_files(sys.argv[1], 'Makefile*'):
     s = open(filename).read()
     s = re.sub(oldpath, newpath, s)
     open(filename, "w").write(s)
+
+filename=basedir+"/src/corelib/global/qconfig.cpp"
+oldpath = re.sub("/", r"\\\\\\\\", sys.argv[2][2:])
+newpath = re.sub("/", r"\\\\\\\\", sys.argv[3][2:])
+print "replacing", oldpath, "with", newpath
+s = open(filename).read()
+s = re.sub(oldpath, newpath, s)
+open(filename, "w").write(s)

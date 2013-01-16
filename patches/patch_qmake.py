@@ -3,6 +3,7 @@ import sys, mmap, re, glob
 qtdir = sys.argv[1]
 qtsrc = sys.argv[2]
 qmake = qtdir + '/bin/qmake.exe'
+qcore = qtdir + '/bin/QtCore4.dll'
 
 if len(qtdir) > 400:
     print >> sys.stderr, "Path", qtdir, "too long. Aborting."
@@ -50,25 +51,28 @@ def readToken(fmap, token, pos):
     
     return s
 
-f = open(qmake, "r+b")
-fmap = mmap.mmap(f.fileno(),0, access= mmap.ACCESS_WRITE)
-try:
-    zero = '\x00'
-    for prop in _props:
-        if prop._token:
-            if prop._pos == 0:
-                i = fmap.find(prop._token, 0)
-                if i == -1: 
-                    continue
-                prop._pos = i
-            path = qtdir.replace('/', '\\') + prop._dir
-            print "Setting", prop._name, "=", path
-            fmap.seek(prop._pos)
-            fmap.write(prop._token + '=' + path)
-            fmap.write(zero) # Termniating zero
-finally:
-    fmap.close()
-    f.close()
+for file in [qmake]:
+    f = open(file, "r+b")
+    fmap = mmap.mmap(f.fileno(),0, access= mmap.ACCESS_WRITE)
+    try:
+        zero = '\x00'
+        for prop in _props:
+            if prop._token:
+                if prop._pos == 0:
+                    i = fmap.find(prop._token, 0)
+                    if i == -1: 
+                        continue
+                    prop._pos = i
+                oldpath = readToken(fmap, prop._token, i)
+                path = qtdir.replace('/', '\\') + prop._dir
+                print file,": Setting", prop._name, "=", path, "(was", oldpath, ")"
+                # FIXME: check that the old path is the expected one before replacing it
+                fmap.seek(prop._pos)
+                fmap.write(prop._token + '=' + path)
+                fmap.write(zero) # Termniating zero
+    finally:
+        fmap.close()
+        f.close()
             
         
 # Update lib/*.prl hard-coded path

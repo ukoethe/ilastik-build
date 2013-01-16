@@ -47,7 +47,7 @@ ExternalProject_Add(${qt_NAME}
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ""
     CONFIGURE_COMMAND   set QTDIR=${TMP_QTDIR}
-       \necho "yes" | ./configure # pipe "yes" to stdin to accept the license.
+       \necho "yes" | .\\configure # pipe "yes" to stdin to accept the license.
         # --prefix=${ILASTIK_DEPENDENCY_DIR}   # unsupported on Windows
         # -optimized-qmake                     # unsupported on Windows
         -opensource
