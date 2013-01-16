@@ -25,7 +25,7 @@ SET(CMAKE_MODULE_PATH  ${CMAKE_MODULE_PATH}  ${ilastik_SOURCE_DIR})
 ADD_CUSTOM_TARGET(ilastik)
 include(python)
 include(python_packages)
-# include(numpy)
+include(numpy)
 include(zlib)
 include(jpeg)
 include(tiff)
@@ -36,12 +36,13 @@ include(h5py)
 include(boost)
 include(vigra)
 include(qt)
-# include(pyqt)
+include(pyqt)
+include(qimage2ndarray)
 
 ADD_DEPENDENCIES(ilastik 
         ${python_NAME}
         ${python_packages_NAME}
-        # ${numpy_NAME}
+        ${numpy_NAME}
         ${zlib_NAME}
         ${jpeg_NAME}
         ${tiff_NAME}
@@ -52,5 +53,6 @@ ADD_DEPENDENCIES(ilastik
         ${boost_NAME}
         ${vigra_NAME}
         ${qt_NAME}
-        # ${pyqt_NAME}
+        ${pyqt_NAME}
+        ${qimage2ndarray_NAME}
 )
