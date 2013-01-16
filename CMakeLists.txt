@@ -35,7 +35,7 @@ include(fftw)
 include(hdf5)
 include(h5py)
 include(boost)
-# include(vigra)
+include(vigra)
 
 ADD_DEPENDENCIES(ilastik 
         ${python_NAME}
@@ -50,5 +50,5 @@ ADD_DEPENDENCIES(ilastik
         ${hdf5_NAME}
         ${h5py_NAME}
         ${boost_NAME}
-        # ${vigra_NAME}
+        ${vigra_NAME}
 )
