@@ -25,6 +25,9 @@ external_source (python
 SET(PYTHON_PREFIX ${ILASTIK_DEPENDENCY_DIR}/python)
 SET(PYTHON_BIN_DIR ${python_SRC_DIR}/PCbuild)
 
+# Add missing '/MANIFEST' compiler flag to msvc9compiler.py
+set(python_PATCH amd64\\python.exe ${PROJECT_SOURCE_DIR}/patches/patch_python.py ../Lib/distutils/msvc9compiler.py)
+
 SET(python_INSTALL ${ILASTIK_DEPENDENCY_DIR}/tmp/python_install.cmake)
 FILE(WRITE   ${python_INSTALL} "file(INSTALL amd64/python.exe amd64/python27.dll DESTINATION ${PYTHON_PREFIX})\n")
 FILE(APPEND  ${python_INSTALL} "file(INSTALL ../Include/ ../PC/pyconfig.h DESTINATION ${PYTHON_PREFIX}/include)\n")
@@ -33,7 +36,6 @@ FILE(APPEND  ${python_INSTALL} "file(INSTALL amd64/ DESTINATION ${PYTHON_PREFIX}
 FILE(APPEND  ${python_INSTALL} "file(INSTALL ../Lib DESTINATION ${PYTHON_PREFIX})\n")
 
 message ("Installing ${python_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
-
 ExternalProject_Add(${python_NAME}
     DEPENDS             # ${zlib_NAME} ${openssl_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
@@ -50,7 +52,7 @@ ExternalProject_Add(${python_NAME}
                         \ndevenv PCbuild.sln /build Release|x64 /project _socket
                         \ndevenv PCbuild.sln /build Release|x64 /project select
                         \ndevenv PCbuild.sln /build Release|x64 /project unicodedata
-                        \namd64\\python.exe ${PROJECT_SOURCE_DIR}/patches/python.py ../Lib/distutils/msvc9compiler.py
+                        \n ${python_PATCH}
     INSTALL_COMMAND     ${CMAKE_COMMAND} -P ${python_INSTALL}
 )
 

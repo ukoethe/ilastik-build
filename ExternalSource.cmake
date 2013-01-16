@@ -41,7 +41,7 @@ if (NOT ILASTIK_DEPENDENCY_DIR)
 endif ()
 
 # URL of cache for required software tarballs
-set (DEFAULT_CACHE_URL "http://janelia-flyem.github.com/downloads" CACHE TYPE STRING)
+set (DEFAULT_CACHE_URL "http://hci.iwr.uni-heidelberg.de/Software/ilastik-dependencies" CACHE TYPE STRING)
 
 # Define macro to set a number of variables per external project source
 macro (external_source ABBREV SRC_VERSION FILENAME MD5)

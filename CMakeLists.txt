@@ -24,7 +24,6 @@ SET(CMAKE_MODULE_PATH  ${CMAKE_MODULE_PATH}  ${ilastik_SOURCE_DIR})
 
 ADD_CUSTOM_TARGET(ilastik)
 include(python)
-include(sqlite)
 include(python_packages)
 # include(numpy)
 include(zlib)
@@ -36,10 +35,11 @@ include(hdf5)
 include(h5py)
 include(boost)
 include(vigra)
+include(qt)
+# include(pyqt)
 
 ADD_DEPENDENCIES(ilastik 
         ${python_NAME}
-        ${sqlite_NAME}
         ${python_packages_NAME}
         # ${numpy_NAME}
         ${zlib_NAME}
@@ -51,4 +51,6 @@ ADD_DEPENDENCIES(ilastik
         ${h5py_NAME}
         ${boost_NAME}
         ${vigra_NAME}
+        ${qt_NAME}
+        # ${pyqt_NAME}
 )

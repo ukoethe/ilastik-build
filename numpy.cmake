@@ -20,7 +20,8 @@ external_source (numpy
     1.6.2
     numpy-1.6.2.tar.gz
     95ed6c9dcc94af1fc1642ea2a33c1bba
-    http://downloads.sourceforge.net/project/numpy/NumPy/1.6.2)
+    http://downloads.sourceforge.net/project/numpy/NumPy/1.6.2
+    FORCE)
 
 # Download and install numpy
 message ("Installing ${numpy_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")

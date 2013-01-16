@@ -17,7 +17,15 @@ external_source (tiff
     http://download.osgeo.org/libtiff
     FORCE)
 
-set (tiff_PATCH ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/patches/tiff.py ${tiff_SRC_DIR} ${ILASTIK_DEPENDENCY_DIR})
+# insert zlib and jpeg path into nmake.opt
+set (tiff_PATCH ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/patches/patch_tiff.py ${tiff_SRC_DIR} ${ILASTIK_DEPENDENCY_DIR})
+
+# create a CMake script for installation
+SET(tiff_INSTALL ${ILASTIK_DEPENDENCY_DIR}/tmp/tiff_install.cmake)
+FILE(WRITE   ${tiff_INSTALL} "file(INSTALL libtiff/tiff.h libtiff/tiffconf.h libtiff/tiffio.h libtiff/tiffiop.h libtiff/tiffvers.h DESTINATION ${ILASTIK_DEPENDENCY_DIR}/include)\n")
+FILE(APPEND  ${tiff_INSTALL} "file(INSTALL libtiff/libtiff.dll DESTINATION ${ILASTIK_DEPENDENCY_DIR}/bin)\n")
+FILE(APPEND  ${tiff_INSTALL} "file(INSTALL libtiff/libtiff_i.lib libtiff/libtiff.lib DESTINATION ${ILASTIK_DEPENDENCY_DIR}/lib)\n")
+
         
 message ("Installing ${tiff_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${tiff_NAME}
@@ -30,7 +38,7 @@ ExternalProject_Add(${tiff_NAME}
     CONFIGURE_COMMAND   ""
     BUILD_COMMAND       nmake /f Makefile.vc
     BUILD_IN_SOURCE     1
-    INSTALL_COMMAND     ${CMAKE_COMMAND} -P ${ILASTIK_DEPENDENCY_DIR}/src/${tiff_NAME}/cmake_install.cmake
+    INSTALL_COMMAND     ${CMAKE_COMMAND} -P ${tiff_INSTALL}
 )
 
 set_target_properties(${tiff_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)

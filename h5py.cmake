@@ -20,7 +20,8 @@ external_source (h5py
     http://h5py.googlecode.com/files
     FORCE)
 
-set (h5py_PATCH ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/patches/h5py.py ${h5py_SRC_DIR})
+# Fix library and path names in setup.py
+set (h5py_PATCH ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/patches/patch_h5py.py ${h5py_SRC_DIR})
 
 message ("Installing ${h5py_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${h5py_NAME}

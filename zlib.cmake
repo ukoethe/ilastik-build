@@ -17,7 +17,8 @@ external_source (zlib
     http://zlib.net
     FORCE)
 
-set (zlib_PATCH ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/patches/zlib.py ${zlib_SRC_DIR})
+# Workaround for cmake bug (missing "/machine:x64" compiler flag)
+set (zlib_PATCH ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/patches/patch_zlib.py ${zlib_SRC_DIR})
         
 message ("Installing ${zlib_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${zlib_NAME}
