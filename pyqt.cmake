@@ -42,6 +42,7 @@ else ()
 endif()
 
 configure_file(configure_pyqt.bat.in ${ILASTIK_DEPENDENCY_DIR}/tmp/configure_pyqt.bat)
+configure_file(build_pyqt.bat.in ${ILASTIK_DEPENDENCY_DIR}/tmp/build_pyqt.bat)
 
 ExternalProject_Add(${pyqt_NAME}
     DEPENDS             ${python_NAME} ${sip_NAME} ${qt_NAME}             
@@ -54,7 +55,7 @@ ExternalProject_Add(${pyqt_NAME}
         # ${pyqt_SRC_DIR}/configure.py ${PATCH_DIR}/pyqt.patch # For some reason, the configure script wants to build pyqt phonon support even if qt was built without it.  This patch simply comments out phonon support. The patch is apparently not needed in Windows.
     # CONFIGURE_COMMAND   set PATH=${QMAKE_PATH};%PATH%\n ${PYTHON_EXE} ${pyqt_SRC_DIR}/configure.py 
     CONFIGURE_COMMAND   ${ILASTIK_DEPENDENCY_DIR}/tmp/configure_pyqt.bat
-    BUILD_COMMAND       nmake
+    BUILD_COMMAND       ${ILASTIK_DEPENDENCY_DIR}/tmp/build_pyqt.bat
     INSTALL_COMMAND     nmake install
     BUILD_IN_SOURCE 1
 )

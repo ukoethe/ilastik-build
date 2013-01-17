@@ -1,0 +1,3 @@
+set PATH=${QMAKE_PATH};%PATH%
+set QTDIR=${QTDIR}
+nmake
