@@ -9,6 +9,7 @@ include (ExternalSource)
 
 include (python)
 
+
 ####################################################################
 
 if (NOT sqlite_NAME)
@@ -66,6 +67,7 @@ ExternalProject_Add(${sqlite_NAME}
 # )
 
 set_target_properties(${sqlite_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+set(python_packages_NAME ${python_packages_NAME} ${sqlite_NAME})
 
 endif (NOT sqlite_NAME)
 
@@ -97,6 +99,7 @@ ExternalProject_Add(${setuptools_NAME}
 )
 
 set_target_properties(${setuptools_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+set(python_packages_NAME ${python_packages_NAME} ${setuptools_NAME})
 
 endif (NOT setuptools_NAME)
 
@@ -127,6 +130,7 @@ ExternalProject_Add(${pip_NAME}
 )
 
 set_target_properties(${pip_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+set(python_packages_NAME ${python_packages_NAME} ${pip_NAME})
 
 endif (NOT pip_NAME)
 
@@ -156,6 +160,7 @@ ExternalProject_Add(${nose_NAME}
 )
 
 set_target_properties(${nose_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+set(python_packages_NAME ${python_packages_NAME} ${nose_NAME})
 
 endif (NOT nose_NAME)
 
@@ -185,6 +190,7 @@ ExternalProject_Add(${sphinx_NAME}
 )
 
 set_target_properties(${sphinx_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+set(python_packages_NAME ${python_packages_NAME} ${sphinx_NAME})
 
 endif (NOT sphinx_NAME)
 
@@ -214,6 +220,7 @@ ExternalProject_Add(${cython_NAME}
 )
 
 set_target_properties(${cython_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+set(python_packages_NAME ${python_packages_NAME} ${cython_NAME})
 
 endif (NOT cython_NAME)
 
@@ -243,6 +250,7 @@ ExternalProject_Add(${greenlet_NAME}
 )
 
 set_target_properties(${greenlet_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+set(python_packages_NAME ${python_packages_NAME} ${greenlet_NAME})
 
 endif (NOT greenlet_NAME)
 
@@ -272,6 +280,7 @@ ExternalProject_Add(${blist_NAME}
 )
 
 set_target_properties(${blist_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+set(python_packages_NAME ${python_packages_NAME} ${blist_NAME})
 
 endif (NOT blist_NAME)
 
@@ -301,6 +310,7 @@ ExternalProject_Add(${psutil_NAME}
 )
 
 set_target_properties(${psutil_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+set(python_packages_NAME ${python_packages_NAME} ${psutil_NAME})
 
 endif (NOT psutil_NAME)
 
@@ -330,6 +340,7 @@ ExternalProject_Add(${sip_NAME}
 )
 
 set_target_properties(${sip_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+set(python_packages_NAME ${python_packages_NAME} ${sip_NAME})
 
 endif (NOT sip_NAME)
 
@@ -359,6 +370,7 @@ ExternalProject_Add(${pyreadline_NAME}
 )
 
 set_target_properties(${pyreadline_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+set(python_packages_NAME ${python_packages_NAME} ${pyreadline_NAME})
 
 endif (NOT pyreadline_NAME)
 
@@ -388,6 +400,7 @@ ExternalProject_Add(${pyzmq_NAME}
 )
 
 set_target_properties(${pyzmq_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+set(python_packages_NAME ${python_packages_NAME} ${pyzmq_NAME})
 
 endif (NOT pyzmq_NAME)
 
@@ -418,6 +431,7 @@ ExternalProject_Add(${tornado_NAME}
 )
 
 set_target_properties(${tornado_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+set(python_packages_NAME ${python_packages_NAME} ${tornado_NAME})
 
 endif (NOT tornado_NAME)
 
@@ -447,6 +461,7 @@ ExternalProject_Add(${ipython_NAME}
 )
 
 set_target_properties(${ipython_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+set(python_packages_NAME ${python_packages_NAME} ${ipython_NAME})
 
 endif (NOT ipython_NAME)
 
