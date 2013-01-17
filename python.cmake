@@ -50,6 +50,7 @@ ExternalProject_Add(${python_NAME}
                         \ndevenv PCbuild.sln /build Release|x64 /project _elementtree
                         \ndevenv PCbuild.sln /build Release|x64 /project _multiprocessing
                         \ndevenv PCbuild.sln /build Release|x64 /project _socket
+                        \ndevenv PCbuild.sln /build Release|x64 /project pyexpat
                         \ndevenv PCbuild.sln /build Release|x64 /project select
                         \ndevenv PCbuild.sln /build Release|x64 /project unicodedata
                         \n ${python_PATCH}
