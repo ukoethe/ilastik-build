@@ -25,7 +25,7 @@ set (h5py_PATCH ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/patches/patch_h5py.py ${h5py
 
 message ("Installing ${h5py_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${h5py_NAME}
-    DEPENDS             ${python_NAME} ${hdf5_NAME} #${numpy_NAME}
+    DEPENDS             ${python_NAME} ${hdf5_NAME} ${numpy_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${h5py_URL}
     URL_MD5             ${h5py_MD5}

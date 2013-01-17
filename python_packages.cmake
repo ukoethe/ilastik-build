@@ -393,6 +393,36 @@ endif (NOT pyzmq_NAME)
 
 ####################################################################
 
+if (NOT tornado_NAME)
+
+# FIXME: this download doesn't work (but it works in the Browser)
+external_source (tornado
+    2.4.1
+    tornado-2.4.1.tar.gz
+    9b7146cbe7cce015e35856b592707b9b
+    http://pypi.python.org/packages/source/t/tornado
+    FORCE)
+
+message ("Installing ${tornado_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${tornado_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${tornado_URL}
+    URL_MD5             ${tornado_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${tornado_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+endif (NOT tornado_NAME)
+
+####################################################################
+
 if (NOT ipython_NAME)
 
 external_source (ipython
@@ -404,7 +434,7 @@ external_source (ipython
 
 message ("Installing ${ipython_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${ipython_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME} ${pyreadline_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME} ${pyreadline_NAME} ${sqlite_NAME} ${pyzmq_NAME} ${tornado_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${ipython_URL}
     URL_MD5             ${ipython_MD5}

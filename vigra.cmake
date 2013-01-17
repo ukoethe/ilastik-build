@@ -26,7 +26,7 @@ external_git_repo (vigra
 message ("Installing ${vigra_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${vigra_NAME}
     DEPENDS             ${jpeg_NAME} ${tiff_NAME} ${libpng_NAME} ${fftw_NAME}
-                        ${hdf5_NAME} ${python_NAME} ${boost_NAME} # ${numpy_NAME} 
+                        ${hdf5_NAME} ${python_NAME} ${boost_NAME} ${numpy_NAME} 
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     GIT_REPOSITORY      ${vigra_URL}
     UPDATE_COMMAND      ""

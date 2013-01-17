@@ -1,3 +1,3 @@
-set PATH=${QTDIR}\bin;%PATH%
+set PATH=${QMAKE_PATH};%PATH%
 set QTDIR=${QTDIR}
 ${PYTHON_EXE} ${pyqt_SRC_DIR}/configure.py --confirm-license

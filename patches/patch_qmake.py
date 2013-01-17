@@ -51,6 +51,8 @@ def readToken(fmap, token, pos):
     
     return s
 
+# this strategy is suggested by http://www.runfastsoft.com/
+# (see also http://stackoverflow.com/questions/4699311/how-to-install-qt-on-windows-after-building)
 for file in [qmake]:
     f = open(file, "r+b")
     fmap = mmap.mmap(f.fileno(),0, access= mmap.ACCESS_WRITE)
