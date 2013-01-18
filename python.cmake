@@ -45,14 +45,14 @@ ExternalProject_Add(${python_NAME}
     PATCH_COMMAND       ""
     BINARY_DIR          ${PYTHON_BIN_DIR}
     CONFIGURE_COMMAND   devenv PCbuild.sln /upgrade
-    BUILD_COMMAND       devenv PCbuild.sln /build Release|x64 /project Python
-                        \ndevenv PCbuild.sln /build Release|x64 /project _ctypes
-                        \ndevenv PCbuild.sln /build Release|x64 /project _elementtree
-                        \ndevenv PCbuild.sln /build Release|x64 /project _multiprocessing
-                        \ndevenv PCbuild.sln /build Release|x64 /project _socket
-                        \ndevenv PCbuild.sln /build Release|x64 /project pyexpat
-                        \ndevenv PCbuild.sln /build Release|x64 /project select
-                        \ndevenv PCbuild.sln /build Release|x64 /project unicodedata
+    BUILD_COMMAND       devenv PCbuild.sln /build "Release|x64" /project Python
+                        \ndevenv PCbuild.sln /build "Release|x64" /project _ctypes
+                        \ndevenv PCbuild.sln /build "Release|x64" /project _elementtree
+                        \ndevenv PCbuild.sln /build "Release|x64" /project _multiprocessing
+                        \ndevenv PCbuild.sln /build "Release|x64" /project _socket
+                        \ndevenv PCbuild.sln /build "Release|x64" /project pyexpat
+                        \ndevenv PCbuild.sln /build "Release|x64" /project select
+                        \ndevenv PCbuild.sln /build "Release|x64" /project unicodedata
                         \n ${python_PATCH}
     INSTALL_COMMAND     ${CMAKE_COMMAND} -P ${python_INSTALL}
 )

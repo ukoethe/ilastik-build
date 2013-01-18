@@ -113,7 +113,7 @@ ExternalProject_Add(${qt_NAME}
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ""
     BINARY_DIR          ${QT_BUILD_DIR}
-    CONFIGURE_COMMAND   echo "yes" | ${QT_CONFIGURE_BAT} # pipe "yes" to stdin to accept the license.
+    CONFIGURE_COMMAND   echo "yes" | call ${QT_CONFIGURE_BAT} # pipe "yes" to stdin to accept the license.
     BUILD_COMMAND       nmake
     TEST_COMMAND        "" # nmake check
     INSTALL_COMMAND     nmake install

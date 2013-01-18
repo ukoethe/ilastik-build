@@ -1,0 +1,1 @@
+import sys, refilename = sys.argv[1] + '/freetype.sln'print "    patching ", filename# Fix library namess = open(filename).read()s = re.sub(r'Win32', 'x64', s)open(filename, "w").write(s)filename = sys.argv[1] + '/freetype.vcxproj'print "    patching ", filename# Fix library namess = open(filename).read()s = re.sub(r'Win32', 'x64', s)open(filename, "w").write(s)

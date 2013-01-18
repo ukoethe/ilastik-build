@@ -29,7 +29,7 @@ ExternalProject_Add(${vigra_NAME}
                         ${hdf5_NAME} ${python_NAME} ${boost_NAME} ${numpy_NAME} ${nose_NAME} ${sphinx_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     GIT_REPOSITORY      ${vigra_URL}
-    UPDATE_COMMAND      ""
+    UPDATE_COMMAND      "" # git pull
     PATCH_COMMAND       ""
     CONFIGURE_COMMAND   ${CMAKE_COMMAND} ${vigra_SRC_DIR} 
         -G ${CMAKE_GENERATOR} 
