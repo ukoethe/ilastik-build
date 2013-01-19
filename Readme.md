@@ -12,26 +12,32 @@ Preliminaries:
 
 Configuration:
 
-* Open Visual Studio's 64-bit DOS command shell. It can usually be found in the Start menu under "Programs->Microsoft Visual Studio 2010->Visual Studio Tools->Visual Studio x64 Win64 Command Prompt")
+* Open Visual Studio's 64-bit DOS command shell. It can usually be found in the Start menu under "Programs->Microsoft Visual Studio 2010->Visual Studio Tools->Visual Studio x64 Win64 Command Prompt".
 * Create a directory for the cmake-created build scripts (e.g. `ilastik-build/build`) and goto this directory:
+
 ```
-    % mkdir <build-directory\>
+    % mkdir <build-directory>
     % cd <build-directory>
 ```
+
 * Configure the build system:
+
 ```
     % cmake -G "Visual Studio 10 Win64" -DILASTIK_DEPENDENCY_DIR=<prefix>  <path-to-build-system>
 ```
+
   This will create a file `ilastik.sln` in the `<build-directory>` that can be opened with Visual Studio. In the above cmake call, `<path-to-build-system>` is the directory where ilastik-build has been checked out (typically just `..` when we are in `ilastik-build/build`), and `<prefix>` is the desired path where the dependencies will be installed. The actual installations will be located in the subdirectories `<prefix>\bin`, `<prefix>\lib`, `<prefix>\include`, `<prefix>\python`, and `<prefix>\Qt4`. The sources (including cached `tar` archives and intermediate files) go into `<prefix>\src`.
 
 Compilation and Installation:
 
 * Open `ilastik.sln`, switch to "Release" mode and build the project `ilastik`. In theory, this should build and install everything in one go. In practice, it sometimes stops with an error message like "Cannot extract sources". If this happens, just build `ilastik` again (this doesn't rebuild already installed dependencies). Due to some unknown reasons, Visual Studio always believes that the compilation of numpy failed, although everything was actually ok. In this case, open "numpy-1.6.2->CMakeRules", right-click on `numpy-1.6.2-download.rule` and remove this rule. Then build `ilastik` again. 
 * Add the following directories to your `PATH` variable:
+
 ```
     % <prefix>\bin
     % <prefix>\Qt4\bin
     % <prefix>\python
     % <prefix>\python\Scripts   # optional
 ```
+
 * Open a new command shell (to activate your chages to the `PATH`) and invoke python with the approriate ilastik start-up script.
