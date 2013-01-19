@@ -38,7 +38,6 @@ ExternalProject_Add(${qimage2ndarray_NAME}
     URL_MD5             ${qimage2ndarray_MD5}
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ${qimage2ndarray_PATCH}
-    LIST_SEPARATOR      ^^
     CONFIGURE_COMMAND   ""
     BUILD_COMMAND       ${PYTHON_EXE} setup.py build
     INSTALL_COMMAND     ${PYTHON_EXE} setup.py install

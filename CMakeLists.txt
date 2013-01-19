@@ -37,6 +37,7 @@ include(vigra)
 include(qt)
 include(pyqt)
 include(qimage2ndarray)
+include(vigraqt)
 include(freetype)
 include(matplotlib)
 

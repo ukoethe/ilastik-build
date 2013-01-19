@@ -24,7 +24,7 @@ set (freetype_PATCH ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/patches/patch_freetype.p
 
 SET(freetype_INSTALL ${ILASTIK_DEPENDENCY_DIR}/tmp/freetype_install.cmake)
 FILE(WRITE   ${freetype_INSTALL} "file(INSTALL ../../../include/ DESTINATION ${ILASTIK_DEPENDENCY_DIR}/include)\n")
-FILE(APPEND  ${freetype_INSTALL} "file(INSTALL ../../../objs/win32/vc2010/ DESTINATION ${ILASTIK_DEPENDENCY_DIR}/lib FILES_MATCHING PATTERN *MT.lib)\n")
+FILE(APPEND  ${freetype_INSTALL} "file(INSTALL ../../../objs/win32/vc2010/freetype2411MT.lib DESTINATION ${ILASTIK_DEPENDENCY_DIR}/lib/freetype.lib)\n")
 
 message ("Installing ${freetype_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${freetype_NAME}
