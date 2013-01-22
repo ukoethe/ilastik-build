@@ -1,7 +1,7 @@
 ilastik-build
 =============
 
-ilastik-build downloads and compiles all dependencies needed by ilastik (and a few additional ones that are frequently needed for experimentation, such as ipython). It builds upon [buildem](https://github.com/janelia-flyem/buildem), Janelia Farm's build system for the FlyEM project (see there for a description of the underlying philosophy). It is currently restricted to 64-bit builds on Windows using Microsoft Visual Studio 2010, but it will be easy to generalize for 32-bit builds with the same compiler, as there are only few places where specific settings are hard-wired. By merging with the corresponding scripts of the buildem project (and insertion of the appropriate `if` statements), it should also be easy to extend ilastik-build to Linux and Mac platforms.
+ilastik-build downloads and compiles all dependencies needed by ilastik (and a few additional ones that are frequently needed for experimentation, such as ipython and matplotlib). It builds upon [buildem](https://github.com/janelia-flyem/buildem), Janelia Farm's build system for the FlyEM project (see there for a description of the underlying philosophy). It is currently restricted to 64-bit builds on Windows using Microsoft Visual Studio 2010, but it will be easy to generalize for 32-bit builds with the same compiler, as there are only few places where specific settings are hard-wired. By merging with the corresponding scripts of the buildem project (and insertion of the appropriate `if` statements), it should also be easy to extend ilastik-build to Linux and Mac platforms.
 
 ## Usage
 
@@ -40,4 +40,4 @@ Compilation and Installation:
     % <prefix>\python\Scripts   # optional
 ```
 
-* Open a new command shell (to activate your chages to the `PATH`) and invoke python with the approriate ilastik start-up script.
+* Open a new command shell (to activate your chages to the `PATH`) and invoke python with the appropriate ilastik start-up script.

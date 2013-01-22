@@ -18,6 +18,8 @@ FILE(MAKE_DIRECTORY ${ILASTIK_DEPENDENCY_DIR}/bin
                     ${ILASTIK_DEPENDENCY_DIR}/include
                     ${ILASTIK_DEPENDENCY_DIR}/tmp )
 
+file(TO_NATIVE_PATH ${ILASTIK_DEPENDENCY_DIR}/bin ILASTIK_BIN_PATH)
+
 ############################################################################
 
 SET(CMAKE_MODULE_PATH  ${CMAKE_MODULE_PATH}  ${ilastik_SOURCE_DIR})
@@ -40,6 +42,7 @@ include(qimage2ndarray)
 include(vigraqt)
 include(freetype)
 include(matplotlib)
+# include(scipy)
 
 file(TO_NATIVE_PATH " ${ILASTIK_DEPENDENCY_DIR}/bin ${QT_BUILD_DIR}/bin ${PYTHON_PREFIX} ${PYTHON_PREFIX}/Scripts" ILASTIK_PATH_SETTINGS)
 

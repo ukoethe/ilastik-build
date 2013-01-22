@@ -1,4 +1,4 @@
-set PATH=${QMAKE_PATH};%PATH%
+set PATH=${QMAKE_PATH};${ILASTIK_BIN_PATH};%PATH%
 set QTDIR=${QTDIR}
 rem Options "--prefix" and "-optimized-qmake" are not available on Windows!
-${QT_CONFIGURE_EXE} -opensource -platform win32-msvc2010 -I ${ILASTIK_DEPENDENCY_DIR}/include -L ${ILASTIK_DEPENDENCY_DIR}/lib -mp -nomake examples -nomake demos -nomake docs -nomake translations -no-multimedia -no-webkit -no-audio-backend -no-phonon -no-phonon-backend -no-sql-sqlite -no-sql-sqlite2 -no-sql-psql -no-sql-db2 -no-sql-ibase -no-sql-mysql -no-sql-oci -no-sql-odbc -no-sql-tds -no-dbus -no-cups -no-nis -no-qt3support -release -shared -no-accessibility 
+${QT_CONFIGURE_EXE} -opensource -platform win32-msvc2010 -I ${ILASTIK_DEPENDENCY_DIR}/include -L ${ILASTIK_DEPENDENCY_DIR}/lib -mp -nomake examples -nomake demos -nomake docs -nomake translations -no-multimedia -no-webkit -no-audio-backend -no-phonon -no-phonon-backend -no-sql-sqlite -no-sql-sqlite2 -no-sql-psql -no-sql-db2 -no-sql-ibase -no-sql-mysql -no-sql-oci -no-sql-odbc -no-sql-tds -no-dbus -no-cups -no-nis -no-qt3support -release -shared -no-accessibility -system-zlib -system-libpng -system-libjpeg -system-libtiff
