@@ -7,7 +7,8 @@ ilastik-build downloads and compiles all dependencies needed by ilastik (and a f
 
 Preliminaries:
 
-* Install MS Visual Studio 2010, cmake, git, and ActiveState perl. perl is not part of ilastik, but needed for the compilation of Qt.
+* Install MS Visual Studio 2010, git, cmake, and ActiveState perl. perl is not part of ilastik, but needed for the compilation of Qt.
+* If you want to create an .exe installer, also install NSIS.
 * Remove possibly interfering software from your `PATH` variable (e.g. an existing Python or Qt installation, the MinGW gcc compiler).
 
 Configuration:
@@ -41,3 +42,7 @@ Compilation and Installation:
 ```
 
 * Open a new command shell (to activate your chages to the `PATH`) and invoke python with the appropriate ilastik start-up script.
+
+Create an .exe Installer:
+
+* Open `ilastik.sln`, and build the project `PACKAGE`. The installer will be named something like `ilastik-0.6.a-win64.exe` in the same directory.
