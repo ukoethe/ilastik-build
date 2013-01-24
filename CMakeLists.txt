@@ -167,6 +167,10 @@ string(REGEX REPLACE "/" "\\\\\\\\" ILASTIK_SHORTCUT_ICON "${PROJECT_SOURCE_DIR}
 SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "
   CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Pixel Classification.lnk\\\" \\\"$INSTDIR\\\\pixelClassification.bat\\\" \\\"\\\" \\\"${ILASTIK_SHORTCUT_ICON}\\\"
 ")
+SET(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "
+  !insertmacro MUI_STARTMENU_GETFOLDER Application $STARTMENU_FOLDER
+  Delete \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Pixel Classification.lnk\\\"
+")
 
 # Cannot use SET(CPACK_PACKAGE_ICON  ...) because NSIS needs a Windows path here.
 # The icon must be a 150x57 BMP image created with Paint (gimp's BMP doesn't work).
