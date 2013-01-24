@@ -41,8 +41,18 @@ Compilation and Installation:
     % <prefix>\python\Scripts   # optional
 ```
 
-* Open a new command shell (to activate your chages to the `PATH`) and invoke python with the appropriate ilastik start-up script.
-
 Create an .exe Installer:
 
 * Open `ilastik.sln`, and build the project `PACKAGE`. The installer will be named something like `ilastik-0.6.a-win64.exe` in the same directory.
+
+Use the Pixel Classification Workflow:
+
+* To use the installed ilastik version, call `pixelClassification.bat` in the installation's root directory.
+* To use another ilastik version together with the installed dependencies, set the environment variable `ILASTIK_DIR` to the root of your ilastik installation before calling `pixelClassification.bat`. The specified directory must have subdirectories `lazyflow`, `volumina`, and `ilastik`, holding the respective sources or modules. Example:
+
+```
+    % set ILASTIK_DIR=c:\Users\ukoethe\ilastik
+    % c:\ilastik\pixelClassification.bat
+```
+
+* Other workflows will work similarly as soon as they are ported to Windows.
