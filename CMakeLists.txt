@@ -61,18 +61,10 @@ ExternalProject_Add(${lazyflow_NAME}
     GIT_REPOSITORY      https://github.com/ilastik/lazyflow.git
     PATCH_COMMAND       ""
     BINARY_DIR          ${ILASTIK_DEPENDENCY_DIR}/src/drtile-build
-    # FIXME: Read the following config information from ${ILASTIK_DEPENDENCY_DIR}/lib/vigra/VigraConfig.cmake
-    #        (after extending this file appropriately)
+    # Read the config information from ${ILASTIK_DEPENDENCY_DIR}/lib/vigranumpy/VigranumpyConfig.cmake
     CONFIGURE_COMMAND   ${CMAKE_COMMAND} ${ILASTIK_DEPENDENCY_DIR}/ilastik/lazyflow/lazyflow/drtile
-        -G ${CMAKE_GENERATOR} 
-        -DBoost_INCLUDE_DIR=${ILASTIK_DEPENDENCY_DIR}/include
-        -DBoost_PYTHON_LIBRARY=${ILASTIK_DEPENDENCY_DIR}/lib/boost_python-vc100-mt-1_51.lib
-        -DPYTHON_EXECUTABLE=${PYTHON_EXE}
-        -DPYTHON_INCLUDE_DIR=${ILASTIK_DEPENDENCY_DIR}/python/include
-        -DPYTHON_LIBRARY=${ILASTIK_DEPENDENCY_DIR}/python/libs/python27.lib
-        -DPYTHON_NUMPY_INCLUDE_DIR=${ILASTIK_DEPENDENCY_DIR}/python/Lib/site-packages/numpy/core/include
-        -DVIGRA_INCLUDE_DIR=${ILASTIK_DEPENDENCY_DIR}/include
-        -DVIGRA_IMPEX_LIBRARY=${ILASTIK_DEPENDENCY_DIR}/lib/vigraimpex.lib
+        -G ${CMAKE_GENERATOR}
+        -DVigranumpy_DIR=${ILASTIK_DEPENDENCY_DIR}/lib/vigranumpy
     BUILD_COMMAND       devenv drtile.sln /build "Release" /project drtile
     INSTALL_COMMAND     ${CMAKE_COMMAND} -E copy Release/drtile.pyd ${ILASTIK_DEPENDENCY_DIR}/ilastik/lazyflow/lazyflow/drtile
 )

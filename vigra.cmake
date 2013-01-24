@@ -20,8 +20,7 @@ include (numpy)
 
 external_git_repo (vigra
     HEAD
-    # http://github.com/ukoethe/vigra.git)
-    hci:repos/vigra)
+    http://github.com/ukoethe/vigra.git)
     
 message ("Installing ${vigra_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${vigra_NAME}
