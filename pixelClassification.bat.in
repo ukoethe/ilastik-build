@@ -4,6 +4,7 @@ set INSTALL_DIR=%~dp0
 set PATH=%INSTALL_DIR%bin;%INSTALL_DIR%Qt4\bin;%INSTALL_DIR%python
 set QTDIR=%INSTALL_DIR%Qt4
 IF [%ILASTIK_DIR%] EQU [] set ILASTIK_DIR=%INSTALL_DIR%ilastik
+echo Loading ilastik from "%ILASTIK_DIR%"
 set PYTHONPATH=%ILASTIK_DIR%\lazyflow;%ILASTIK_DIR%\volumina;%ILASTIK_DIR%\ilastik
 "%INSTALL_DIR%python\python" "%ILASTIK_DIR%\ilastik\workflows\pixelClassification\pixelClassificationWorkflowMainGui.py"
 ENDLOCAL
