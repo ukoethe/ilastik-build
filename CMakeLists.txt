@@ -5,6 +5,16 @@ include (ExternalProject)
 
 ############################################################################
 # Check if ILASTIK_DEPENDENCY_DIR has already been assigned.  If not, create a default.
+
+find_package(git REQUIRED)
+
+get_filename_component(GIT_PATH ${GIT_EXECUTABLE} PATH)
+get_filename_component(PATCH_EXE ${GIT_PATH}/../bin/patch.exe ABSOLUTE)
+    
+if(NOT EXISTS ${PATCH_EXE})
+    message(FATAL_ERROR "patch.exe NOT found, should be at \n${PATCH_EXE}")
+endif()
+
 set (ILASTIK_DEPENDENCY_DIR "None" CACHE TYPE STRING)
 
 if (${ILASTIK_DEPENDENCY_DIR} STREQUAL "None")
@@ -45,6 +55,9 @@ include(vigraqt)
 include(freetype)
 include(matplotlib)
 # include(scipy)
+include(lemon)
+include(cylemon)
+
 
 #############################################################################
 
