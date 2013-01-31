@@ -136,6 +136,37 @@ endif (NOT pip_NAME)
 
 ####################################################################
 
+if (NOT docopt_NAME)
+
+external_source (docopt
+    0.1
+    docopt-0.1.tar.gz
+    2068ff93c8cb37d02830c4a8de873b7a
+    http://pypi.python.org/packages/source/d/docopt/
+    FORCE)
+
+# Download and install docopt
+message ("Installing ${docopt_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${docopt_NAME}
+    DEPENDS             ${python_NAME} 
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${docopt_URL}
+    URL_MD5             ${docopt_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py build
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ${PYTHON_EXE} setup.py install
+)
+
+set_target_properties(${docopt_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+
+endif (NOT docopt_NAME)
+
+####################################################################
+
 if (NOT nose_NAME)
 
 external_source (nose
