@@ -1,0 +1,43 @@
+--- numpy/distutils/fcompiler/gnu.py	Tue Sep 13 20:39:16 2011
++++ numpy/distutils/fcompiler/gnu.py	Wed Feb 20 21:12:07 2013
+@@ -324,11 +324,7 @@ class Gnu95FCompiler(GnuFCompiler):
+                     opt.insert(i+1, "mingw32")
+             # XXX: fix this mess, does not work for mingw
+             if is_win64():
+-                c_compiler = self.c_compiler
+-                if c_compiler and c_compiler.compiler_type == "msvc":
+-                    return []
+-                else:
+-                    raise NotImplementedError("Only MS compiler supported with gfortran on win64")
++                return []
+         return opt
+ 
+     def get_target(self):
+--- numpy/distutils/mingw32ccompiler.py	Sat May 19 13:51:55 2012
++++ numpy/distutils/mingw32ccompiler.py	Wed Feb 20 21:12:07 2013
+@@ -106,17 +106,17 @@ class Mingw32CCompiler(distutils.cygwinc
+         if get_build_architecture() == 'AMD64':
+             if self.gcc_version < "4.":
+                 self.set_executables(
+-                    compiler='gcc -g -DDEBUG -DMS_WIN64 -mno-cygwin -O0 -Wall',
+-                    compiler_so='gcc -g -DDEBUG -DMS_WIN64 -mno-cygwin -O0 -Wall -Wstrict-prototypes',
+-                    linker_exe='gcc -g -mno-cygwin',
+-                    linker_so='gcc -g -mno-cygwin -shared')
++                    compiler='gcc -DMS_WIN64 -mno-cygwin -O -Wall',
++                    compiler_so='gcc -DMS_WIN64 -mno-cygwin -O -Wall -Wstrict-prototypes',
++                    linker_exe='gcc -mno-cygwin',
++                    linker_so='gcc -mno-cygwin -shared')
+             else:
+                 # gcc-4 series releases do not support -mno-cygwin option
+                 self.set_executables(
+-                    compiler='gcc -g -DDEBUG -DMS_WIN64 -O0 -Wall',
+-                    compiler_so='gcc -g -DDEBUG -DMS_WIN64 -O0 -Wall -Wstrict-prototypes',
+-                    linker_exe='gcc -g',
+-                    linker_so='gcc -g -shared')
++                    compiler='gcc -DMS_WIN64 -O -Wall',
++                    compiler_so='gcc -DMS_WIN64 -O -Wall -Wstrict-prototypes',
++                    linker_exe='gcc',
++                    linker_so='gcc -shared')
+         else:
+             if self.gcc_version <= "3.0.0":
+                 self.set_executables(compiler='gcc -mno-cygwin -O2 -w',
