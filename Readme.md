@@ -9,6 +9,7 @@ Usage
 ### Preliminaries:
 
 * Install MS Visual Studio 2010, git, cmake, and ActiveState perl. perl is not part of ilastik, but needed for the compilation of Qt.
+* Install the MingW 64-bit compiler suite from http://sourceforge.net/projects/mingwbuilds/files/host-windows/releases/ and the MSYS 64-bit tools from http://sourceforge.net/projects/mingw-w64/files/External%20binary%20packages%20%28Win64%20hosted%29/MSYS%20%2832-bit%29/. These packages are needed for scipy and other modules using Fortran.
 * If you want to create an .exe installer, also install NSIS.
 * Remove possibly interfering software from your `PATH` variable (e.g. an existing Python or Qt installation, the MinGW gcc compiler).
 
@@ -25,7 +26,7 @@ Usage
 * Configure the build system:
 
 ```
-    % cmake -G "Visual Studio 10 Win64" -DILASTIK_DEPENDENCY_DIR=<prefix>  <path-to-build-system>
+    % cmake -G "Visual Studio 10 Win64" -DILASTIK_DEPENDENCY_DIR=<prefix> -DMSYS_PATH=<path-to-msys-binaries> -DMINGW_PATH=<path-to-mingw-binaries> <path-to-build-system>
 ```
 
   This will create a file `ilastik.sln` in the `<build-directory>` that can be opened with Visual Studio. In the above cmake call, `<path-to-build-system>` is the directory where ilastik-build has been checked out (typically just `..` when we are in `ilastik-build/build`), and `<prefix>` is the desired path where the dependencies will be installed. The actual installations will be located in the subdirectories `<prefix>\bin`, `<prefix>\lib`, `<prefix>\include`, `<prefix>\python`, and `<prefix>\Qt4`. The sources (including cached `tar` archieves and intermediate files) go into `<prefix>\src`. The ilastik Python modules will be installed into `<prefix>\ilastik`.

@@ -16,9 +16,18 @@ if(NOT EXISTS ${PATCH_EXE})
 endif()
 
 set (ILASTIK_DEPENDENCY_DIR "None" CACHE TYPE STRING)
-
 if (${ILASTIK_DEPENDENCY_DIR} STREQUAL "None")
     message (FATAL_ERROR "ERROR: ILASTIK_DEPENDENCY_DIR build directory (for all downloads & builds) should be specified via -DILASTIK_DEPENDENCY_DIR=<path> on cmake command line.")
+endif ()
+
+set (MSYS_PATH "None" CACHE TYPE STRING)
+if (${MSYS_PATH} STREQUAL "None")
+    message (FATAL_ERROR "ERROR: MSYS_PATH must be specified via -DMSYS_PATH=<path> on cmake command line.")
+endif ()
+
+set (MINGW_PATH "None" CACHE TYPE STRING)
+if (${MINGW_PATH} STREQUAL "None")
+    message (FATAL_ERROR "ERROR: MINGW_PATH must be specified via -DMINGW_PATH=<path> on cmake command line.")
 endif ()
 
 message ("ilastik downloads and builds will be placed here: ${ILASTIK_DEPENDENCY_DIR}")
@@ -38,6 +47,7 @@ SET(CMAKE_MODULE_PATH  ${CMAKE_MODULE_PATH}  ${ilastik_SOURCE_DIR})
 
 include(python)
 include(python_packages)
+include(openblas)
 include(numpy)
 include(zlib)
 include(jpeg)
@@ -57,6 +67,7 @@ include(matplotlib)
 # include(scipy)
 include(lemon)
 include(cylemon)
+
 
 
 #############################################################################
