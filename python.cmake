@@ -26,7 +26,7 @@ SET(PYTHON_PREFIX ${ILASTIK_DEPENDENCY_DIR}/python)
 SET(PYTHON_BIN_DIR ${python_SRC_DIR}/PCbuild)
 
 # Add missing '/MANIFEST' compiler flag to msvc9compiler.py
-set(python_PATCH amd64\\python.exe ${PROJECT_SOURCE_DIR}/patches/patch_python.py ../Lib/distutils/msvc9compiler.py)
+set(python_PATCH amd64\\python.exe ${PROJECT_SOURCE_DIR}/patches/patch_python.py ../Lib/distutils/msvc9compiler.py ../Lib/distutils/cygwinccompiler.py)
 
 SET(python_INSTALL ${ILASTIK_DEPENDENCY_DIR}/tmp/python_install.cmake)
 FILE(WRITE   ${python_INSTALL} "file(INSTALL amd64/python.exe amd64/python27.dll DESTINATION ${PYTHON_PREFIX})\n")

@@ -9,7 +9,7 @@ Usage
 ### Preliminaries:
 
 * Install MS Visual Studio 2010, git, cmake, and ActiveState perl. perl is not part of ilastik, but needed for the compilation of Qt.
-* Install the MingW 64-bit compiler suite from http://sourceforge.net/projects/mingwbuilds/files/host-windows/releases/ and the MSYS 64-bit tools from http://sourceforge.net/projects/mingw-w64/files/External%20binary%20packages%20%28Win64%20hosted%29/MSYS%20%2832-bit%29/. These packages are needed for scipy and other modules using Fortran.
+* Install the MinGW 64-bit compiler suite from http://sourceforge.net/projects/mingwbuilds/files/host-windows/releases/ and the MSYS 64-bit tools from http://sourceforge.net/projects/mingw-w64/files/External%20binary%20packages%20%28Win64%20hosted%29/MSYS%20%2832-bit%29/. Since the MinGW download is compressed with 7-zip, you need this program as well. MinGW and MSYS are needed for blas, lapack, scipy and other modules using Fortran. FIXME: These modules are currently not required for ilastik's core part, so make this step optional.
 * If you want to create an .exe installer, also install NSIS.
 * Remove possibly interfering software from your `PATH` variable (e.g. an existing Python or Qt installation, the MinGW gcc compiler).
 
@@ -26,14 +26,14 @@ Usage
 * Configure the build system:
 
 ```
-    % cmake -G "Visual Studio 10 Win64" -DILASTIK_DEPENDENCY_DIR=<prefix> -DMSYS_PATH=<path-to-msys-binaries> -DMINGW_PATH=<path-to-mingw-binaries> <path-to-build-system>
+    % cmake -G "Visual Studio 10 Win64" -DILASTIK_DEPENDENCY_DIR=<prefix> -DMSYS_PATH=<path-to-msys-binaries> -DMINGW_PATH=<path-to-mingw-binaries>  <path-to-build-system>
 ```
 
   This will create a file `ilastik.sln` in the `<build-directory>` that can be opened with Visual Studio. In the above cmake call, `<path-to-build-system>` is the directory where ilastik-build has been checked out (typically just `..` when we are in `ilastik-build/build`), and `<prefix>` is the desired path where the dependencies will be installed. The actual installations will be located in the subdirectories `<prefix>\bin`, `<prefix>\lib`, `<prefix>\include`, `<prefix>\python`, and `<prefix>\Qt4`. The sources (including cached `tar` archieves and intermediate files) go into `<prefix>\src`. The ilastik Python modules will be installed into `<prefix>\ilastik`.
 
 ### Compilation and Installation:
 
-* Open `ilastik.sln`, switch to "Release" mode and build the project `ilastik`. In theory, this should build and install everything in one go. In practice, it sometimes stops with an error message like "Cannot extract sources". If this happens, just build `ilastik` again (this doesn't rebuild already installed dependencies). Due to some unknown reasons, Visual Studio always believes that the compilation of numpy failed, although everything was actually ok. In this case, open "numpy-1.6.2->CMakeRules", right-click on `numpy-1.6.2-download.rule` and remove this rule. Do likewise with `numpy-1.6.2-patch.rule`. Then build `ilastik` again. 
+* Open `ilastik.sln`, switch to "Release" mode and build the project `ilastik`. In theory, this should build and install everything in one go. In practice, it sometimes stops with an error message like "Cannot extract sources". If this happens, just build `ilastik` again (this doesn't rebuild already installed dependencies). Due to unknown reasons, Visual Studio always believes that the compilation of numpy failed, although everything was actually ok. In this case, open "numpy-1.6.2->CMakeRules", right-click on `numpy-1.6.2-download.rule` and remove this rule. Do likewise with `numpy-1.6.2-patch.rule`. Then build `ilastik` again. 
 * Add the following directories to your `PATH` variable:
 
 ```

@@ -23,8 +23,8 @@
 -                    compiler_so='gcc -g -DDEBUG -DMS_WIN64 -mno-cygwin -O0 -Wall -Wstrict-prototypes',
 -                    linker_exe='gcc -g -mno-cygwin',
 -                    linker_so='gcc -g -mno-cygwin -shared')
-+                    compiler='gcc -DMS_WIN64 -mno-cygwin -O -Wall',
-+                    compiler_so='gcc -DMS_WIN64 -mno-cygwin -O -Wall -Wstrict-prototypes',
++                    compiler='gcc -O2 -DMS_WIN64 -mno-cygwin -Wall',
++                    compiler_so='gcc -O2 -DMS_WIN64 -mno-cygwin -Wall -Wstrict-prototypes',
 +                    linker_exe='gcc -mno-cygwin',
 +                    linker_so='gcc -mno-cygwin -shared')
              else:
@@ -34,10 +34,21 @@
 -                    compiler_so='gcc -g -DDEBUG -DMS_WIN64 -O0 -Wall -Wstrict-prototypes',
 -                    linker_exe='gcc -g',
 -                    linker_so='gcc -g -shared')
-+                    compiler='gcc -DMS_WIN64 -O -Wall',
-+                    compiler_so='gcc -DMS_WIN64 -O -Wall -Wstrict-prototypes',
++                    compiler='gcc -O2 -DMS_WIN64 -Wall',
++                    compiler_so='gcc -O2 -DMS_WIN64 -Wall -Wstrict-prototypes',
 +                    linker_exe='gcc',
 +                    linker_so='gcc -shared')
          else:
              if self.gcc_version <= "3.0.0":
                  self.set_executables(compiler='gcc -mno-cygwin -O2 -w',
+--- numpy/core/setup.py	Wed Feb 20 21:12:06 2013
++++ numpy/core/setup.py	Thu Feb 21 11:40:32 2013
+@@ -117,6 +117,9 @@ def win32_checks(deflist):
+ 
+ def check_math_capabilities(config, moredefs, mathlibs):
+     def check_func(func_name):
++        print "Checking for", func_name
++        if func_name == "modff":
++            return 0
+         return config.check_func(func_name, libraries=mathlibs,
+                                  decl=True, call=True)
