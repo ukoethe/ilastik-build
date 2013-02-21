@@ -25,7 +25,7 @@ file(TO_NATIVE_PATH ${ILASTIK_DEPENDENCY_DIR}/tmp/build_scipy.bat SCIPY_BUILD_BA
 # Download and install scipy
 message ("Installing ${scipy_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${scipy_NAME}
-    DEPENDS             # ${python_NAME} ${numpy_NAME} ${nose_NAME}
+    DEPENDS             ${python_NAME} ${numpy_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${scipy_URL}
     URL_MD5             ${scipy_MD5}

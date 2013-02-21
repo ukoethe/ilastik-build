@@ -1,4 +1,3 @@
-@echo off
 set PATH=${MSYS_PATH};${MINGW_PATH};%PATH%
 make -j6
 make PREFIX=${ILASTIK_DEPENDENCY_DIR} install
