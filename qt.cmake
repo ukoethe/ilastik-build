@@ -101,12 +101,15 @@ set(QT_BUILD_DIR ${ILASTIK_DEPENDENCY_DIR}/Qt4)
 file(TO_NATIVE_PATH ${QT_BUILD_DIR} QTDIR)
 file(TO_NATIVE_PATH ${QT_BUILD_DIR}/bin QMAKE_PATH)
 file(TO_NATIVE_PATH ${qt_SRC_DIR}/configure QT_CONFIGURE_EXE)
-file(TO_NATIVE_PATH ${ILASTIK_DEPENDENCY_DIR}/tmp/configure_qt.bat QT_CONFIGURE_BAT)
 
 # Patch names of system libraries (zlib, png, jpeg, tiff)
 set (qt_PATCH ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/patches/patch_qt.py ${qt_SRC_DIR})
 
 configure_file(configure_qt.bat.in ${ILASTIK_DEPENDENCY_DIR}/tmp/configure_qt.bat)
+file(TO_NATIVE_PATH ${ILASTIK_DEPENDENCY_DIR}/tmp/configure_qt.bat QT_CONFIGURE_BAT)
+
+configure_file(build_qt.bat.in ${ILASTIK_DEPENDENCY_DIR}/tmp/build_qt.bat)
+file(TO_NATIVE_PATH ${ILASTIK_DEPENDENCY_DIR}/tmp/build_qt.bat QT_BUILD_BAT)
 
 ExternalProject_Add(${qt_NAME}
     DEPENDS             ${python_NAME} ${zlib_NAME} ${jpeg_NAME} ${tiff_NAME} ${libpng_NAME}
@@ -117,7 +120,7 @@ ExternalProject_Add(${qt_NAME}
     PATCH_COMMAND       ${qt_PATCH}
     BINARY_DIR          ${QT_BUILD_DIR}
     CONFIGURE_COMMAND   echo "yes" | call ${QT_CONFIGURE_BAT} # pipe "yes" to stdin to accept the license.
-    BUILD_COMMAND       nmake
+    BUILD_COMMAND       ${QT_BUILD_BAT}
     TEST_COMMAND        "" # nmake check
     INSTALL_COMMAND     nmake install
 )

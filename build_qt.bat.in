@@ -1,0 +1,2 @@
+set PATH=${ILASTIK_BIN_PATH};%PATH%
+nmake
