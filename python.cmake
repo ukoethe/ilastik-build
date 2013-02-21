@@ -12,6 +12,8 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 include (ExternalProject)
 include (ExternalSource)
 
+include (bzip2)
+
 # include (zlib)
 #include (openssl)   # without openssl, hashlib might have missing encryption methods
 
@@ -37,7 +39,7 @@ FILE(APPEND  ${python_INSTALL} "file(INSTALL ../Lib DESTINATION ${PYTHON_PREFIX}
 
 message ("Installing ${python_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${python_NAME}
-    DEPENDS             # ${zlib_NAME} ${openssl_NAME}
+    DEPENDS             ${bzip2_NAME} # ${zlib_NAME} ${openssl_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${python_URL}
     URL_MD5             ${python_MD5}
@@ -53,6 +55,7 @@ ExternalProject_Add(${python_NAME}
                         \ndevenv PCbuild.sln /build "Release|x64" /project pyexpat
                         \ndevenv PCbuild.sln /build "Release|x64" /project select
                         \ndevenv PCbuild.sln /build "Release|x64" /project unicodedata
+                        \ndevenv PCbuild.sln /build "Release|x64" /project bz2
                         \n ${python_PATCH}
     INSTALL_COMMAND     ${CMAKE_COMMAND} -P ${python_INSTALL}
 )
