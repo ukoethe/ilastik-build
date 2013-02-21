@@ -1,8 +1,10 @@
 --- numpy/distutils/fcompiler/gnu.py	Tue Sep 13 20:39:16 2011
 +++ numpy/distutils/fcompiler/gnu.py	Wed Feb 20 21:12:07 2013
-@@ -324,11 +324,7 @@ class Gnu95FCompiler(GnuFCompiler):
+@@ -322,13 +322,8 @@ class Gnu95FCompiler(GnuFCompiler):
+                     i = opt.index("gcc")
+                     opt.insert(i+1, "mingwex")
                      opt.insert(i+1, "mingw32")
-             # XXX: fix this mess, does not work for mingw
+-            # XXX: fix this mess, does not work for mingw
              if is_win64():
 -                c_compiler = self.c_compiler
 -                if c_compiler and c_compiler.compiler_type == "msvc":
@@ -13,6 +15,15 @@
          return opt
  
      def get_target(self):
+@@ -343,7 +338,7 @@ class Gnu95FCompiler(GnuFCompiler):
+ 
+     def get_flags_opt(self):
+         if is_win64():
+-            return ['-O0']
++            return ['-O2']
+         else:
+             return GnuFCompiler.get_flags_opt(self)
+ 
 --- numpy/distutils/mingw32ccompiler.py	Sat May 19 13:51:55 2012
 +++ numpy/distutils/mingw32ccompiler.py	Wed Feb 20 21:12:07 2013
 @@ -106,17 +106,17 @@ class Mingw32CCompiler(distutils.cygwinc

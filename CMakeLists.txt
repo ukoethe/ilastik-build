@@ -52,7 +52,6 @@ include(python)
 include(python_packages)
 include(openblas)
 include(numpy)
-include(scipy)
 include(zlib)
 include(jpeg)
 include(tiff)
@@ -70,8 +69,8 @@ include(freetype)
 include(matplotlib)
 include(lemon)
 include(cylemon)
-
-
+include(scipy)
+include(scikit_learn)
 
 #############################################################################
 

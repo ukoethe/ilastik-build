@@ -35,7 +35,7 @@ ExternalProject_Add(${openblas_NAME}
     CONFIGURE_COMMAND   ""
     BUILD_COMMAND       ${OPENBLAS_BUILD_BAT}
     BUILD_IN_SOURCE     1
-    INSTALL_COMMAND     ""
+    INSTALL_COMMAND     "" # ${OPENBLAS_BUILD_BAT} already installs
 )
 
 set_target_properties(${openblas_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)

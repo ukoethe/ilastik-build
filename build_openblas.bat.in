@@ -4,6 +4,7 @@ make -j6
 make PREFIX=${ILASTIK_DEPENDENCY_DIR} install
 mv ${ILASTIK_DEPENDENCY_DIR}/lib/libopenblas.dll ${ILASTIK_DEPENDENCY_DIR}/bin
 cp ${MINGW_PATH}/libgcc_s_sjlj-1.dll ${ILASTIK_DEPENDENCY_DIR}/bin
+cp ${MINGW_PATH}/libstdc++-6.dll ${ILASTIK_DEPENDENCY_DIR}/bin
 cp ${MINGW_PATH}/libgfortran-3.dll ${ILASTIK_DEPENDENCY_DIR}/bin
 cp ${MINGW_PATH}/libquadmath-0.dll ${ILASTIK_DEPENDENCY_DIR}/bin
 cp exports/libopenblas.lib ${ILASTIK_DEPENDENCY_DIR}/lib/blas.lib

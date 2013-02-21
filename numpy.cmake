@@ -8,14 +8,9 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 include (ExternalProject)
 include (ExternalSource)
-# include (BuildSupport)
-# include (FortranSupport)
-# include (EasyInstall)
 
 include (python)
 include (openblas)
-# include (nose)
-# include (atlas)
 
 external_source (numpy
     1.6.2
