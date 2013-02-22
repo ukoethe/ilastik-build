@@ -1,69 +1,78 @@
-#include <stdexcept>
+// emulate some C99 functions that are missing in MSVC in terms of their C++ equivalents
+
 #include <complex>
 #include <cmath>
 
 typedef struct { float re, im; }  fcomplex;
 typedef struct { double re, im; } dcomplex;
+typedef std::complex<float>       fc;
+typedef std::complex<double>      dc;
 
 extern "C" {
 
-int ___chkstk_ms()
+#ifdef TESTING
+# define NAME(n) n##_  // change function name so that we can compare with their real C99 counterparts
+#else
+# define NAME(n) n
+#endif
+
+int NAME(___chkstk_ms)()
 {
     return 0; // FIXME: this is a terrible hack
 }
 
-double trunc( double t )
+double NAME(trunc)( double t )
 {
      return t >= 0.0
                 ? std::floor(t + 0.5)
                 : std::ceil(t - 0.5);
 }
 
-long lround( double t )
+long NAME(lround)( double t )
 {
      return t >= 0.0
                 ? (long)std::floor(t + 0.5)
                 : (long)std::ceil(t - 0.5);
 }
 
-float cabsf(fcomplex x)
+float NAME(cabsf)(fcomplex x)
 {
-    return std::abs(reinterpret_cast<std::complex<float> const &>(x));
+    return std::abs((fc const &)x);
 }
 
-fcomplex csqrtf(fcomplex x)
+fcomplex NAME(csqrtf)(fcomplex x)
 {
-    return reinterpret_cast<fcomplex const &>(std::sqrt(reinterpret_cast<std::complex<float> const &>(x)));
+    return *(fcomplex const *)&std::sqrt((fc const &)x);
 }
 
-dcomplex csqrt(dcomplex x)
+dcomplex NAME(csqrt)(dcomplex x)
 {
-    return reinterpret_cast<dcomplex const &>(std::sqrt(reinterpret_cast<std::complex<double> const &>(x)));
+    return *(dcomplex const *)&std::sqrt((dc const &)x);
 }
 
-dcomplex cexp(dcomplex x)
+dcomplex NAME(cexp)(dcomplex x)
 {
-    return reinterpret_cast<dcomplex const &>(std::exp(reinterpret_cast<std::complex<double> const &>(x)));
+    return *(dcomplex const *)&std::exp((dc const &)x);
 }
 
-dcomplex clog(dcomplex x)
+dcomplex NAME(clog)(dcomplex x)
 {
-    return reinterpret_cast<dcomplex const &>(std::log(reinterpret_cast<std::complex<double> const &>(x)));
+    return *(dcomplex const *)&std::log((dc const &)x);
 }
 
-dcomplex ccos(dcomplex x)
+dcomplex NAME(ccos)(dcomplex x)
 {
-    return reinterpret_cast<dcomplex const &>(std::cos(reinterpret_cast<std::complex<double> const &>(x)));
+    return *(dcomplex const *)&std::cos((dc const &)x);
 }
 
-dcomplex csin(dcomplex x)
+dcomplex NAME(csin)(dcomplex x)
 {
-    return reinterpret_cast<dcomplex const &>(std::sin(reinterpret_cast<std::complex<double> const &>(x)));
+    return *(dcomplex const *)&std::sin((dc const &)x);
 }
 
-dcomplex cpow(dcomplex x, dcomplex y)
+dcomplex NAME(cpow)(dcomplex x, dcomplex y)
 {
-    return reinterpret_cast<dcomplex const &>(std::pow(reinterpret_cast<std::complex<double> const &>(x),reinterpret_cast<std::complex<double> const &>(y)));
+    return *(dcomplex const *)&std::pow((dc const &)x,(dc const &)y);
 }
 
 }
