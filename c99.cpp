@@ -16,11 +16,6 @@ extern "C" {
 # define NAME(n) n
 #endif
 
-int NAME(___chkstk_ms)()
-{
-    return 0; // FIXME: this is a terrible hack
-}
-
 double NAME(trunc)( double t )
 {
      return t >= 0.0

@@ -1,5 +1,5 @@
 #
-# Install tiff from source
+# Install OpenBLAS from source
 #
 
 if (NOT openblas_NAME)
@@ -23,6 +23,10 @@ endif()
     
 configure_file(build_openblas.bat.in ${ILASTIK_DEPENDENCY_DIR}/tmp/build_openblas.bat)
 file(TO_NATIVE_PATH ${ILASTIK_DEPENDENCY_DIR}/tmp/build_openblas.bat OPENBLAS_BUILD_BAT)
+
+# NOTE: 'make' downloads and compiles lapack-3.4.2 on the fly and puts blas and lapack
+#       together into libopenblas.dll. numpy wants two separate libraries, so we copy the
+#       link library libopenblas.lib under the two names blas.lib and lapack.lib.
 
 message ("Installing ${openblas_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${openblas_NAME}

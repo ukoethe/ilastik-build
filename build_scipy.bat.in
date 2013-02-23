@@ -3,19 +3,23 @@ set PATH=${MINGW_PATH};%PATH%
 
 rem create link-libs for MinGW dlls that are referenced by gfortran
 rem so that these libs can be linked by MSVC
-gendef ${MINGW_PATH}/libgcc_s_sjlj-1.dll
+gendef ${MINGW_PATH}\libgcc_s_sjlj-1.dll
 lib /NOLOGO /MACHINE:X64 /DEF:libgcc_s_sjlj-1.def /OUT:${ILASTIK_DEPENDENCY_DIR}/lib/libgcc_s_sjlj-1.lib
 "${CMAKE_COMMAND}" -E copy ${MINGW_PATH}/libgcc_s_sjlj-1.dll ${ILASTIK_DEPENDENCY_DIR}/bin
 
-gendef ${MINGW_PATH}/libgfortran-3.dll
+gendef ${MINGW_PATH}\libgfortran-3.dll
 lib /NOLOGO /MACHINE:X64 /DEF:libgfortran-3.def /OUT:${ILASTIK_DEPENDENCY_DIR}/lib/libgfortran-3.lib
 "${CMAKE_COMMAND}" -E copy ${MINGW_PATH}/libgfortran-3.dll ${ILASTIK_DEPENDENCY_DIR}/bin
+
+rem find 64-bit libgcc.a and copy it to ilastik libdir (needed to get __chkstk_ms() )
+for /f "delims=" %%a in ('dir /s /b ${MINGW_PATH}\..\lib\*libgcc.a ^| find /v "\32\"') do @set LIBGCC=%%a
+"${CMAKE_COMMAND}" -E copy %LIBGCC% ${ILASTIK_DEPENDENCY_DIR}/lib/libgcc.lib
 
 rem compile missing C99 functions
 cl /EHsc /MD /O2 /c ${PROJECT_SOURCE_DIR}/c99.cpp
 lib /NOLOGO /MACHINE:X64 /OUT:${ILASTIK_DEPENDENCY_DIR}/lib/emulate_c99.lib c99.obj
 
-rem Do not build with '-c mingw32' because this uses gcc, leading to crashes.
-rem Without this flag, mingw is only used for Fortran sources, and gfortran 
+rem Do not build with '-c mingw32' because this would use gcc for linking, leading to crashes.
+rem Without this flag, mingw will only be used for Fortran sources, and gfortran 
 rem is automatically found in the PATH.
-${PYTHON_EXE} setup.py build_ext -l "libgcc_s_sjlj-1 libgfortran-3 emulate_c99" -L ${ILASTIK_DEPENDENCY_DIR}/lib install
+${PYTHON_EXE} setup.py build_ext -l "libgcc_s_sjlj-1 libgfortran-3 emulate_c99 libgcc" -L ${ILASTIK_DEPENDENCY_DIR}/lib install

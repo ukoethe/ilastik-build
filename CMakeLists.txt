@@ -26,12 +26,14 @@ if (${MSYS_PATH} STREQUAL "None")
     message (FATAL_ERROR "ERROR: MSYS_PATH must be specified via -DMSYS_PATH=<path> on cmake command line.")
 endif ()
 get_filename_component(MSYS_PATH ${MSYS_PATH} ABSOLUTE)
+file(TO_NATIVE_PATH ${MSYS_PATH} MSYS_PATH)
 
 set (MINGW_PATH "None" CACHE TYPE STRING)
 if (${MINGW_PATH} STREQUAL "None")
     message (FATAL_ERROR "ERROR: MINGW_PATH must be specified via -DMINGW_PATH=<path> on cmake command line.")
 endif ()
 get_filename_component(MINGW_PATH ${MINGW_PATH} ABSOLUTE)
+file(TO_NATIVE_PATH ${MINGW_PATH} MINGW_PATH)
 
 message ("ilastik downloads and builds will be placed here: ${ILASTIK_DEPENDENCY_DIR}")
 
