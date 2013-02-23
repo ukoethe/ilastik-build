@@ -3,9 +3,6 @@ project (ilastik)
 
 include (ExternalProject)
 
-############################################################################
-# Check if ILASTIK_DEPENDENCY_DIR has already been assigned.  If not, create a default.
-
 find_package(git REQUIRED)
 
 get_filename_component(GIT_PATH ${GIT_EXECUTABLE} PATH)
@@ -15,25 +12,27 @@ if(NOT EXISTS ${PATCH_EXE})
     message(FATAL_ERROR "patch.exe NOT found, should be at \n${PATCH_EXE}")
 endif()
 
-set (ILASTIK_DEPENDENCY_DIR "None" CACHE TYPE STRING)
+set (ILASTIK_DEPENDENCY_DIR "None" CACHE PATH "Install prefix for ilastik and its dependencies.")
 if (${ILASTIK_DEPENDENCY_DIR} STREQUAL "None")
-    message (FATAL_ERROR "ERROR: ILASTIK_DEPENDENCY_DIR build directory (for all downloads & builds) should be specified via -DILASTIK_DEPENDENCY_DIR=<path> on cmake command line.")
+    message (FATAL_ERROR "ERROR: ILASTIK_DEPENDENCY_DIR build directory (for all downloads & builds) should be specified via -DILASTIK_DEPENDENCY_DIR=<path> on the cmake command line.")
 endif ()
 get_filename_component(ILASTIK_DEPENDENCY_DIR ${ILASTIK_DEPENDENCY_DIR} ABSOLUTE)
 
-set (MSYS_PATH "None" CACHE TYPE STRING)
-if (${MSYS_PATH} STREQUAL "None")
-    message (FATAL_ERROR "ERROR: MSYS_PATH must be specified via -DMSYS_PATH=<path> on cmake command line.")
-endif ()
-get_filename_component(MSYS_PATH ${MSYS_PATH} ABSOLUTE)
-file(TO_NATIVE_PATH ${MSYS_PATH} MSYS_PATH)
+OPTION(WITH_SCIPY "Build scipy (and its dependencies) ?" OFF)
 
-set (MINGW_PATH "None" CACHE TYPE STRING)
-if (${MINGW_PATH} STREQUAL "None")
-    message (FATAL_ERROR "ERROR: MINGW_PATH must be specified via -DMINGW_PATH=<path> on cmake command line.")
-endif ()
-get_filename_component(MINGW_PATH ${MINGW_PATH} ABSOLUTE)
-file(TO_NATIVE_PATH ${MINGW_PATH} MINGW_PATH)
+if(WITH_SCIPY)
+    set (MSYS_PATH "-NOTFOUND" CACHE PATH "Path to MSYS binaries (must contain make.exe).")
+    set (MINGW_PATH "-NOTFOUND" CACHE PATH "Path to MinGW binaries (must contain gfortran.exe).")
+    
+    if (${MSYS_PATH} STREQUAL "-NOTFOUND" OR ${MINGW_PATH} STREQUAL "-NOTFOUND")
+        message (FATAL_ERROR "ERROR: To build scipy, MSYS_PATH and MINGW_PATH must be specified via -DMSYS_PATH=<path> -DMINGW_PATH=<path> on the cmake command line.")
+    endif ()
+
+    get_filename_component(MSYS_PATH ${MSYS_PATH} ABSOLUTE)
+    file(TO_NATIVE_PATH ${MSYS_PATH} MSYS_PATH)
+    get_filename_component(MINGW_PATH ${MINGW_PATH} ABSOLUTE)
+    file(TO_NATIVE_PATH ${MINGW_PATH} MINGW_PATH)
+endif()
 
 message ("ilastik downloads and builds will be placed here: ${ILASTIK_DEPENDENCY_DIR}")
 
@@ -52,7 +51,6 @@ SET(CMAKE_MODULE_PATH  ${CMAKE_MODULE_PATH}  ${ilastik_SOURCE_DIR})
 
 include(python)
 include(python_packages)
-include(openblas)
 include(numpy)
 include(zlib)
 include(jpeg)
@@ -71,8 +69,10 @@ include(freetype)
 include(matplotlib)
 include(lemon)
 include(cylemon)
-include(scipy)
-include(scikit_learn)
+if(WITH_SCIPY)
+    include(scipy)
+    include(scikit_learn)
+endif()
 
 #############################################################################
 

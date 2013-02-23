@@ -1,7 +1,7 @@
 @echo off
 set PATH=${MINGW_PATH};%PATH%
 
-rem create link-libs for MinGW dlls that are referenced by gfortran
+rem create import libs for MinGW dlls that are referenced by gfortran
 rem so that these libs can be linked by MSVC
 gendef ${MINGW_PATH}\libgcc_s_sjlj-1.dll
 lib /NOLOGO /MACHINE:X64 /DEF:libgcc_s_sjlj-1.def /OUT:${ILASTIK_DEPENDENCY_DIR}/lib/libgcc_s_sjlj-1.lib
