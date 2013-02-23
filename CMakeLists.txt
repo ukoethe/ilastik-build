@@ -34,6 +34,8 @@ if(WITH_SCIPY)
     file(TO_NATIVE_PATH ${MINGW_PATH} MINGW_PATH)
 endif()
 
+OPTION(WITH_VTK "Build VTK ?" OFF)
+
 message ("ilastik downloads and builds will be placed here: ${ILASTIK_DEPENDENCY_DIR}")
 
 FILE(MAKE_DIRECTORY ${ILASTIK_DEPENDENCY_DIR}/bin 
@@ -72,6 +74,9 @@ include(cylemon)
 if(WITH_SCIPY)
     include(scipy)
     include(scikit_learn)
+endif()
+if(WITH_VTK)
+    include(vtk)
 endif()
 
 #############################################################################

@@ -10,6 +10,7 @@ Usage
 
 * Install MS Visual Studio 2010, git, cmake, and ActiveState perl. perl is not part of ilastik, but needed for the compilation of Qt.
 * If you want to build scipy and scikit-learn, you must also install the MinGW 64-bit compiler suite from http://sourceforge.net/projects/mingwbuilds/files/host-windows/releases/ and the MSYS 64-bit tools from http://sourceforge.net/projects/mingw-w64/files/External%20binary%20packages%20%28Win64%20hosted%29/MSYS%20%2832-bit%29/. Since the MinGW download is compressed with 7-zip, you need this program as well. MinGW and MSYS are needed to compile Fortran source. 
+* If you want to build VTK, you must also install Tcl. 
 * If you want to create an .exe installer, also install NSIS.
 * Remove possibly interfering software from your `PATH` variable (e.g. an existing Python or Qt installation, the MinGW gcc compiler).
 
@@ -35,6 +36,12 @@ Usage
 
 ```
     % cmake -G "Visual Studio 10 Win64" -DILASTIK_DEPENDENCY_DIR=<prefix> -DWITH_SCIPY=1 -DMSYS_PATH=<path-to-msys-binaries> -DMINGW_PATH=<path-to-mingw-binaries>  <path-to-build-system>
+```
+
+* To compile VTK, use:
+
+```
+    % cmake -G "Visual Studio 10 Win64" -DILASTIK_DEPENDENCY_DIR=<prefix> -DWITH_VTK=1  <path-to-build-system>
 ```
 
 The directories given by MSYS_PATH and MINGW_PATH must contain the programs `make.exe` and `gfortran.exe` respectively.
