@@ -11,12 +11,11 @@ include (ExternalSource)
 
 include (zlib)
 
-# DO NOT USE HDF5 1.8.10 - it is buggy !
 external_source (hdf5
-    1.8.9
-    hdf5-1.8.9.tar.gz
-    d1266bb7416ef089400a15cc7c963218
-    http://www.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8.9/src
+    1.8.10
+    hdf5-1.8.10-patch1.tar.gz
+    2147a289fb33c887464ad2b6c5a8ae4c
+    http://www.hdfgroup.org/ftp/HDF5/current/src
     FORCE)
 
 message ("Installing ${hdf5_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
@@ -40,7 +39,6 @@ ExternalProject_Add(${hdf5_NAME}
     BUILD_COMMAND       devenv HDF5.sln /build Release /project hdf5
                       \ndevenv HDF5.sln /build Release /project hdf5_hl
     INSTALL_COMMAND     devenv HDF5.sln /build Release /project INSTALL
-#                      \necho "ADD_DEFINITIONS(-DH5_BUILT_AS_DYNAMIC_LIB)" >> ${ILASTIK_DEPENDENCY_DIR}/cmake/hdf5/hdf5-config.cmake
 )
 
 set_target_properties(${hdf5_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)

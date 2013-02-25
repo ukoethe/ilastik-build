@@ -27,8 +27,8 @@ external_source (vtk
     FORCE)
 
 # FIXME: 
-#  * how to specify location of qmake?
 #  * how to compile without Tcl ?
+#  * how to perform a minimal build ?
 
 message ("Installing ${vtk_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 
