@@ -36,7 +36,7 @@ ExternalProject_Add(${fftw_NAME}
     URL_MD5             ${fftw_MD5}
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ${fftw_PATCH}
-    CONFIGURE_COMMAND   ""
+    CONFIGURE_COMMAND   devenv fftw-3.3-libs.sln /upgrade
     BINARY_DIR          ${fftw_SRC_DIR}/fftw-3.3-libs
     BUILD_COMMAND       devenv fftw-3.3-libs.sln /build Release /project libfftw-3.3
                       \ndevenv fftw-3.3-libs.sln /build Release /project libfftwf-3.3

@@ -44,7 +44,7 @@ Usage
     % cmake -G "Visual Studio 10 Win64" -DILASTIK_DEPENDENCY_DIR=<prefix> -DWITH_VTK=1  <path-to-build-system>
 ```
 
-The directories given by MSYS_PATH and MINGW_PATH must contain the programs `make.exe` and `gfortran.exe` respectively.
+The directories given by MSYS_PATH and MINGW_PATH must contain the programs `make.exe` and `gfortran.exe` respectively. Of course, the different options can be combined.
 
 ### Compilation and Installation:
 

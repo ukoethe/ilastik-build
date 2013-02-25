@@ -29,7 +29,7 @@ ExternalProject_Add(${freetype_NAME}
     URL_MD5             ${freetype_MD5}
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ${freetype_PATCH}
-    CONFIGURE_COMMAND   ""
+    CONFIGURE_COMMAND   devenv freetype.sln /upgrade
     BINARY_DIR          ${freetype_BIN_DIR}
     BUILD_COMMAND       devenv freetype.sln /build "Release Multithreaded|x64" /project freetype
     INSTALL_COMMAND     ${CMAKE_COMMAND} -E copy_directory ../../../include ${ILASTIK_DEPENDENCY_DIR}/include

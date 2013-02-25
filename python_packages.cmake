@@ -436,12 +436,12 @@ endif (NOT pyreadline_NAME)
 
 if (NOT pyzmq_NAME)
 
-# FIXME: this download doesn't work (but it works in the Browser)
 external_source (pyzmq
     2.2.0
     pyzmq-2.2.0.1.tar.gz
     f2f80709e84c8ac72d6671eee645d804
-    http://github.com/zeromq/pyzmq/downloads)
+	http://pypi.python.org/packages/source/p/pyzmq
+	FORCE)
 
 message ("Installing ${pyzmq_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${pyzmq_NAME}

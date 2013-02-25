@@ -13,7 +13,7 @@ external_source (libpng
     1.5.13
     libpng-1.5.13.tar.gz
     9c5a584d4eb5fe40d0f1bc2090112c65
-    http://downloads.sourceforge.net/project/libpng/libpng15/1.5.13
+    http://sourceforge.net/projects/libpng/files/libpng15/older-releases/1.5.13
     FORCE)
 
 message ("Installing ${libpng_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")

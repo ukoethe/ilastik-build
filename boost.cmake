@@ -24,12 +24,12 @@ external_source (boost
 FILE(WRITE ${ILASTIK_DEPENDENCY_DIR}/tmp/boost_patch.jam "using python : : ${PYTHON_EXE} ;\n")
 file(TO_NATIVE_PATH ${ILASTIK_DEPENDENCY_DIR}/tmp/boost_patch.jam boost_PATCH)
 
-set(boost_PYTHON_BUILD_DIR ${boost_SRC_DIR}/bin.v2/libs/python/build/msvc-10.0/release/address-model-64/threading-multi)
 SET(boost_INSTALL ${ILASTIK_DEPENDENCY_DIR}/tmp/boost_install.cmake)
 FILE(WRITE   ${boost_INSTALL} "file(INSTALL boost/ DESTINATION ${ILASTIK_DEPENDENCY_DIR}/include/boost)\n")
-FILE(APPEND  ${boost_INSTALL} "file(GLOB boost_DLL ${boost_PYTHON_BUILD_DIR}/boost*.dll)\n")
+FILE(APPEND  ${boost_INSTALL} "file(GLOB boost_PYTHON_BUILD_DIR ${boost_SRC_DIR}/bin.v2/libs/python/build/msvc-*/release/address-model-64/threading-multi)\n")
+FILE(APPEND  ${boost_INSTALL} "file(GLOB boost_DLL \${boost_PYTHON_BUILD_DIR}/boost*.dll)\n")
 FILE(APPEND  ${boost_INSTALL} "file(INSTALL \${boost_DLL} DESTINATION ${ILASTIK_DEPENDENCY_DIR}/bin)\n")
-FILE(APPEND  ${boost_INSTALL} "file(GLOB boost_LIB ${boost_PYTHON_BUILD_DIR}/boost*.lib)\n")
+FILE(APPEND  ${boost_INSTALL} "file(GLOB boost_LIB \${boost_PYTHON_BUILD_DIR}/boost*.lib)\n")
 FILE(APPEND  ${boost_INSTALL} "file(INSTALL \${boost_LIB} DESTINATION ${ILASTIK_DEPENDENCY_DIR}/lib)\n")
 
 message ("Installing ${boost_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
