@@ -27,7 +27,7 @@ set (matplotlib_PATCH ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/patches/patch_matplotl
 
 message ("Installing ${matplotlib_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${matplotlib_NAME}
-    DEPENDS             ${python_NAME} ${numpy_NAME} ${libpng_NAME} ${freetype_NAME} # ${pyqt_NAME}
+    DEPENDS             ${python_NAME} ${numpy_NAME} ${libpng_NAME} ${freetype_NAME} ${pyqt_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${matplotlib_URL}
     URL_MD5             ${matplotlib_MD5}
