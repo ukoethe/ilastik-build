@@ -44,7 +44,7 @@ foreach(PLATFORM_SPEC "B C")
         DOWNLOAD_COMMAND ""
         BINARY_DIR ./foo
         CONFIGURE_COMMAND cmake .
-        BUILD_COMMAND  devenv foo.sln /build Release /project foo1
+        BUILD_COMMAND  devenv foo.sln /build "Release|x64" /project foo1
                      \ndevenv foo.sln /build Release /project foo2
         INSTALL_COMMAND devenv foo.sln /build Release /project INSTALL
       PLATFORM B C

@@ -79,7 +79,7 @@ FUNCTION(ExternalProject_AddMultiPlatform name)
     if(DRY_RUN)
         # report results 
         if(unsupported)
-            MESSAGE("platform is unsupported!")
+            MESSAGE("Package ${name} doesn't support platform ${PLATFORM_SPEC}!")
         else()
             MESSAGE("calling ExternalProject_Add() with")
             MESSAGE("  name: ${name}")
