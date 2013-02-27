@@ -20,6 +20,9 @@ external_source (boost
     6a1f32d902203ac70fbec78af95b3cf8
     http://downloads.sourceforge.net/project/boost/boost/1.51.0
     FORCE)
+    
+string(REGEX REPLACE "bin/.*" "vcvarsall.bat" VCVARSALL_BAT "${CMAKE_C_COMPILER}")
+file(TO_NATIVE_PATH ${VCVARSALL_BAT} VCVARSALL_BAT)
 
 FILE(WRITE ${ILASTIK_DEPENDENCY_DIR}/tmp/boost_patch.jam "using python : : ${PYTHON_EXE} ;\n")
 file(TO_NATIVE_PATH ${ILASTIK_DEPENDENCY_DIR}/tmp/boost_patch.jam boost_PATCH)
@@ -40,7 +43,8 @@ ExternalProject_Add(${boost_NAME}
     URL_MD5             ${boost_MD5}
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ""
-    CONFIGURE_COMMAND   ./bootstrap.bat 
+    CONFIGURE_COMMAND   call "${VCVARSALL_BAT}" x86   # bootstrap.bat needs the 32-bit compiler
+                        \ncall bootstrap.bat 
                         \nmore ${boost_PATCH} >> project-config.jam
     BUILD_COMMAND       ./b2 --with-python variant=release threading=multi link=shared toolset=msvc address-model=64
     BUILD_IN_SOURCE     1
