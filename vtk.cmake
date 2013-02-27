@@ -30,6 +30,9 @@ external_source (vtk
 #  * how to compile without Tcl ?
 #  * how to perform a minimal build ?
 
+# strangely, this directory must be created explicitly on Windows 8
+FILE(MAKE_DIRECTORY ${vtk_SRC_DIR}-build/Wrapping/Python/vtk) 
+
 message ("Installing ${vtk_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 
 string(REGEX REPLACE "/" "\\\\\\\\" PYTHON_PREFIX_SLASH ${ILASTIK_DEPENDENCY_DIR}/python)
@@ -60,6 +63,7 @@ ExternalProject_Add(${vtk_NAME}
         -DVTK_USE_SYSTEM_ZLIB:BOOL=ON
         -DVTK_WRAP_PYTHON:BOOL=ON
         -DVTK_WRAP_PYTHON_SIP:BOOL=ON
+        -DVTK_USE_TK:BOOL=OFF
         -DVTK_WRAP_TCL:BOOL=OFF
         -DNETCDF_ENABLE_NETCDF4:BOOL=ON
         -DHDF5_DIR:PATH=${ILASTIK_DEPENDENCY_DIR}/cmake/hdf5
