@@ -31,9 +31,9 @@ if(WITH_SCIPY)
         UPDATE_COMMAND      ""
         PATCH_COMMAND       ${PATCH_EXE} -p0 -i ${PROJECT_SOURCE_DIR}/patches/patch_numpy.patch
         CONFIGURE_COMMAND   ${CMAKE_COMMAND} -E copy ${ILASTIK_DEPENDENCY_DIR}/tmp/configure_numpy.cfg ${numpy_SRC_DIR}/site.cfg
-        BUILD_COMMAND       ${PYTHON_EXE} setup.py build
+        BUILD_COMMAND       ${PYTHON_EXE} setup.py build -c msvc install
         BUILD_IN_SOURCE     1
-        INSTALL_COMMAND     ${PYTHON_EXE} setup.py install
+        INSTALL_COMMAND     "" # already installed above
     )
 else()
     ExternalProject_Add(${numpy_NAME}
