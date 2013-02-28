@@ -1,16 +1,17 @@
 ilastik-build
 =============
 
-ilastik-build downloads and compiles all dependencies needed by ilastik (and a few additional ones that are frequently needed for experimentation, such as ipython and matplotlib) and ilastik itself. It builds upon [BuildEM](https://github.com/janelia-flyem/buildem), Janelia Farm's build system for the FlyEM project (see there for a description of the underlying philosophy). It is currently restricted to 64-bit builds on Windows using Microsoft Visual Studio 2010, but will be easy to generalize for 32-bit builds with that compiler, as there are only few places where specific settings are hard-wired. By merging with the corresponding scripts of the BuildEM project (and insertion of the appropriate `if` statements), it should also be easy to extend ilastik-build to Linux and Mac platforms.
+ilastik-build downloads and compiles all dependencies needed by ilastik (and a few additional ones that are frequently needed for experimentation, such as ipython and matplotlib) and ilastik itself. It builds upon [BuildEM](https://github.com/janelia-flyem/buildem), Janelia Farm's build system for the FlyEM project (see there for a description of the underlying philosophy). 
+
+It is currently restricted to 64-bit builds on Windows 7 or 8 using Microsoft Visual Studio 2010 or 2012, but will be easy to generalize for 32-bit builds, as there are only few places where specific settings are hard-wired. By merging with the corresponding scripts of the BuildEM project (and insertion of the appropriate `if` statements), it should also be easy to extend ilastik-build to Linux and Mac platforms.
 
 Usage
 -----
 
 ### Preliminaries:
 
-* Install MS Visual Studio 2010, git, cmake, and ActiveState perl. perl is not part of ilastik, but needed for the compilation of Qt.
+* Install MS Visual Studio 2010 or 2012, git, cmake, and ActiveState perl. perl is not part of ilastik, but needed for the compilation of Qt.
 * If you want to build scipy and scikit-learn, you must also install the MinGW 64-bit compiler suite from http://sourceforge.net/projects/mingwbuilds/files/host-windows/releases/ and the MSYS 64-bit tools from http://sourceforge.net/projects/mingw-w64/files/External%20binary%20packages%20%28Win64%20hosted%29/MSYS%20%2832-bit%29/. Since the MinGW download is compressed with 7-zip, you need this program as well. MinGW and MSYS are needed to compile Fortran source. 
-* If you want to build VTK, you must also install Tcl. 
 * If you want to create an .exe installer, also install NSIS.
 * Remove possibly interfering software from your `PATH` variable (e.g. an existing Python or Qt installation, the MinGW gcc compiler).
 
@@ -24,7 +25,7 @@ Usage
     % cd <build-directory>
 ```
 
-* Configure the build system:
+* Configure the build system (use `-G "Visual Studio 11 Win64"` if you have Visual Studio 2012):
 
 ```
     % cmake -G "Visual Studio 10 Win64" -DILASTIK_DEPENDENCY_DIR=<prefix>  <path-to-build-system>
@@ -48,7 +49,8 @@ The directories given by MSYS_PATH and MINGW_PATH must contain the programs `mak
 
 ### Compilation and Installation:
 
-* Open `ilastik.sln`, switch to "Release" mode and build the project `ilastik`. In theory, this should build and install everything in one go. In practice, it sometimes stops with an error message like "Cannot extract sources". If this happens, just build `ilastik` again (this doesn't rebuild already installed dependencies). Due to unknown reasons, Visual Studio always believes that the compilation of numpy failed, although everything was actually ok. In this case, open "numpy-1.6.2->CMakeRules", right-click on `numpy-1.6.2-download.rule` and remove this rule. Do likewise with `numpy-1.6.2-patch.rule`. Then build `ilastik` again. 
+* Open `ilastik.sln`, switch to "Release" mode and build the project `ilastik`. In theory, this should build and install everything in one go. In practice, it sometimes stops with an error message like "Cannot extract sources". If this happens, just build `ilastik` again (this doesn't rebuild already installed dependencies). Due to unknown reasons, Visual Studio always believes that the compilation of numpy failed, although everything was actually ok. In this case, open "numpy-1.6.2->CMakeRules", right-click on `numpy-1.6.2-download.rule` and remove this rule. Do likewise with `numpy-1.6.2-patch.rule`. Then build `ilastik` again.
+* Do not build the targets `ALL_BUILD` and `INSTALL`. 
 * Add the following directories to your `PATH` variable:
 
 ```
@@ -60,7 +62,7 @@ The directories given by MSYS_PATH and MINGW_PATH must contain the programs `mak
 
 ### Create an .exe Installer:
 
-* Open `ilastik.sln`, and build the project `PACKAGE`. The installer will be named something like `ilastik-0.6.a-win64.exe` in the same directory.
+* Open `ilastik.sln`, and build the project `PACKAGE`. The installer will be named something like `ilastik-0.6.a-win64.exe` in the directory where `ilsatik.sln` resides.
 
 ### Use the Pixel Classification Workflow:
 
