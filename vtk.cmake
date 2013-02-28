@@ -74,6 +74,7 @@ ExternalProject_Add(${vtk_NAME}
         -DQT_QMAKE_EXECUTABLE:FILEPATH=${QMAKE_PATH}/qmake.exe
         -DVTK_INSTALL_QT_DIR:STRING=${ILASTIK_DEPENDENCY_DIR}/Qt4                     # seems to be unused
         -DVTK_INSTALL_QT_PLUGIN_DIR:STRING=${ILASTIK_DEPENDENCY_DIR}/Qt4/plugins/designer
+        -DPYTHON_EXECUTABLE:FILEPATH=${PYTHON_EXE}
         -DPYTHON_INCLUDE_DIR:PATH=${PYTHON_INCLUDE_PATH}
         -DPYTHON_LIBRARY:FILEPATH=${PYTHON_LIBRARY_FILE}
         -DVTK_PYTHON_SETUP_ARGS:STRING=--prefix=${PYTHON_PREFIX_SLASH}      # needs double-backslashes to work
