@@ -9,6 +9,11 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 include (ExternalProject)
 include (ExternalSource)
 include (python)
+include (zlib)
+include (jpeg)
+include (tiff)
+include (libpng)
+include (jom)
 
 external_source (qt
     4.8.3
@@ -112,7 +117,7 @@ configure_file(build_qt.bat.in ${ILASTIK_DEPENDENCY_DIR}/tmp/build_qt.bat)
 file(TO_NATIVE_PATH ${ILASTIK_DEPENDENCY_DIR}/tmp/build_qt.bat QT_BUILD_BAT)
 
 ExternalProject_Add(${qt_NAME}
-    DEPENDS             ${python_NAME} ${zlib_NAME} ${jpeg_NAME} ${tiff_NAME} ${libpng_NAME}
+    DEPENDS             ${python_NAME} ${zlib_NAME} ${jpeg_NAME} ${tiff_NAME} ${libpng_NAME} ${jom_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${qt_URL}
     URL_MD5             ${qt_MD5}

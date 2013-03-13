@@ -47,6 +47,9 @@ FILE(MAKE_DIRECTORY ${ILASTIK_DEPENDENCY_DIR}/bin
 file(TO_NATIVE_PATH ${ILASTIK_DEPENDENCY_DIR}     ILASTIK_INSTALL_PATH)
 file(TO_NATIVE_PATH ${ILASTIK_DEPENDENCY_DIR}/bin ILASTIK_BIN_PATH)
 
+set(ADD_PATH "${ILASTIK_DEPENDENCY_DIR}/tmp/add_path.bat")
+configure_file(add_path.bat ${ADD_PATH} COPYONLY)
+
 ############################################################################
 
 SET(CMAKE_MODULE_PATH  ${CMAKE_MODULE_PATH}  ${ilastik_SOURCE_DIR})

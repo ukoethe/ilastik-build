@@ -1,5 +1,5 @@
 @echo off
-set PATH=${MINGW_PATH};%PATH%
+set PATH=${MINGW_PATH};${ILASTIK_DEPENDENCY_DIR}/bin;%PATH%
 
 rem create import libs for MinGW dlls that are referenced by gfortran
 rem so that these libs can be linked by MSVC

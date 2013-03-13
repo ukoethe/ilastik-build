@@ -1,2 +1,2 @@
 set PATH=${ILASTIK_BIN_PATH};%PATH%
-nmake
+${jom_EXE} -j 4

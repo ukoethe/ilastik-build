@@ -23,8 +23,10 @@ ExternalProject_Add(${cylemon_NAME}
     GIT_REPOSITORY      ${cylemon_URL}
     PATCH_COMMAND       ""
     CONFIGURE_COMMAND   ""
-    BUILD_COMMAND       ${PYTHON_EXE} setup.py build_ext -I ${ILASTIK_DEPENDENCY_DIR}/include -L ${ILASTIK_DEPENDENCY_DIR}/lib -c msvc
-    INSTALL_COMMAND     ${PYTHON_EXE} setup.py install
+    BUILD_COMMAND       ${ADD_PATH} "${ILASTIK_DEPENDENCY_DIR}/bin"
+                     \n ${PYTHON_EXE} setup.py build_ext -I ${ILASTIK_DEPENDENCY_DIR}/include -L ${ILASTIK_DEPENDENCY_DIR}/lib -c msvc
+    INSTALL_COMMAND     ${ADD_PATH} "${ILASTIK_DEPENDENCY_DIR}/bin"
+                     \n ${PYTHON_EXE} setup.py install
     BUILD_IN_SOURCE     1
 )
 

@@ -34,10 +34,12 @@ ExternalProject_Add(${matplotlib_NAME}
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ${matplotlib_PATCH}
     CONFIGURE_COMMAND   ""
-    BUILD_COMMAND       ${PYTHON_EXE} setup.py build
+    BUILD_COMMAND       ${ADD_PATH} "${ILASTIK_DEPENDENCY_DIR}/bin"
+                     \n ${PYTHON_EXE} setup.py build
     BUILD_IN_SOURCE     1
     TEST_COMMAND        ""
-    INSTALL_COMMAND     ${PYTHON_EXE} setup.py install
+    INSTALL_COMMAND     ${ADD_PATH} "${ILASTIK_DEPENDENCY_DIR}/bin"
+                     \n ${PYTHON_EXE} setup.py install
 )
 
 set_target_properties(${matplotlib_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)

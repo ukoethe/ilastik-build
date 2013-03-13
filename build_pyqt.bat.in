@@ -1,3 +1,3 @@
 set PATH=${QMAKE_PATH};${ILASTIK_BIN_PATH};%PATH%
 set QTDIR=${QTDIR}
-nmake
+${jom_EXE} -j 4

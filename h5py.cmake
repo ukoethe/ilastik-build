@@ -32,13 +32,15 @@ ExternalProject_Add(${h5py_NAME}
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ${h5py_PATCH}
     CONFIGURE_COMMAND   ""
-    BUILD_COMMAND       ${PYTHON_EXE} setup.py build_ext 
-        -c msvc
-        -L ${ILASTIK_DEPENDENCY_DIR}/lib
-        -I ${ILASTIK_DEPENDENCY_DIR}/include
+    BUILD_COMMAND       ${ADD_PATH} "${ILASTIK_DEPENDENCY_DIR}/bin"
+                     \n ${PYTHON_EXE} setup.py build_ext 
+                            -c msvc
+                            -L ${ILASTIK_DEPENDENCY_DIR}/lib
+                            -I ${ILASTIK_DEPENDENCY_DIR}/include
     BUILD_IN_SOURCE     1
     TEST_COMMAND        ""
-    INSTALL_COMMAND     ${PYTHON_EXE} setup.py install
+    INSTALL_COMMAND     ${ADD_PATH} "${ILASTIK_DEPENDENCY_DIR}/bin"
+                     \n ${PYTHON_EXE} setup.py install
 )
 
 set_target_properties(${h5py_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
