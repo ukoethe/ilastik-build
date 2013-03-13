@@ -6,6 +6,8 @@ if (NOT qt_NAME)
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
+find_package(perl REQUIRED)
+
 include (ExternalProject)
 include (ExternalSource)
 include (python)
