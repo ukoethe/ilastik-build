@@ -33,16 +33,16 @@ Usage
 
   This will create a file `ilastik.sln` in the `<build-directory>` that can be opened with Visual Studio. In the above cmake call, `<path-to-build-system>` is the directory where ilastik-build has been checked out (typically just `..` when we are in `ilastik-build/build`), and `<prefix>` is the desired path where the dependencies will be installed. The actual installations will be located in the subdirectories `<prefix>\bin`, `<prefix>\lib`, `<prefix>\include`, `<prefix>\python`, and `<prefix>\Qt4`. The sources (including cached `tar` archieves and intermediate files) go into `<prefix>\src`. The ilastik Python modules will be installed into `<prefix>\ilastik`.
   
+* To include VTK into the build, use:
+
+```
+    % cmake -G "Visual Studio 10 Win64" -DILASTIK_DEPENDENCY_DIR=<prefix> -DWITH_VTK=1  <path-to-build-system>
+```
+
 * If you want to compile scipy as well, use:
 
 ```
     % cmake -G "Visual Studio 10 Win64" -DILASTIK_DEPENDENCY_DIR=<prefix> -DWITH_SCIPY=1 -DMSYS_PATH=<path-to-msys-binaries> -DMINGW_PATH=<path-to-mingw-binaries>  <path-to-build-system>
-```
-
-* To compile VTK, use:
-
-```
-    % cmake -G "Visual Studio 10 Win64" -DILASTIK_DEPENDENCY_DIR=<prefix> -DWITH_VTK=1  <path-to-build-system>
 ```
 
 The directories given by MSYS_PATH and MINGW_PATH must contain the programs `make.exe` and `gfortran.exe` respectively. Of course, the different options can be combined.

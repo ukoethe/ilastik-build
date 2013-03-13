@@ -495,6 +495,36 @@ endif (NOT tornado_NAME)
 
 ####################################################################
 
+if (NOT futures_NAME)
+
+external_source (futures
+    2.1.3
+    futures-2.1.3.tar.gz
+    3de68835c8035dff0495cbe7f5c75beb
+    https://pypi.python.org/packages/source/f/futures
+    FORCE)
+
+message ("Installing ${futures_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${futures_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${futures_URL}
+    URL_MD5             ${futures_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${futures_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+
+endif (NOT futures_NAME)
+
+####################################################################
+
 if (NOT ipython_NAME)
 
 external_source (ipython
