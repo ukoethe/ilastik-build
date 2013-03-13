@@ -1,6 +1,26 @@
 --- numpy/distutils/fcompiler/gnu.py	Tue Sep 13 20:39:16 2011
 +++ numpy/distutils/fcompiler/gnu.py	Wed Feb 20 21:12:07 2013
-@@ -322,13 +322,8 @@ class Gnu95FCompiler(GnuFCompiler):
+@@ -86,7 +86,8 @@ class GnuFCompiler(FCompiler):
+     # use -mno-cygwin for g77 when Python is not Cygwin-Python
+     if sys.platform == 'win32':
+         for key in ['version_cmd', 'compiler_f77', 'linker_so', 'linker_exe']:
+-            executables[key].append('-mno-cygwin')
++            # executables[key].append('-mno-cygwin')
++            pass
+ 
+     g2c = 'g2c'
+ 
+@@ -236,7 +237,8 @@ class Gnu95FCompiler(GnuFCompiler):
+             if sys.platform == 'win32':
+                 for key in ['version_cmd', 'compiler_f77', 'compiler_f90',
+                             'compiler_fix', 'linker_so', 'linker_exe']:
+-                    self.executables[key].append('-mno-cygwin')
++                    # self.executables[key].append('-mno-cygwin')
++                    pass
+         return v
+ 
+     # 'gfortran --version' results:
+@@ -322,13 +324,8 @@ class Gnu95FCompiler(GnuFCompiler):
                      i = opt.index("gcc")
                      opt.insert(i+1, "mingwex")
                      opt.insert(i+1, "mingw32")
@@ -15,7 +35,7 @@
          return opt
  
      def get_target(self):
-@@ -343,7 +338,7 @@ class Gnu95FCompiler(GnuFCompiler):
+@@ -343,7 +340,7 @@ class Gnu95FCompiler(GnuFCompiler):
  
      def get_flags_opt(self):
          if is_win64():
