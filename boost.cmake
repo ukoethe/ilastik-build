@@ -46,7 +46,7 @@ ExternalProject_Add(${boost_NAME}
     CONFIGURE_COMMAND   call "${VCVARSALL_BAT}" x86   # bootstrap.bat needs the 32-bit compiler
                         \ncall bootstrap.bat 
                         \nmore ${boost_PATCH} >> project-config.jam
-    BUILD_COMMAND       ./b2 --with-python variant=release threading=multi link=shared toolset=msvc address-model=64
+    BUILD_COMMAND       ./b2 --with-python --with-serialization variant=release threading=multi link=shared toolset=msvc address-model=64
     BUILD_IN_SOURCE     1
     INSTALL_COMMAND     ${CMAKE_COMMAND} -P ${boost_INSTALL}
 )
