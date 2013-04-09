@@ -162,7 +162,7 @@ endif (NOT ilastik_NAME)
 
 ############################################################################
 
-configure_file(pixelClassification.bat.in ${ILASTIK_DEPENDENCY_DIR}/pixelClassification.bat)
+configure_file(ilastik.bat.in ${ILASTIK_DEPENDENCY_DIR}/ilastik.bat)
 
 file(TO_NATIVE_PATH " ${ILASTIK_DEPENDENCY_DIR}/bin ${QT_BUILD_DIR}/bin ${PYTHON_PREFIX} ${PYTHON_PREFIX}/Scripts" ILASTIK_PATH_SETTINGS)
 
@@ -171,7 +171,7 @@ ADD_CUSTOM_TARGET(ilastik DEPENDS ${APP_DEPENDENCIES}
                   COMMENT "Installed ilastik dependencies. Add directories to your PATH variable: ${ILASTIK_PATH_SETTINGS}")
 
 install(CODE "execute_process(COMMAND ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/compile_all.py ${ILASTIK_DEPENDENCY_DIR}/ilastik)")
-INSTALL(FILES ${ILASTIK_DEPENDENCY_DIR}/pixelClassification.bat DESTINATION .)
+INSTALL(FILES ${ILASTIK_DEPENDENCY_DIR}/ilastik.bat DESTINATION .)
 INSTALL(DIRECTORY ${ILASTIK_DEPENDENCY_DIR}/ilastik/ DESTINATION ilastik)
 INSTALL(DIRECTORY ${ILASTIK_DEPENDENCY_DIR}/bin/ DESTINATION bin FILES_MATCHING PATTERN "*.dll")
 INSTALL(DIRECTORY ${ILASTIK_DEPENDENCY_DIR}/python/ DESTINATION python PATTERN "*ui-bg_highlight-soft_75_cccccc_1x100.png" EXCLUDE)
@@ -193,11 +193,11 @@ SET(CPACK_PACKAGE_INSTALL_DIRECTORY     "${PROJECT_NAME}-0.6.a")
 # cannot use SET(CPACK_PACKAGE_EXECUTABLES ...) for *.bat files because it appends .exe
 string(REGEX REPLACE "/" "\\\\\\\\" ILASTIK_SHORTCUT_ICON "${PROJECT_SOURCE_DIR}/ilastik-icon.ico")
 SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "
-  CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Pixel Classification.lnk\\\" \\\"$INSTDIR\\\\pixelClassification.bat\\\" \\\"\\\" \\\"${ILASTIK_SHORTCUT_ICON}\\\"
+  CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\ilastik.lnk\\\" \\\"$INSTDIR\\\\ilastik.bat\\\" \\\"\\\" \\\"${ILASTIK_SHORTCUT_ICON}\\\"
 ")
 SET(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "
   !insertmacro MUI_STARTMENU_GETFOLDER Application $STARTMENU_FOLDER
-  Delete \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Pixel Classification.lnk\\\"
+  Delete \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\ilastik.lnk\\\"
 ")
 
 # Cannot use SET(CPACK_PACKAGE_ICON  ...) because NSIS needs a Windows path here.
