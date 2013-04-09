@@ -25,7 +25,7 @@ SET(ann_BUILD_DIR ${ann_SRC_DIR}/MS_Win32)
 SET(ann_INSTALL ${ILASTIK_DEPENDENCY_DIR}/tmp/ann_install.cmake)
 FILE(WRITE   ${ann_INSTALL} "file(INSTALL bin/ANN.dll DESTINATION ${ILASTIK_DEPENDENCY_DIR}/bin)\n")
 FILE(APPEND  ${ann_INSTALL} "file(INSTALL dll/Release/ANN.lib DESTINATION ${ILASTIK_DEPENDENCY_DIR}/lib)\n")
-FILE(APPEND  ${ann_INSTALL} "file(INSTALL  ${ann_SRC_DIR}/include/ANN DESTINATION {ILASTIK_DEPENDENCY_DIR}/include)\n")
+FILE(APPEND  ${ann_INSTALL} "file(INSTALL ${ann_SRC_DIR}/include/ANN DESTINATION ${ILASTIK_DEPENDENCY_DIR}/include)\n")
 
         
 message ("Installing ${ann_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
