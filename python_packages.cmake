@@ -525,6 +525,36 @@ endif (NOT futures_NAME)
 
 ####################################################################
 
+if (NOT yapsy_NAME)
+
+external_source (yapsy
+    1.10.1
+    Yapsy-1.10.1-pythons2n3.tar.gz
+    468274aa078bd56a5ab4a41cd6c0c8ef
+    https://pypi.python.org/packages/source/Y/Yapsy
+    FORCE)
+
+message ("Installing ${yapsy_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${yapsy_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${yapsy_URL}
+    URL_MD5             ${yapsy_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${yapsy_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+
+endif (NOT yapsy_NAME)
+
+####################################################################
+
 if (NOT ipython_NAME)
 
 external_source (ipython
