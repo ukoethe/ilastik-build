@@ -583,3 +583,152 @@ set_target_properties(${ipython_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
 endif (NOT ipython_NAME)
 
+####################################################################
+
+if (NOT pyflakes_NAME)
+external_source (pyflakes
+    0.7
+    pyflakes-0.7.tar.gz
+    4cbe17be937684654eb29d9efab67b80
+    http://pypi.python.org/packages/source/p/pyflakes
+    FORCE)
+
+message ("Installing ${pyflakes_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${pyflakes_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${pyflakes_URL}
+    URL_MD5             ${pyflakes_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${pyflakes_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+
+endif (NOT pyflakes_NAME)
+
+##################################################
+
+if (NOT rope_NAME)
+external_source (rope
+    0.7
+    rope-0.7.tar.gz
+    4cbe17be937684654eb29d9efab67b80
+    http://pypi.python.org/packages/source/p/rope
+    FORCE)
+
+message ("Installing ${rope_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${rope_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${rope_URL}
+    URL_MD5             ${rope_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${rope_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+
+endif (NOT rope_NAME)
+
+##################################################
+
+if (NOT pygments_NAME)
+external_source (pygments
+    1.6
+    Pygments-1.6.tar.gz
+    a18feedf6ffd0b0cc8c8b0fbdb2027b1
+    http://pypi.python.org/packages/source/P/Pygments/
+    FORCE)
+
+message ("Installing ${pygments_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${pygments_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${pygments_URL}
+    URL_MD5             ${pygments_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${pygments_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+
+endif (NOT pygments_NAME)
+
+############################################
+
+if (NOT pylint_NAME)
+external_source (pylint
+    0.27.0
+    pylint-0.27.0.tar.gz
+    7819fec3ce3e720f30e508b8a88cf59b
+    http://pypi.python.org/packages/source/p/pylint
+    FORCE)
+
+https://pypi.python.org/packages/source/p/pep8/pep8-1.4.5.tar.gz\#md5\=055dbd22ac5669232fdba752612e9686
+
+message ("Installing ${pylint_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${pylint_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${pylint_URL}
+    URL_MD5             ${pylint_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${pylint_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+
+endif (NOT pep8_NAME)
+
+############################################
+
+if (NOT pep8_NAME)
+external_source (pep8
+    1.4.5
+    pep8-1.4.5.tar.gz
+    055dbd22ac5669232fdba752612e9686
+    http://pypi.python.org/packages/source/p/pep8
+    FORCE)
+
+https://pypi.python.org/packages/source/p/pep8/pep8-1.4.5.tar.gz\#md5\=055dbd22ac5669232fdba752612e9686
+
+message ("Installing ${pep8_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${pep8_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${pep8_URL}
+    URL_MD5             ${pep8_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${pep8_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+
+endif (NOT pep8_NAME)
+
