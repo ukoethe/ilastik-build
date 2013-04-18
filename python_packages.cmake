@@ -9,6 +9,34 @@ include (ExternalSource)
 
 include (python)
 
+####################################################################
+
+if (NOT colorama_NAME)
+
+external_source (colorama
+    0.2.5
+    colorama-0.2.5.tar.gz
+    308c6e38917bdbfc4d3b0783c614897d
+    http://pypi.python.org/packages/source/c/colorama
+    FORCE)
+
+message ("Installing ${colorama_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${colorama_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${colorama_URL}
+    URL_MD5             ${colorama_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${colorama_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+endif (NOT colorama_NAME)
 
 ####################################################################
 
@@ -670,6 +698,65 @@ set_target_properties(${pygments_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
 endif (NOT pygments_NAME)
 
+
+############################################
+
+if (NOT logilab_common_NAME)
+external_source (logilab_common
+    0.59.1
+    logilab-common-0.59.1.tar.gz
+    14b3becc67397cdc4b51ced617f2982b
+    https://pypi.python.org/packages/source/l/logilab-common
+    FORCE)
+
+message ("Installing ${logilab_common_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${logilab_common_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME} ${colorama_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${logilab_common_URL}
+    URL_MD5             ${logilab_common_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${logilab_common_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+
+endif ()
+
+############################################
+
+if (NOT logilab_astng_NAME)
+external_source (logilab_astng
+    0.24.3
+    logilab-astng-0.24.3.tar.gz
+    f0dd5dee1d5053939da174e1bfe69388
+    http://pypi.python.org/packages/source/l/logilab-astng
+    FORCE)
+
+message ("Installing ${logilab_astng_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${logilab_astng_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME} ${logilab_astng_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${logilab_astng_URL}
+    URL_MD5             ${logilab_astng_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${logilab_astng_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+
+endif ()
+
 ############################################
 
 if (NOT pylint_NAME)
@@ -682,7 +769,7 @@ external_source (pylint
 
 message ("Installing ${pylint_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${pylint_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME} ${colorama_NAME} ${logilab_astng_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${pylint_URL}
     URL_MD5             ${pylint_MD5}
