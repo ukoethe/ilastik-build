@@ -616,10 +616,10 @@ endif (NOT pyflakes_NAME)
 
 if (NOT rope_NAME)
 external_source (rope
-    0.7
-    rope-0.7.tar.gz
-    4cbe17be937684654eb29d9efab67b80
-    http://pypi.python.org/packages/source/p/rope
+    0.9.4
+    rope-0.9.4.tar.gz
+    6c654c6892f78008e04e2d65f9f859bb
+    http://pypi.python.org/packages/source/r/rope
     FORCE)
 
 message ("Installing ${rope_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
@@ -680,8 +680,6 @@ external_source (pylint
     http://pypi.python.org/packages/source/p/pylint
     FORCE)
 
-https://pypi.python.org/packages/source/p/pep8/pep8-1.4.5.tar.gz\#md5\=055dbd22ac5669232fdba752612e9686
-
 message ("Installing ${pylint_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${pylint_NAME}
     DEPENDS             ${python_NAME} ${setuptools_NAME}
@@ -699,7 +697,7 @@ ExternalProject_Add(${pylint_NAME}
 set_target_properties(${pylint_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
 
-endif (NOT pep8_NAME)
+endif ()
 
 ############################################
 
@@ -710,8 +708,6 @@ external_source (pep8
     055dbd22ac5669232fdba752612e9686
     http://pypi.python.org/packages/source/p/pep8
     FORCE)
-
-https://pypi.python.org/packages/source/p/pep8/pep8-1.4.5.tar.gz\#md5\=055dbd22ac5669232fdba752612e9686
 
 message ("Installing ${pep8_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${pep8_NAME}
@@ -730,5 +726,5 @@ ExternalProject_Add(${pep8_NAME}
 set_target_properties(${pep8_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
 
-endif (NOT pep8_NAME)
+endif ()
 

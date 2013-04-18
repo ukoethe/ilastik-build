@@ -21,9 +21,6 @@ external_source (scikit_image
     http://pypi.python.org/packages/source/s/scikit-image
     FORCE)
 
-configure_file(build_scikit_image.bat.in ${ILASTIK_DEPENDENCY_DIR}/tmp/build_scikit_image.bat)
-file(TO_NATIVE_PATH ${ILASTIK_DEPENDENCY_DIR}/tmp/build_scikit__image.bat SCIKIT_IMAGE_BUILD_BAT)
-
 message ("Installing ${scikit_image_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${scikit_image_NAME}
     DEPENDS             ${python_NAME} ${cython_NAME} ${numpy_NAME} ${scipy_NAME} 
@@ -33,7 +30,7 @@ ExternalProject_Add(${scikit_image_NAME}
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ""
     CONFIGURE_COMMAND   ""
-    BUILD_COMMAND       ${SCIKIT_IMAGE_BUILD_BAT}
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py build_ext -c msvc install
     BUILD_IN_SOURCE     1
     TEST_COMMAND        ""
     INSTALL_COMMAND     ""
