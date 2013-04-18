@@ -1,3 +1,0 @@
-@echo off
-set PATH=${MINGW_PATH};${ILASTIK_DEPENDENCY_DIR}/bin;%PATH%
-${PYTHON_EXE} setup.py build install
