@@ -11,35 +11,6 @@ include (python)
 
 ####################################################################
 
-if (NOT colorama_NAME)
-
-external_source (colorama
-    0.2.5
-    colorama-0.2.5.tar.gz
-    308c6e38917bdbfc4d3b0783c614897d
-    http://pypi.python.org/packages/source/c/colorama
-    FORCE)
-
-message ("Installing ${colorama_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
-ExternalProject_Add(${colorama_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME}
-    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
-    URL                 ${colorama_URL}
-    URL_MD5             ${colorama_MD5}
-    UPDATE_COMMAND      ""
-    PATCH_COMMAND       ""
-    CONFIGURE_COMMAND   ""
-    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
-    BUILD_IN_SOURCE     1
-    INSTALL_COMMAND     ""
-)
-
-set_target_properties(${colorama_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
-
-endif (NOT colorama_NAME)
-
-####################################################################
-
 if (NOT sqlite_NAME)
 
 external_source (sqlite
@@ -757,6 +728,64 @@ set_target_properties(${logilab_astng_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
 endif ()
 
+####################################################################
+
+if (NOT colorama_NAME)
+
+external_source (colorama
+    0.2.5
+    colorama-0.2.5.tar.gz
+    308c6e38917bdbfc4d3b0783c614897d
+    http://pypi.python.org/packages/source/c/colorama
+    FORCE)
+
+message ("Installing ${colorama_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${colorama_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${colorama_URL}
+    URL_MD5             ${colorama_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${colorama_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+endif (NOT colorama_NAME)
+
+####################################################################
+
+if (NOT grin_NAME)
+
+external_source (grin
+    1.2.1
+    grin-1.2.1.tar.gz
+    d894426dfbf70bc105388c2a51348199
+    https://pypi.python.org/packages/source/g/grin
+    FORCE)
+
+message ("Installing ${grin_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${grin_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${grin_URL}
+    URL_MD5             ${grin_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${grin_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+endif (NOT grin_NAME)
+
 ############################################
 
 if (NOT pylint_NAME)
@@ -813,3 +842,5 @@ ExternalProject_Add(${pep8_NAME}
 set_target_properties(${pep8_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
 endif ()
+
+
