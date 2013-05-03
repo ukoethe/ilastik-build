@@ -165,6 +165,7 @@ endif (NOT ilastik_NAME)
 ############################################################################
 
 configure_file(ilastik.bat.in ${ILASTIK_DEPENDENCY_DIR}/ilastik.bat)
+configure_file(ilastik-icon.ico ${ILASTIK_DEPENDENCY_DIR}/ilastik-icon.ico COPYONLY)
 
 file(TO_NATIVE_PATH " ${ILASTIK_DEPENDENCY_DIR}/bin ${QT_BUILD_DIR}/bin ${PYTHON_PREFIX} ${PYTHON_PREFIX}/Scripts" ILASTIK_PATH_SETTINGS)
 
@@ -173,14 +174,21 @@ ADD_CUSTOM_TARGET(ilastik DEPENDS ${APP_DEPENDENCIES}
                   COMMENT "Installed ilastik dependencies. Add directories to your PATH variable: ${ILASTIK_PATH_SETTINGS}")
 
 install(CODE "execute_process(COMMAND ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/compile_all.py ${ILASTIK_DEPENDENCY_DIR}/ilastik)")
+INSTALL(FILES ${ILASTIK_DEPENDENCY_DIR}/ilastik-icon.ico DESTINATION .)
 INSTALL(FILES ${ILASTIK_DEPENDENCY_DIR}/ilastik.bat DESTINATION .)
+INSTALL(FILES ${ILASTIK_DEPENDENCY_DIR}/spyder.bat DESTINATION .)
 INSTALL(DIRECTORY ${ILASTIK_DEPENDENCY_DIR}/ilastik/ DESTINATION ilastik)
 INSTALL(DIRECTORY ${ILASTIK_DEPENDENCY_DIR}/bin/ DESTINATION bin FILES_MATCHING PATTERN "*.dll")
 INSTALL(DIRECTORY ${ILASTIK_DEPENDENCY_DIR}/python/ DESTINATION python PATTERN "*ui-bg_highlight-soft_75_cccccc_1x100.png" EXCLUDE)
 INSTALL(DIRECTORY ${ILASTIK_DEPENDENCY_DIR}/Qt4/bin/ DESTINATION Qt4/bin FILES_MATCHING PATTERN "*.dll")
 INSTALL(DIRECTORY ${ILASTIK_DEPENDENCY_DIR}/Qt4/plugins/ DESTINATION Qt4/plugins FILES_MATCHING PATTERN "*.dll")
 
-SET(CPACK_PACKAGE_VENDOR "Heidelberg Collaboratory for Image Processing")
+# OpenMP runtimes are needed for cylemon
+file(TO_CMAKE_PATH $ENV{VCINSTALLDIR} MSVC_ROOT)
+string(REGEX REPLACE "\\." "" MSVC_VERSION $ENV{VISUALSTUDIOVERSION})
+INSTALL(DIRECTORY ${MSVC_ROOT}/redist/x64/Microsoft.VC${MSVC_VERSION}.OpenMP/ DESTINATION bin FILES_MATCHING PATTERN "vcomp*.dll")
+
+SET(CPACK_PACKAGE_VENDOR "The ilastik Team")
 SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY
     "Interactive image labeling and segmentation toolkit."
 )
@@ -193,13 +201,14 @@ SET(CPACK_PACKAGE_VERSION_PATCH "a")
 SET(CPACK_PACKAGE_INSTALL_DIRECTORY     "${PROJECT_NAME}-0.6.a")
 
 # cannot use SET(CPACK_PACKAGE_EXECUTABLES ...) for *.bat files because it appends .exe
-string(REGEX REPLACE "/" "\\\\\\\\" ILASTIK_SHORTCUT_ICON "${PROJECT_SOURCE_DIR}/ilastik-icon.ico")
 SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "
-  CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\ilastik.lnk\\\" \\\"$INSTDIR\\\\ilastik.bat\\\" \\\"\\\" \\\"${ILASTIK_SHORTCUT_ICON}\\\"
+  CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\ilastik.lnk\\\" \\\"$INSTDIR\\\\ilastik.bat\\\" \\\"\\\" \\\"$INSTDIR\\\\ilastik-icon.ico\\\"
+  CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\spyder.lnk\\\" \\\"$INSTDIR\\\\spyder.bat\\\" \\\"\\\" \\\"$INSTDIR\\\\ilastik-icon.ico\\\"
 ")
 SET(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "
   !insertmacro MUI_STARTMENU_GETFOLDER Application $STARTMENU_FOLDER
   Delete \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\ilastik.lnk\\\"
+  Delete \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\spyder.lnk\\\"
 ")
 
 # Cannot use SET(CPACK_PACKAGE_ICON  ...) because NSIS needs a Windows path here.
