@@ -138,10 +138,10 @@ endif (NOT pip_NAME)
 if (NOT docopt_NAME)
 
 external_source (docopt
-    0.1
-    docopt-0.1.tar.gz
-    2068ff93c8cb37d02830c4a8de873b7a
-    http://pypi.python.org/packages/source/d/docopt/
+    0.6.1
+    docopt-0.6.1.tar.gz
+    fe36e9b7a1708a0b02a115f2a78cf623
+    https://pypi.python.org/packages/source/d/docopt
     FORCE)
 
 # Download and install docopt
