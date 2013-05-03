@@ -14,9 +14,9 @@ include (hdf5)
 #include (numpy)
 
 external_source (h5py
-    2.1.0
-    h5py-2.1.0.tar.gz
-    a6f0d15cc5e51c322479822f5cc6c1d6
+    2.1.3
+    h5py-2.1.3.tar.gz
+    afd3c14f763339e186dd9cd24eb2eb74
     http://h5py.googlecode.com/files
     FORCE)
 
