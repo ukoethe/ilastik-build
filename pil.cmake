@@ -13,7 +13,7 @@ include (python)
 include (numpy)
 include (jpeg)
 include (tiff)
-include (png)
+include (libpng)
 include (freetype)
 
 external_source (pil
@@ -28,7 +28,7 @@ set (pil_PATCH ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/patches/patch_pil.py ${pil_SR
 
 message ("Installing ${pil_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${pil_NAME}
-    DEPENDS             ${python_NAME} ${numpy_NAME} ${jpeg_NAME} ${png_NAME} ${tiff_NMAE} ${freetype_NMAE}
+    DEPENDS             ${python_NAME} ${numpy_NAME} ${jpeg_NAME} ${libpng_NAME} ${tiff_NMAE} ${freetype_NMAE}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${pil_URL}
     URL_MD5             ${pil_MD5}
