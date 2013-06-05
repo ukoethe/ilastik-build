@@ -13,7 +13,7 @@ external_source (freetype
     2.4.11
     freetype-2.4.11.tar.gz
     5af8234cf36f64dc2b97f44f89325117
-    http://download.savannah.gnu.org/releases/freetype/
+    http://download-mirror.savannah.gnu.org/releases/freetype/
     FORCE)
 
 
