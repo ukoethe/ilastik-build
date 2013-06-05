@@ -11,9 +11,9 @@ include (ExternalSource)
 include (python)
 
 external_source (zlib
-    1.2.7
-    zlib-1.2.7.tar.gz
-    60df6a37c56e7c1366cca812414f7b85
+    1.2.8
+    zlib-1.2.8.tar.gz
+    44d667c142d7cda120332623eab69f40
     http://zlib.net
     FORCE)
 
