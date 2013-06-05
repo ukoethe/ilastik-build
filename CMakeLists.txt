@@ -35,6 +35,7 @@ if(WITH_SCIPY)
 endif()
 
 OPTION(WITH_VTK "Build VTK ?" OFF)
+OPTION(WITH_PGMLINK "pgmLink requires an installed cplex to build successfully" OFF)
 
 message ("ilastik downloads and builds will be placed here: ${ILASTIK_DEPENDENCY_DIR}")
 
@@ -74,12 +75,18 @@ include(freetype)
 include(matplotlib)
 include(lemon)
 include(cylemon)
+
 if(WITH_SCIPY)
     include(scipy)
     include(scikit_learn)
 endif()
 if(WITH_VTK)
     include(vtk)
+endif()
+if(WITH_PGMLINK) 
+    include(ann)
+    include(opengm)
+    include(pgmlink)
 endif()
 
 #############################################################################
