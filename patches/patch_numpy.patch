@@ -72,6 +72,15 @@
          else:
              if self.gcc_version <= "3.0.0":
                  self.set_executables(compiler='gcc -mno-cygwin -O2 -w',
+@@ -238,7 +238,7 @@ def find_python_dll():
+     # - find it in python main dir
+     # - in system32,
+     # - ortherwise (Sxs), I don't know how to get it.
+-    lib_dirs = []
++    lib_dirs = [sys.prefix]
+     lib_dirs.append(os.path.join(sys.prefix, 'lib'))
+     try:
+         lib_dirs.append(os.path.join(os.environ['SYSTEMROOT'], 'system32'))
 --- numpy/core/setup.py	Wed Feb 20 21:12:06 2013
 +++ numpy/core/setup.py	Thu Feb 21 11:40:32 2013
 @@ -117,6 +117,9 @@ def win32_checks(deflist):

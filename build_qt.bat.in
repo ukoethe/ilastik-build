@@ -1,2 +1,4 @@
 set PATH=${ILASTIK_BIN_PATH};%PATH%
-${jom_EXE} -j 4
+rem jom doesn't work properly for VS 2012
+rem ${jom_EXE} -j 4
+nmake

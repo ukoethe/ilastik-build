@@ -9,7 +9,6 @@ include (ExternalSource)
 
 include (python)
 
-
 ####################################################################
 
 if (NOT sqlite_NAME)
@@ -139,10 +138,10 @@ endif (NOT pip_NAME)
 if (NOT docopt_NAME)
 
 external_source (docopt
-    0.1
-    docopt-0.1.tar.gz
-    2068ff93c8cb37d02830c4a8de873b7a
-    http://pypi.python.org/packages/source/d/docopt/
+    0.6.1
+    docopt-0.6.1.tar.gz
+    fe36e9b7a1708a0b02a115f2a78cf623
+    https://pypi.python.org/packages/source/d/docopt
     FORCE)
 
 # Download and install docopt
@@ -525,6 +524,36 @@ endif (NOT futures_NAME)
 
 ####################################################################
 
+if (NOT yapsy_NAME)
+
+external_source (yapsy
+    1.10.1
+    Yapsy-1.10.1-pythons2n3.tar.gz
+    468274aa078bd56a5ab4a41cd6c0c8ef
+    https://pypi.python.org/packages/source/Y/Yapsy
+    FORCE)
+
+message ("Installing ${yapsy_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${yapsy_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${yapsy_URL}
+    URL_MD5             ${yapsy_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${yapsy_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+
+endif (NOT yapsy_NAME)
+
+####################################################################
+
 if (NOT ipython_NAME)
 
 external_source (ipython
@@ -552,4 +581,266 @@ set_target_properties(${ipython_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
 
 endif (NOT ipython_NAME)
+
+####################################################################
+
+if (NOT pyflakes_NAME)
+external_source (pyflakes
+    0.7
+    pyflakes-0.7.tar.gz
+    4cbe17be937684654eb29d9efab67b80
+    http://pypi.python.org/packages/source/p/pyflakes
+    FORCE)
+
+message ("Installing ${pyflakes_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${pyflakes_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${pyflakes_URL}
+    URL_MD5             ${pyflakes_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${pyflakes_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+
+endif (NOT pyflakes_NAME)
+
+##################################################
+
+if (NOT rope_NAME)
+external_source (rope
+    0.9.4
+    rope-0.9.4.tar.gz
+    6c654c6892f78008e04e2d65f9f859bb
+    http://pypi.python.org/packages/source/r/rope
+    FORCE)
+
+message ("Installing ${rope_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${rope_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${rope_URL}
+    URL_MD5             ${rope_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${rope_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+
+endif (NOT rope_NAME)
+
+##################################################
+
+if (NOT pygments_NAME)
+external_source (pygments
+    1.6
+    Pygments-1.6.tar.gz
+    a18feedf6ffd0b0cc8c8b0fbdb2027b1
+    http://pypi.python.org/packages/source/P/Pygments/
+    FORCE)
+
+message ("Installing ${pygments_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${pygments_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${pygments_URL}
+    URL_MD5             ${pygments_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${pygments_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+
+endif (NOT pygments_NAME)
+
+
+############################################
+
+if (NOT logilab_common_NAME)
+external_source (logilab_common
+    0.59.1
+    logilab-common-0.59.1.tar.gz
+    14b3becc67397cdc4b51ced617f2982b
+    https://pypi.python.org/packages/source/l/logilab-common
+    FORCE)
+
+message ("Installing ${logilab_common_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${logilab_common_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME} ${colorama_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${logilab_common_URL}
+    URL_MD5             ${logilab_common_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${logilab_common_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+
+endif ()
+
+############################################
+
+if (NOT logilab_astng_NAME)
+external_source (logilab_astng
+    0.24.3
+    logilab-astng-0.24.3.tar.gz
+    f0dd5dee1d5053939da174e1bfe69388
+    http://pypi.python.org/packages/source/l/logilab-astng
+    FORCE)
+
+message ("Installing ${logilab_astng_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${logilab_astng_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME} ${logilab_astng_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${logilab_astng_URL}
+    URL_MD5             ${logilab_astng_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${logilab_astng_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+
+endif ()
+
+####################################################################
+
+if (NOT colorama_NAME)
+
+external_source (colorama
+    0.2.5
+    colorama-0.2.5.tar.gz
+    308c6e38917bdbfc4d3b0783c614897d
+    http://pypi.python.org/packages/source/c/colorama
+    FORCE)
+
+message ("Installing ${colorama_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${colorama_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${colorama_URL}
+    URL_MD5             ${colorama_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${colorama_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+endif (NOT colorama_NAME)
+
+####################################################################
+
+if (NOT grin_NAME)
+
+external_source (grin
+    1.2.1
+    grin-1.2.1.tar.gz
+    d894426dfbf70bc105388c2a51348199
+    https://pypi.python.org/packages/source/g/grin
+    FORCE)
+
+message ("Installing ${grin_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${grin_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${grin_URL}
+    URL_MD5             ${grin_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${grin_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+endif (NOT grin_NAME)
+
+############################################
+
+if (NOT pylint_NAME)
+external_source (pylint
+    0.27.0
+    pylint-0.27.0.tar.gz
+    7819fec3ce3e720f30e508b8a88cf59b
+    http://pypi.python.org/packages/source/p/pylint
+    FORCE)
+
+message ("Installing ${pylint_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${pylint_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME} ${colorama_NAME} ${logilab_astng_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${pylint_URL}
+    URL_MD5             ${pylint_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${pylint_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+
+endif ()
+
+############################################
+
+if (NOT pep8_NAME)
+external_source (pep8
+    1.4.5
+    pep8-1.4.5.tar.gz
+    055dbd22ac5669232fdba752612e9686
+    http://pypi.python.org/packages/source/p/pep8
+    FORCE)
+
+message ("Installing ${pep8_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${pep8_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${pep8_URL}
+    URL_MD5             ${pep8_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${pep8_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+endif ()
+
 

@@ -112,6 +112,11 @@ file(TO_NATIVE_PATH ${qt_SRC_DIR}/configure QT_CONFIGURE_EXE)
 # Patch names of system libraries (zlib, png, jpeg, tiff)
 set (qt_PATCH ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/patches/patch_qt.py ${qt_SRC_DIR})
 
+if(MSVC11)
+    # HashSet.h bug is not detected by earlier MSVC versions. It will hopefully be fixed in future Qt releases.
+    set (qt_PATCH ${qt_PATCH}\n ${PATCH_EXE} -p0 -i ${PROJECT_SOURCE_DIR}/patches/patch_qt.patch )
+endif()
+
 configure_file(configure_qt.bat.in ${ILASTIK_DEPENDENCY_DIR}/tmp/configure_qt.bat)
 file(TO_NATIVE_PATH ${ILASTIK_DEPENDENCY_DIR}/tmp/configure_qt.bat QT_CONFIGURE_BAT)
 
