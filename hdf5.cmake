@@ -15,7 +15,7 @@ external_source (hdf5
     1.8.10
     hdf5-1.8.10-patch1.tar.gz
     2147a289fb33c887464ad2b6c5a8ae4c
-    http://www.hdfgroup.org/ftp/HDF5/current/src
+    http://www.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8.10-patch1/src/
     FORCE)
 
 message ("Installing ${hdf5_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
