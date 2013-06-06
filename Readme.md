@@ -32,20 +32,34 @@ Usage
 ```
 
   This will create a file `ilastik.sln` in the `<build-directory>` that can be opened with Visual Studio. In the above cmake call, `<path-to-build-system>` is the directory where ilastik-build has been checked out (typically just `..` when we are in `ilastik-build/build`), and `<prefix>` is the desired path where the dependencies will be installed. The actual installations will be located in the subdirectories `<prefix>\bin`, `<prefix>\lib`, `<prefix>\include`, `<prefix>\python`, and `<prefix>\Qt4`. The sources (including cached `tar` archieves and intermediate files) go into `<prefix>\src`. The ilastik Python modules will be installed into `<prefix>\ilastik`.
-  
-* To include VTK into the build, use:
+ 
+The directories given by MSYS_PATH and MINGW_PATH must contain the programs `make.exe` and `gfortran.exe` respectively. 
+
+#### VTK
+To include VTK into the build, use:
 
 ```
     % cmake -G "Visual Studio 10 Win64" -DILASTIK_DEPENDENCY_DIR=<prefix> -DWITH_VTK=1  <path-to-build-system>
 ```
 
-* If you want to compile scipy as well, use:
+#### SciPy
+If you want to compile scipy as well, use:
 
 ```
     % cmake -G "Visual Studio 10 Win64" -DILASTIK_DEPENDENCY_DIR=<prefix> -DWITH_SCIPY=1 -DMSYS_PATH=<path-to-msys-binaries> -DMINGW_PATH=<path-to-mingw-binaries>  <path-to-build-system>
 ```
 
-The directories given by MSYS_PATH and MINGW_PATH must contain the programs `make.exe` and `gfortran.exe` respectively. Of course, the different options can be combined.
+#### pgmLink
+pgmLink depends on the proprietary software [IBM ILOG CPLEX](http://www-01.ibm.com/software/integration/optimization/cplex-optimization-studio/). If you are an academic you can obtain a free license from the [IBM Academic Initiative](http://www-03.ibm.com/ibm/university/academic/pub/page/academic_initiative). pgmLink can only be compiled with Visual Studio 10 since currently there are no cplex binaries that are compatible with Visual Studio 11.
+
+Install cplex and use:
+
+```
+    % cmake -G "Visual Studio 10 Win64" -DILASTIK_DEPENDENCY_DIR=<prefix> -DWITH_PGMLINK=1 -DMSYS_PATH=<path-to-msys-binaries> -DMINGW_PATH=<path-to-mingw-binaries>  <path-to-build-system>
+```
+
+Cplex will not be part of the ilastik installation bundle. You have to copy your cplex dll (for instance "cplex125.dll") to the `bin\` directory manually.
+
 
 ### Compilation and Installation:
 
@@ -64,14 +78,12 @@ The directories given by MSYS_PATH and MINGW_PATH must contain the programs `mak
 
 * Open `ilastik.sln`, and build the project `PACKAGE`. The installer will be named something like `ilastik-0.6.a-win64.exe` in the directory where `ilsatik.sln` resides.
 
-### Use the Pixel Classification Workflow:
+### Using ilastik:
 
-* To use the installed ilastik version, call `pixelClassification.bat` in the installation's root directory. It automatically sets `PATH` and `PYTHONPATH` appropriately.
+* To use the installed ilastik version, call `ilastik.bat` in the installation's root directory. It automatically sets `PATH` and `PYTHONPATH` appropriately.
 * To use another ilastik version together with the installed dependencies, set the environment variable `ILASTIK_DIR` to the root of your ilastik installation before calling `pixelClassification.bat`. The specified directory must have subdirectories `lazyflow`, `volumina`, and `ilastik`, holding the respective sources or modules. Example:
 
 ```
     % set ILASTIK_DIR=c:\Users\ukoethe\ilastik
-    % c:\ilastik\pixelClassification.bat
+    % c:\ilastik\ilastik.bat
 ```
-
-* Other workflows will work similarly as soon as they are ported to Windows.
