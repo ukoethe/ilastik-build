@@ -55,7 +55,7 @@ pgmLink depends on the proprietary software [IBM ILOG CPLEX](http://www-01.ibm.c
 Install cplex and use:
 
 ```
-    % cmake -G "Visual Studio 10 Win64" -DILASTIK_DEPENDENCY_DIR=<prefix> -DWITH_PGMLINK=1 -DMSYS_PATH=<path-to-msys-binaries> -DMINGW_PATH=<path-to-mingw-binaries>  <path-to-build-system>
+    % cmake -G "Visual Studio 10 Win64" -DILASTIK_DEPENDENCY_DIR=<prefix> -DWITH_PGMLINK=1 <path-to-build-system>
 ```
 
 Cplex will not be part of the ilastik installation bundle. You have to copy your cplex dll (for instance "cplex125.dll") to the `bin\` directory manually.
