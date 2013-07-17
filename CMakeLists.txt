@@ -17,6 +17,7 @@ if (${ILASTIK_DEPENDENCY_DIR} STREQUAL "None")
     message (FATAL_ERROR "ERROR: ILASTIK_DEPENDENCY_DIR build directory (for all downloads & builds) should be specified via -DILASTIK_DEPENDENCY_DIR=<path> on the cmake command line.")
 endif ()
 get_filename_component(ILASTIK_DEPENDENCY_DIR ${ILASTIK_DEPENDENCY_DIR} ABSOLUTE)
+file(TO_NATIVE_PATH ${ILASTIK_DEPENDENCY_DIR} ILASTIK_DEPENDENCY_DIR_DOS)
 
 OPTION(WITH_SCIPY "Build scipy (and its dependencies) ?" OFF)
 

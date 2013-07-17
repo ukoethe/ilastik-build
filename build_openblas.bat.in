@@ -2,10 +2,10 @@ set PATH=${MSYS_PATH};${MINGW_PATH};%PATH%
 rem disable AVX so that the binaries can run on older processors
 make -j6 NO_AVX=1
 make PREFIX=${ILASTIK_DEPENDENCY_DIR} install
-mv ${ILASTIK_DEPENDENCY_DIR}/lib/libopenblas.dll ${ILASTIK_DEPENDENCY_DIR}/bin
-cp ${MINGW_PATH}/libgcc_s_sjlj-1.dll ${ILASTIK_DEPENDENCY_DIR}/bin
-cp ${MINGW_PATH}/libstdc++-6.dll ${ILASTIK_DEPENDENCY_DIR}/bin
-cp ${MINGW_PATH}/libgfortran-3.dll ${ILASTIK_DEPENDENCY_DIR}/bin
-cp ${MINGW_PATH}/libquadmath-0.dll ${ILASTIK_DEPENDENCY_DIR}/bin
-cp exports/libopenblas.lib ${ILASTIK_DEPENDENCY_DIR}/lib/blas.lib
-cp exports/libopenblas.lib ${ILASTIK_DEPENDENCY_DIR}/lib/lapack.lib
+rename "${ILASTIK_DEPENDENCY_DIR_DOS}\lib\libopenblas.dll" "${ILASTIK_DEPENDENCY_DIR_DOS}\bin"
+copy "${MINGW_PATH}\libgcc_s_sjlj-1.dll" "${ILASTIK_DEPENDENCY_DIR_DOS}\bin"
+copy "${MINGW_PATH}\libstdc++-6.dll" "${ILASTIK_DEPENDENCY_DIR_DOS}\bin"
+copy "${MINGW_PATH}\libgfortran-3.dll" "${ILASTIK_DEPENDENCY_DIR_DOS}\bin"
+copy "${MINGW_PATH}\libquadmath-0.dll" "${ILASTIK_DEPENDENCY_DIR_DOS}\bin"
+copy exports\libopenblas.lib "${ILASTIK_DEPENDENCY_DIR_DOS}\lib\blas.lib"
+copy exports\libopenblas.lib "${ILASTIK_DEPENDENCY_DIR_DOS}\lib\lapack.lib"
