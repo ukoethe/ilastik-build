@@ -197,6 +197,37 @@ endif (NOT docutils_NAME)
 
 ####################################################################
 
+if (NOT markupsafe_NAME)
+
+external_source (markupsafe
+    0.18
+    MarkupSafe-0.18.tar.gz
+    f8d252fd05371e51dec2fe9a36890687
+    https://pypi.python.org/packages/source/M/MarkupSafe/
+    FORCE)
+
+# Download and install markupsafe
+message ("Installing ${markupsafe_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${markupsafe_NAME}
+    DEPENDS             ${python_NAME} 
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${markupsafe_URL}
+    URL_MD5             ${markupsafe_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py build
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ${PYTHON_EXE} setup.py install
+)
+
+set_target_properties(${markupsafe_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+
+endif (NOT markupsafe_NAME)
+
+####################################################################
+
 if (NOT nose_NAME)
 
 external_source (nose
@@ -238,7 +269,7 @@ external_source (sphinx
 
 message ("Installing ${sphinx_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${sphinx_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME} ${docutils_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME} ${docutils_NAME} ${jinja2_NAME} ${pygments_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${sphinx_URL}
     URL_MD5             ${sphinx_MD5}
@@ -699,6 +730,36 @@ set_target_properties(${pygments_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
 
 endif (NOT pygments_NAME)
+
+
+##################################################
+
+if (NOT jinja2_NAME)
+external_source (jinja2
+    2.7
+    Jinja2-2.7.tar.gz
+    c2fb12cbbb523c57d3d15bfe4dc0e8fe
+    https://pypi.python.org/packages/source/J/Jinja2/
+    FORCE)
+
+message ("Installing ${jinja2_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${jinja2_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME} ${markupsafe_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${jinja2_URL}
+    URL_MD5             ${jinja2_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${jinja2_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+
+endif (NOT jinja2_NAME)
 
 
 ############################################
