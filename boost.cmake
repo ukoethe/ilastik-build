@@ -25,7 +25,7 @@ string(REGEX REPLACE "bin/.*" "vcvarsall.bat" VCVARSALL_BAT "${CMAKE_C_COMPILER}
 file(TO_NATIVE_PATH ${VCVARSALL_BAT} VCVARSALL_BAT)
 
 FILE(WRITE ${ILASTIK_DEPENDENCY_DIR}/tmp/boost_patch.jam "using python : : ${PYTHON_EXE} ;\n")
-FILE(APPEND ${ILASTIK_DEPENDENCY_DIR}/tmp/boost_patch.jam "using msvc : 10.0 ;\n")
+FILE(APPEND ${ILASTIK_DEPENDENCY_DIR}/tmp/boost_patch.jam "using msvc : ${VISUAL_STUDIO_VERSION}.0 ;\n")
 file(TO_NATIVE_PATH ${ILASTIK_DEPENDENCY_DIR}/tmp/boost_patch.jam boost_PATCH)
 
 message ("Installing ${boost_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
@@ -51,18 +51,7 @@ FILE(APPEND  ${boost_INSTALL} "file(INSTALL \${boost_SERIALIZATION_LIB} DESTINAT
 
 
 ## generate toolset string
-set(BOOST_TOOLSET "msvc")
-if(MSVC_VERSION)
-  if(MSVC_VERSION EQUAL 1600)
-    set(BOOST_TOOLSET "msvc-10.0")
-  elseif(MSVC_VERSION EQUAL 1700)
-    set(BOOST_TOOLSET "msvc-11.0")
-  else()
-    message(WARNING "${boost_NAME}: handling MSVC_VERSION ${MSVC_VERSION} not implemented; will use boost autodiscovery")
-  endif()
-else(MSVC_VERSION)
-  message(WARNING "${boost_NAME}: MSVC_VERSION not defined; will use boost autodiscovery")
-endif(MSVC_VERSION)
+set(BOOST_TOOLSET "msvc-${VISUAL_STUDIO_VERSION}.0")
 message("${boost_NAME} toolset: ${BOOST_TOOLSET}")
 
 ExternalProject_Add(${boost_NAME}
@@ -73,7 +62,8 @@ ExternalProject_Add(${boost_NAME}
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ""
     CONFIGURE_COMMAND   call "${VCVARSALL_BAT}" x86   # bootstrap.bat needs the 32-bit compiler
-                        \ncall bootstrap.bat 
+                        \nset CC=cl.exe               # bootstrap.bat cannot handel spaces in paths
+                        \ncall bootstrap.bat vc${VISUAL_STUDIO_VERSION}
                         \nmore ${boost_PATCH} >> project-config.jam
     BUILD_COMMAND       ./b2 --with-python --with-serialization variant=release threading=multi link=shared toolset=${BOOST_TOOLSET} address-model=64
     BUILD_IN_SOURCE     1

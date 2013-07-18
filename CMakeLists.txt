@@ -1,6 +1,11 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 project (ilastik)
 
+# find compiler version
+STRING(REGEX MATCH "Studio [0-9]+" VISUAL_STUDIO_VERSION ${CMAKE_C_COMPILER})
+STRING(REGEX REPLACE "Studio " "" VISUAL_STUDIO_VERSION ${VISUAL_STUDIO_VERSION})
+MESSAGE(STATUS "Using Visual Studio ${VISUAL_STUDIO_VERSION} at '${CMAKE_C_COMPILER}'")
+
 include (ExternalProject)
 
 find_package(git REQUIRED)
@@ -231,3 +236,6 @@ SET(CPACK_STRIP_FILES TRUE)
 SET(CPACK_PACKAGE_CONTACT "ilastik Team <team@ilastik.org>")
 
 INCLUDE (CPack)
+
+MESSAGE(STATUS "Using Visual Studio ${VISUAL_STUDIO_VERSION} at '${CMAKE_C_COMPILER}'")
+
