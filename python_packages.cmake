@@ -166,6 +166,37 @@ endif (NOT docopt_NAME)
 
 ####################################################################
 
+if (NOT docutils_NAME)
+
+external_source (docutils
+    0.10
+    docutils-0.10.tar.gz
+    d8d4660c08302c791b2d71a155a2f4bc
+    https://pypi.python.org/packages/source/d/docutils
+    FORCE)
+
+# Download and install docutils
+message ("Installing ${docutils_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${docutils_NAME}
+    DEPENDS             ${python_NAME} 
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${docutils_URL}
+    URL_MD5             ${docutils_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py build
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ${PYTHON_EXE} setup.py install
+)
+
+set_target_properties(${docutils_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+
+endif (NOT docutils_NAME)
+
+####################################################################
+
 if (NOT nose_NAME)
 
 external_source (nose
@@ -207,7 +238,7 @@ external_source (sphinx
 
 message ("Installing ${sphinx_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${sphinx_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME} ${docutils_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${sphinx_URL}
     URL_MD5             ${sphinx_MD5}
