@@ -1,10 +1,32 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 project (ilastik)
 
+# check that cmake generator and compiler path in the shell are consistent
+execute_process(COMMAND where cl.exe
+                  OUTPUT_VARIABLE CL_PATH OUTPUT_STRIP_TRAILING_WHITESPACE)
+FILE(TO_CMAKE_PATH ${CL_PATH} CL_PATH)
+
+STRING(REGEX REPLACE "/VC/bin/.*" "" VISUAL_STUDIO_PATH ${CL_PATH})
+STRING(REGEX REPLACE "/VC/bin/.*" "" CMAKE_VISUAL_STUDIO_PATH ${CMAKE_C_COMPILER})
+string(TOLOWER ${VISUAL_STUDIO_PATH} VSPATH_LOWER)
+string(TOLOWER ${CMAKE_VISUAL_STUDIO_PATH} CMAKE_VSPATH_LOWER)
+
+if(NOT "${VSPATH_LOWER}" STREQUAL "${CMAKE_VSPATH_LOWER}")
+   MESSAGE(FATAL_ERROR "Mismatch between generator (-G) and shell:\n  generator uses '${CMAKE_VISUAL_STUDIO_PATH}'\n  shell uses '${VISUAL_STUDIO_PATH}'")
+endif()
+
+if(NOT "${CL_PATH}" MATCHES "amd64")
+    MESSAGE(FATAL_ERROR "Compiler must be 64-bit, but shell uses\n  '${CL_PATH}'")
+endif()
+
+if(NOT "${CMAKE_C_COMPILER}" MATCHES "amd64")
+    MESSAGE(FATAL_ERROR "Compiler must be 64-bit, but generator uses\n  '${CMAKE_C_COMPILER}'")
+endif()
+
 # find compiler version
-STRING(REGEX MATCH "Studio [0-9]+" VISUAL_STUDIO_VERSION ${CMAKE_C_COMPILER})
+STRING(REGEX MATCH "Studio [0-9]+" VISUAL_STUDIO_VERSION ${VISUAL_STUDIO_PATH})
 STRING(REGEX REPLACE "Studio " "" VISUAL_STUDIO_VERSION ${VISUAL_STUDIO_VERSION})
-MESSAGE(STATUS "Using Visual Studio ${VISUAL_STUDIO_VERSION} at '${CMAKE_C_COMPILER}'")
+MESSAGE(STATUS "Using Visual Studio ${VISUAL_STUDIO_VERSION} at '${VISUAL_STUDIO_PATH}'")
 
 include (ExternalProject)
 
