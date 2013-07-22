@@ -102,37 +102,37 @@ set_target_properties(${setuptools_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
 endif (NOT setuptools_NAME)
 
-####################################################################
+# ####################################################################
 
-if (NOT distribute_NAME)
+# if (NOT distribute_NAME)
 
-external_source (distribute
-    0.6.49
-    distribute-0.6.49.tar.gz
-    89e68df89faf1966bcbd99a0033fbf8e
-    https://pypi.python.org/packages/source/d/distribute
-    FORCE)
+# external_source (distribute
+    # 0.6.49
+    # distribute-0.6.49.tar.gz
+    # 89e68df89faf1966bcbd99a0033fbf8e
+    # https://pypi.python.org/packages/source/d/distribute
+    # FORCE)
 
-# Download and install distribute
-message ("Installing ${distribute_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+# # Download and install distribute
+# message ("Installing ${distribute_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 
-ExternalProject_Add(${distribute_NAME}
-    DEPENDS             ${python_NAME}
-    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
-    URL                 ${distribute_URL}
-    URL_MD5             ${distribute_MD5}
-    UPDATE_COMMAND      ""
-    PATCH_COMMAND       ""
-    CONFIGURE_COMMAND   ""
-    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
-    BUILD_IN_SOURCE     1
-    INSTALL_COMMAND     ""
-)
+# ExternalProject_Add(${distribute_NAME}
+    # DEPENDS             ${python_NAME}
+    # PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    # URL                 ${distribute_URL}
+    # URL_MD5             ${distribute_MD5}
+    # UPDATE_COMMAND      ""
+    # PATCH_COMMAND       ""
+    # CONFIGURE_COMMAND   ""
+    # BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    # BUILD_IN_SOURCE     1
+    # INSTALL_COMMAND     ""
+# )
 
-set_target_properties(${distribute_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+# set_target_properties(${distribute_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
 
-endif (NOT distribute_NAME)
+# endif (NOT distribute_NAME)
 
 ####################################################################
 
@@ -164,6 +164,37 @@ set_target_properties(${pip_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
 
 endif (NOT pip_NAME)
+
+####################################################################
+
+if (NOT ssl_NAME)
+
+external_source (ssl
+    1.16
+    ssl-1.16.tar.gz
+    fb12d335d56f3c8c7c1fefc1c06c4bfb
+    https://pypi.python.org/packages/source/s/ssl
+    FORCE)
+
+# Download and install ssl
+message ("Installing ${ssl_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${ssl_NAME}
+    DEPENDS             ${python_NAME} 
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${ssl_URL}
+    URL_MD5             ${ssl_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py build
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ${PYTHON_EXE} setup.py install
+)
+
+set_target_properties(${ssl_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+
+endif (NOT ssl_NAME)
 
 ####################################################################
 
@@ -270,7 +301,7 @@ external_source (jinja2
 
 message ("Installing ${jinja2_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${jinja2_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME} ${markupsafe_NAME}
+    DEPENDS             ${python_NAME} ${markupsafe_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${jinja2_URL}
     URL_MD5             ${jinja2_MD5}
@@ -300,7 +331,7 @@ external_source (pygments
 
 message ("Installing ${pygments_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${pygments_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    DEPENDS             ${python_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${pygments_URL}
     URL_MD5             ${pygments_MD5}
@@ -331,7 +362,7 @@ external_source (nose
 
 message ("Installing ${nose_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${nose_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    DEPENDS             ${python_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${nose_URL}
     URL_MD5             ${nose_MD5}
@@ -361,7 +392,7 @@ external_source (sphinx
 
 message ("Installing ${sphinx_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${sphinx_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME} ${docutils_NAME} ${jinja2_NAME} ${pygments_NAME}
+    DEPENDS             ${python_NAME} ${docutils_NAME} ${jinja2_NAME} ${pygments_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${sphinx_URL}
     URL_MD5             ${sphinx_MD5}
@@ -391,7 +422,7 @@ external_source (cython
 
 message ("Installing ${cython_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${cython_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    DEPENDS             ${python_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${cython_URL}
     URL_MD5             ${cython_MD5}
@@ -421,7 +452,7 @@ external_source (greenlet
 
 message ("Installing ${greenlet_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${greenlet_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    DEPENDS             ${python_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${greenlet_URL}
     URL_MD5             ${greenlet_MD5}
@@ -451,7 +482,7 @@ external_source (blist
 
 message ("Installing ${blist_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${blist_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME} ${distribute_NAME}
+    DEPENDS             ${python_NAME} ${distribute_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${blist_URL}
     URL_MD5             ${blist_MD5}
@@ -481,7 +512,7 @@ external_source (psutil
 
 message ("Installing ${psutil_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${psutil_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    DEPENDS             ${python_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${psutil_URL}
     URL_MD5             ${psutil_MD5}
@@ -511,7 +542,7 @@ external_source (sip
 
 message ("Installing ${sip_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${sip_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    DEPENDS             ${python_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${sip_URL}
     URL_MD5             ${sip_MD5}
@@ -568,7 +599,7 @@ external_source (pyreadline
 
 message ("Installing ${pyreadline_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${pyreadline_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    DEPENDS             ${python_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${pyreadline_URL}
     URL_MD5             ${pyreadline_MD5}
@@ -598,7 +629,7 @@ external_source (pyzmq
 
 message ("Installing ${pyzmq_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${pyzmq_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    DEPENDS             ${python_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${pyzmq_URL}
     URL_MD5             ${pyzmq_MD5}
@@ -629,7 +660,7 @@ external_source (tornado
 
 message ("Installing ${tornado_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${tornado_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    DEPENDS             ${python_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${tornado_URL}
     URL_MD5             ${tornado_MD5}
@@ -659,7 +690,7 @@ external_source (futures
 
 message ("Installing ${futures_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${futures_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    DEPENDS             ${python_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${futures_URL}
     URL_MD5             ${futures_MD5}
@@ -689,7 +720,7 @@ external_source (yapsy
 
 message ("Installing ${yapsy_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${yapsy_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    DEPENDS             ${python_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${yapsy_URL}
     URL_MD5             ${yapsy_MD5}
@@ -718,7 +749,7 @@ external_source (pyflakes
 
 message ("Installing ${pyflakes_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${pyflakes_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    DEPENDS             ${python_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${pyflakes_URL}
     URL_MD5             ${pyflakes_MD5}
@@ -747,7 +778,7 @@ external_source (rope
 
 message ("Installing ${rope_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${rope_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    DEPENDS             ${python_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${rope_URL}
     URL_MD5             ${rope_MD5}
@@ -777,7 +808,7 @@ external_source (colorama
 
 message ("Installing ${colorama_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${colorama_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    DEPENDS             ${python_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${colorama_URL}
     URL_MD5             ${colorama_MD5}
@@ -805,7 +836,7 @@ external_source (logilab_common
 
 message ("Installing ${logilab_common_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${logilab_common_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME} ${colorama_NAME}
+    DEPENDS             ${python_NAME} ${colorama_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${logilab_common_URL}
     URL_MD5             ${logilab_common_MD5}
@@ -834,7 +865,7 @@ external_source (logilab_astng
 
 message ("Installing ${logilab_astng_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${logilab_astng_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME} ${logilab_common_NAME}
+    DEPENDS             ${python_NAME} ${logilab_common_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${logilab_astng_URL}
     URL_MD5             ${logilab_astng_MD5}
@@ -864,7 +895,7 @@ external_source (argparse
 
 message ("Installing ${argparse_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${argparse_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    DEPENDS             ${python_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${argparse_URL}
     URL_MD5             ${argparse_MD5}
@@ -894,7 +925,7 @@ external_source (grin
 
 message ("Installing ${grin_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${grin_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME} ${argparse_NAME}
+    DEPENDS             ${python_NAME} ${argparse_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${grin_URL}
     URL_MD5             ${grin_MD5}
@@ -922,7 +953,7 @@ external_source (pylint
 
 message ("Installing ${pylint_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${pylint_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME} ${colorama_NAME} ${logilab_astng_NAME}
+    DEPENDS             ${python_NAME} ${colorama_NAME} ${logilab_astng_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${pylint_URL}
     URL_MD5             ${pylint_MD5}
@@ -951,7 +982,7 @@ external_source (pep8
 
 message ("Installing ${pep8_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${pep8_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    DEPENDS             ${python_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${pep8_URL}
     URL_MD5             ${pep8_MD5}
@@ -978,7 +1009,7 @@ external_source (ipython
 
 message ("Installing ${ipython_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${ipython_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME} ${pyreadline_NAME} ${sqlite_NAME} ${pyzmq_NAME} ${tornado_NAME}
+    DEPENDS             ${python_NAME} ${pyreadline_NAME} ${sqlite_NAME} ${pyzmq_NAME} ${tornado_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${ipython_URL}
     URL_MD5             ${ipython_MD5}
