@@ -102,37 +102,37 @@ set_target_properties(${setuptools_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
 endif (NOT setuptools_NAME)
 
-# ####################################################################
+####################################################################
 
-# if (NOT distribute_NAME)
+if (NOT distribute_NAME)
 
-# external_source (distribute
-    # 0.6.49
-    # distribute-0.6.49.tar.gz
-    # 89e68df89faf1966bcbd99a0033fbf8e
-    # https://pypi.python.org/packages/source/d/distribute
-    # FORCE)
+external_source (distribute
+    0.6.12
+    distribute-0.6.12.tar.gz
+    d4713d07bccd48892e455fe30230f8bc
+    http://pypi.python.org/packages/source/d/distribute
+    FORCE)
 
-# # Download and install distribute
-# message ("Installing ${distribute_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+# Download and install distribute
+message ("Installing ${distribute_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 
-# ExternalProject_Add(${distribute_NAME}
-    # DEPENDS             ${python_NAME}
-    # PREFIX              ${ILASTIK_DEPENDENCY_DIR}
-    # URL                 ${distribute_URL}
-    # URL_MD5             ${distribute_MD5}
-    # UPDATE_COMMAND      ""
-    # PATCH_COMMAND       ""
-    # CONFIGURE_COMMAND   ""
-    # BUILD_COMMAND       ${PYTHON_EXE} setup.py install
-    # BUILD_IN_SOURCE     1
-    # INSTALL_COMMAND     ""
-# )
+ExternalProject_Add(${distribute_NAME}
+    DEPENDS             ${python_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${distribute_URL}
+    URL_MD5             ${distribute_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
 
-# set_target_properties(${distribute_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+set_target_properties(${distribute_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
 
-# endif (NOT distribute_NAME)
+endif (NOT distribute_NAME)
 
 ####################################################################
 
@@ -164,37 +164,6 @@ set_target_properties(${pip_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
 
 endif (NOT pip_NAME)
-
-####################################################################
-
-if (NOT ssl_NAME)
-
-external_source (ssl
-    1.16
-    ssl-1.16.tar.gz
-    fb12d335d56f3c8c7c1fefc1c06c4bfb
-    https://pypi.python.org/packages/source/s/ssl
-    FORCE)
-
-# Download and install ssl
-message ("Installing ${ssl_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
-ExternalProject_Add(${ssl_NAME}
-    DEPENDS             ${python_NAME} 
-    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
-    URL                 ${ssl_URL}
-    URL_MD5             ${ssl_MD5}
-    UPDATE_COMMAND      ""
-    PATCH_COMMAND       ""
-    CONFIGURE_COMMAND   ""
-    BUILD_COMMAND       ${PYTHON_EXE} setup.py build
-    BUILD_IN_SOURCE     1
-    INSTALL_COMMAND     ${PYTHON_EXE} setup.py install
-)
-
-set_target_properties(${ssl_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
-
-
-endif (NOT ssl_NAME)
 
 ####################################################################
 
