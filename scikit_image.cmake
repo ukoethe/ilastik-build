@@ -30,7 +30,8 @@ ExternalProject_Add(${scikit_image_NAME}
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ""
     CONFIGURE_COMMAND   ""
-    BUILD_COMMAND       ${PYTHON_EXE} setup.py build_ext -c msvc install
+    BUILD_COMMAND       ${ADD_PATH} "${ILASTIK_DEPENDENCY_DIR}/bin" "${PYTHON_PREFIX}"
+                     \n ${PYTHON_EXE} setup.py build_ext -c msvc install
     BUILD_IN_SOURCE     1
     TEST_COMMAND        ""
     INSTALL_COMMAND     ""

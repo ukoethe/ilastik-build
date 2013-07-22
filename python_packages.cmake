@@ -104,6 +104,38 @@ endif (NOT setuptools_NAME)
 
 ####################################################################
 
+if (NOT distribute_NAME)
+
+external_source (distribute
+    0.6.49
+    distribute-0.6.49.tar.gz
+    89e68df89faf1966bcbd99a0033fbf8e
+    https://pypi.python.org/packages/source/d/distribute
+    FORCE)
+
+# Download and install distribute
+message ("Installing ${distribute_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+
+ExternalProject_Add(${distribute_NAME}
+    DEPENDS             ${python_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${distribute_URL}
+    URL_MD5             ${distribute_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${distribute_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+
+endif (NOT distribute_NAME)
+
+####################################################################
+
 if (NOT pip_NAME)
 
 external_source (pip
@@ -419,7 +451,7 @@ external_source (blist
 
 message ("Installing ${blist_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${blist_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME} ${distribute_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${blist_URL}
     URL_MD5             ${blist_MD5}
@@ -739,7 +771,7 @@ if (NOT colorama_NAME)
 external_source (colorama
     0.2.5
     colorama-0.2.5.tar.gz
-    308c6e38917bdbfc4d3b0783c614897d
+    c76f67ead9dc7c83700c57695ebb741e
     http://pypi.python.org/packages/source/c/colorama
     FORCE)
 
@@ -821,6 +853,36 @@ endif ()
 
 ####################################################################
 
+if (NOT argparse_NAME)
+
+external_source (argparse
+    1.2.1
+    argparse-1.2.1.tar.gz
+    2fbef8cb61e506c706957ab6e135840c
+    http://argparse.googlecode.com/files
+    FORCE)
+
+message ("Installing ${argparse_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${argparse_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${argparse_URL}
+    URL_MD5             ${argparse_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${argparse_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+endif (NOT argparse_NAME)
+
+
+####################################################################
+
 if (NOT grin_NAME)
 
 external_source (grin
@@ -832,7 +894,7 @@ external_source (grin
 
 message ("Installing ${grin_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${grin_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME} ${argparse_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${grin_URL}
     URL_MD5             ${grin_MD5}
