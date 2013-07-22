@@ -1,0 +1,25 @@
+--- build_ssl.py	Mon Apr  9 23:07:35 2012
++++ build_ssl.py	Mon Jul 22 19:38:21 2013
+@@ -46,6 +46,7 @@
+ # Being a Perl dummy, the simplest way I can check is if the "Win32" package
+ # is available.
+ def find_working_perl(perls):
++    return perls[0]
+     for perl in perls:
+         fh = os.popen('"%s" -e "use Win32;"' % perl)
+         fh.read()
+@@ -137,12 +138,8 @@
+             if line.startswith("MKDIR="):
+                 line = "MKDIR=mkdir\n"
+             if line.startswith("CFLAG="):
+-                line = line.strip()
+-                for algo in ("RC5", "MDC2", "IDEA"):
+-                    noalgo = " -DOPENSSL_NO_%s" % algo
+-                    if noalgo not in line:
+-                        line = line + noalgo
+-                line = line + '\n'
++                for algo in ["RC5", "MD2", "KRB5", "JPAKE", "MDC2", "IDEA"]:
++                    line = re.sub(" -DOPENSSL_NO_" + algo, "", line)
+             fout.write(line)
+     fout.close()
+ 

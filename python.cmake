@@ -15,7 +15,7 @@ include (ExternalSource)
 include (bzip2)
 
 # include (zlib)
-#include (openssl)   # without openssl, hashlib might have missing encryption methods
+include (openssl)
 
 external_source (python
     2.7.3
@@ -39,7 +39,7 @@ FILE(APPEND  ${python_INSTALL} "file(INSTALL ../Lib DESTINATION ${PYTHON_PREFIX}
 
 message ("Installing ${python_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${python_NAME}
-    DEPENDS             ${bzip2_NAME} # ${zlib_NAME} ${openssl_NAME}
+    DEPENDS             ${bzip2_NAME} ${openssl_NAME} # ${zlib_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${python_URL}
     URL_MD5             ${python_MD5}
@@ -47,7 +47,11 @@ ExternalProject_Add(${python_NAME}
     PATCH_COMMAND       ""
     BINARY_DIR          ${PYTHON_BIN_DIR}
     CONFIGURE_COMMAND   devenv PCbuild.sln /upgrade
-    BUILD_COMMAND       devenv PCbuild.sln /build "Release|x64" /project Python
+    BUILD_COMMAND       ${ADD_PATH} "${PERL_PATH}"
+                        \nset HOST_PYTHON=amd64/python.exe
+                        \nperl -p -i.bak -e s/openssl-0.9.8l/${openssl_NAME}/g pyproject.props
+                        \n ${PATCH_EXE} -i ${PROJECT_SOURCE_DIR}/patches/build_ssl.py.patch
+                        \ndevenv PCbuild.sln /build "Release|x64" /project Python
                         \ndevenv PCbuild.sln /build "Release|x64" /project _ctypes
                         \ndevenv PCbuild.sln /build "Release|x64" /project _elementtree
                         \ndevenv PCbuild.sln /build "Release|x64" /project _multiprocessing
@@ -56,6 +60,7 @@ ExternalProject_Add(${python_NAME}
                         \ndevenv PCbuild.sln /build "Release|x64" /project select
                         \ndevenv PCbuild.sln /build "Release|x64" /project unicodedata
                         \ndevenv PCbuild.sln /build "Release|x64" /project bz2
+                        \ndevenv PCbuild.sln /build "Release|x64" /project _ssl
                         \n ${python_PATCH}
     INSTALL_COMMAND     ${CMAKE_COMMAND} -P ${python_INSTALL}
 )

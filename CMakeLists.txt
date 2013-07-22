@@ -39,6 +39,10 @@ if(NOT EXISTS ${PATCH_EXE})
     message(FATAL_ERROR "patch.exe NOT found, should be at \n${PATCH_EXE}")
 endif()
 
+find_package(perl REQUIRED)
+GET_FILENAME_COMPONENT(PERL_PATH ${PERL_EXECUTABLE} ABSOLUTE)
+file(TO_NATIVE_PATH ${PERL_PATH} PERL_PATH)
+
 set (ILASTIK_DEPENDENCY_DIR "None" CACHE PATH "Install prefix for ilastik and its dependencies.")
 if (${ILASTIK_DEPENDENCY_DIR} STREQUAL "None")
     message (FATAL_ERROR "ERROR: ILASTIK_DEPENDENCY_DIR build directory (for all downloads & builds) should be specified via -DILASTIK_DEPENDENCY_DIR=<path> on the cmake command line.")
@@ -83,6 +87,7 @@ configure_file(add_path.bat ${ADD_PATH} COPYONLY)
 
 SET(CMAKE_MODULE_PATH  ${CMAKE_MODULE_PATH}  ${ilastik_SOURCE_DIR})
 
+include(openssl)
 include(python)
 include(python_packages)
 include(numpy)
