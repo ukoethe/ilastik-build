@@ -226,6 +226,66 @@ set_target_properties(${markupsafe_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
 endif (NOT markupsafe_NAME)
 
+##################################################
+
+if (NOT jinja2_NAME)
+external_source (jinja2
+    2.7
+    Jinja2-2.7.tar.gz
+    c2fb12cbbb523c57d3d15bfe4dc0e8fe
+    https://pypi.python.org/packages/source/J/Jinja2/
+    FORCE)
+
+message ("Installing ${jinja2_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${jinja2_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME} ${markupsafe_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${jinja2_URL}
+    URL_MD5             ${jinja2_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${jinja2_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+
+endif (NOT jinja2_NAME)
+
+
+##################################################
+
+if (NOT pygments_NAME)
+external_source (pygments
+    1.6
+    Pygments-1.6.tar.gz
+    a18feedf6ffd0b0cc8c8b0fbdb2027b1
+    http://pypi.python.org/packages/source/P/Pygments/
+    FORCE)
+
+message ("Installing ${pygments_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${pygments_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${pygments_URL}
+    URL_MD5             ${pygments_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${pygments_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+
+endif (NOT pygments_NAME)
+
+
 ####################################################################
 
 if (NOT nose_NAME)
@@ -616,36 +676,6 @@ endif (NOT yapsy_NAME)
 
 ####################################################################
 
-if (NOT ipython_NAME)
-
-external_source (ipython
-    0.13.1
-    ipython-0.13.1.tar.gz
-    ca7e75f7c802afc6aaa0a1ea59846420
-    http://pypi.python.org/packages/source/i/ipython
-    FORCE)
-
-message ("Installing ${ipython_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
-ExternalProject_Add(${ipython_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME} ${pyreadline_NAME} ${sqlite_NAME} ${pyzmq_NAME} ${tornado_NAME}
-    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
-    URL                 ${ipython_URL}
-    URL_MD5             ${ipython_MD5}
-    UPDATE_COMMAND      ""
-    PATCH_COMMAND       ""
-    CONFIGURE_COMMAND   ""
-    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
-    BUILD_IN_SOURCE     1
-    INSTALL_COMMAND     ""
-)
-
-set_target_properties(${ipython_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
-
-
-endif (NOT ipython_NAME)
-
-####################################################################
-
 if (NOT pyflakes_NAME)
 external_source (pyflakes
     0.7
@@ -702,22 +732,23 @@ set_target_properties(${rope_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
 endif (NOT rope_NAME)
 
-##################################################
+####################################################################
 
-if (NOT pygments_NAME)
-external_source (pygments
-    1.6
-    Pygments-1.6.tar.gz
-    a18feedf6ffd0b0cc8c8b0fbdb2027b1
-    http://pypi.python.org/packages/source/P/Pygments/
+if (NOT colorama_NAME)
+
+external_source (colorama
+    0.2.5
+    colorama-0.2.5.tar.gz
+    308c6e38917bdbfc4d3b0783c614897d
+    http://pypi.python.org/packages/source/c/colorama
     FORCE)
 
-message ("Installing ${pygments_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
-ExternalProject_Add(${pygments_NAME}
+message ("Installing ${colorama_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${colorama_NAME}
     DEPENDS             ${python_NAME} ${setuptools_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
-    URL                 ${pygments_URL}
-    URL_MD5             ${pygments_MD5}
+    URL                 ${colorama_URL}
+    URL_MD5             ${colorama_MD5}
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ""
     CONFIGURE_COMMAND   ""
@@ -726,41 +757,9 @@ ExternalProject_Add(${pygments_NAME}
     INSTALL_COMMAND     ""
 )
 
-set_target_properties(${pygments_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+set_target_properties(${colorama_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
-
-endif (NOT pygments_NAME)
-
-
-##################################################
-
-if (NOT jinja2_NAME)
-external_source (jinja2
-    2.7
-    Jinja2-2.7.tar.gz
-    c2fb12cbbb523c57d3d15bfe4dc0e8fe
-    https://pypi.python.org/packages/source/J/Jinja2/
-    FORCE)
-
-message ("Installing ${jinja2_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
-ExternalProject_Add(${jinja2_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME} ${markupsafe_NAME}
-    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
-    URL                 ${jinja2_URL}
-    URL_MD5             ${jinja2_MD5}
-    UPDATE_COMMAND      ""
-    PATCH_COMMAND       ""
-    CONFIGURE_COMMAND   ""
-    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
-    BUILD_IN_SOURCE     1
-    INSTALL_COMMAND     ""
-)
-
-set_target_properties(${jinja2_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
-
-
-endif (NOT jinja2_NAME)
-
+endif (NOT colorama_NAME)
 
 ############################################
 
@@ -803,7 +802,7 @@ external_source (logilab_astng
 
 message ("Installing ${logilab_astng_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${logilab_astng_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME} ${logilab_astng_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME} ${logilab_common_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${logilab_astng_URL}
     URL_MD5             ${logilab_astng_MD5}
@@ -819,35 +818,6 @@ set_target_properties(${logilab_astng_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 
 
 endif ()
-
-####################################################################
-
-if (NOT colorama_NAME)
-
-external_source (colorama
-    0.2.5
-    colorama-0.2.5.tar.gz
-    308c6e38917bdbfc4d3b0783c614897d
-    http://pypi.python.org/packages/source/c/colorama
-    FORCE)
-
-message ("Installing ${colorama_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
-ExternalProject_Add(${colorama_NAME}
-    DEPENDS             ${python_NAME} ${setuptools_NAME}
-    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
-    URL                 ${colorama_URL}
-    URL_MD5             ${colorama_MD5}
-    UPDATE_COMMAND      ""
-    PATCH_COMMAND       ""
-    CONFIGURE_COMMAND   ""
-    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
-    BUILD_IN_SOURCE     1
-    INSTALL_COMMAND     ""
-)
-
-set_target_properties(${colorama_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
-
-endif (NOT colorama_NAME)
 
 ####################################################################
 
@@ -932,6 +902,36 @@ ExternalProject_Add(${pep8_NAME}
 )
 
 set_target_properties(${pep8_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+####################################################################
+
+if (NOT ipython_NAME)
+
+external_source (ipython
+    0.13.1
+    ipython-0.13.1.tar.gz
+    ca7e75f7c802afc6aaa0a1ea59846420
+    http://pypi.python.org/packages/source/i/ipython
+    FORCE)
+
+message ("Installing ${ipython_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+ExternalProject_Add(${ipython_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME} ${pyreadline_NAME} ${sqlite_NAME} ${pyzmq_NAME} ${tornado_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    URL                 ${ipython_URL}
+    URL_MD5             ${ipython_MD5}
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    CONFIGURE_COMMAND   ""
+    BUILD_COMMAND       ${PYTHON_EXE} setup.py install
+    BUILD_IN_SOURCE     1
+    INSTALL_COMMAND     ""
+)
+
+set_target_properties(${ipython_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+
+
+endif (NOT ipython_NAME)
 
 endif ()
 
