@@ -30,7 +30,7 @@ ExternalProject_Add(${vigra_NAME}
     GIT_REPOSITORY      ${vigra_URL}
     UPDATE_COMMAND      "" # git pull
     PATCH_COMMAND       ""
-    CONFIGURE_COMMAND   ${ADD_PATH} "${ILASTIK_DEPENDENCY_DIR}/bin"
+    CONFIGURE_COMMAND   ${ADD_PATH} "${ILASTIK_DEPENDENCY_DIR}/bin" "${PYTHON_PREFIX}"
                      \n ${CMAKE_COMMAND} ${vigra_SRC_DIR} 
         -G ${CMAKE_GENERATOR} 
         -DCMAKE_INSTALL_PREFIX=${ILASTIK_DEPENDENCY_DIR}
