@@ -109,7 +109,7 @@ include(freetype)
 include(matplotlib)
 include(lemon)
 include(cylemon)
-include(spyder)
+# include(spyder)
 
 if(WITH_SCIPY)
     include(scipy)
@@ -217,7 +217,7 @@ ADD_CUSTOM_TARGET(ilastik DEPENDS ${APP_DEPENDENCIES}
 install(CODE "execute_process(COMMAND ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/compile_all.py ${ILASTIK_DEPENDENCY_DIR}/ilastik)")
 INSTALL(FILES ${ILASTIK_DEPENDENCY_DIR}/ilastik-icon.ico DESTINATION .)
 INSTALL(FILES ${ILASTIK_DEPENDENCY_DIR}/ilastik.bat DESTINATION .)
-INSTALL(FILES ${ILASTIK_DEPENDENCY_DIR}/spyder.bat DESTINATION .)
+# INSTALL(FILES ${ILASTIK_DEPENDENCY_DIR}/spyder.bat DESTINATION .)
 INSTALL(DIRECTORY ${ILASTIK_DEPENDENCY_DIR}/ilastik/ DESTINATION ilastik)
 INSTALL(DIRECTORY ${ILASTIK_DEPENDENCY_DIR}/bin/ DESTINATION bin FILES_MATCHING PATTERN "*.dll")
 INSTALL(DIRECTORY ${ILASTIK_DEPENDENCY_DIR}/python/ DESTINATION python PATTERN "*ui-bg_highlight-soft_75_cccccc_1x100.png" EXCLUDE)
@@ -244,12 +244,10 @@ SET(CPACK_PACKAGE_INSTALL_DIRECTORY     "${PROJECT_NAME}-0.6.a")
 # cannot use SET(CPACK_PACKAGE_EXECUTABLES ...) for *.bat files because it appends .exe
 SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "
   CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\ilastik.lnk\\\" \\\"$INSTDIR\\\\ilastik.bat\\\" \\\"\\\" \\\"$INSTDIR\\\\ilastik-icon.ico\\\"
-  CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\spyder.lnk\\\" \\\"$INSTDIR\\\\spyder.bat\\\" \\\"\\\" \\\"$INSTDIR\\\\ilastik-icon.ico\\\"
 ")
 SET(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "
   !insertmacro MUI_STARTMENU_GETFOLDER Application $STARTMENU_FOLDER
   Delete \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\ilastik.lnk\\\"
-  Delete \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\spyder.lnk\\\"
 ")
 
 # Cannot use SET(CPACK_PACKAGE_ICON  ...) because NSIS needs a Windows path here.
