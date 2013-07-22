@@ -5,7 +5,7 @@ make -j6 NO_AVX=1
 make PREFIX=${ILASTIK_DEPENDENCY_DIR} install
 
 rem install the libraries in their proper places
-rename "${ILASTIK_DEPENDENCY_DIR_DOS}\lib\libopenblas.dll" "${ILASTIK_DEPENDENCY_DIR_DOS}\bin"
+move "${ILASTIK_DEPENDENCY_DIR_DOS}\lib\libopenblas.dll" "${ILASTIK_DEPENDENCY_DIR_DOS}\bin"
 
 for /f "delims=" %%a in ('dir /b "${MINGW_PATH}\libgcc*.dll"') do @set LIBGCC=%%a
 set LIBGCC=%LIBGCC:.dll=%
@@ -16,6 +16,8 @@ lib /NOLOGO /MACHINE:X64 /DEF:%LIBGCC%.def /OUT:${ILASTIK_DEPENDENCY_DIR}/lib/%L
 copy "${MINGW_PATH}\libgfortran-3.dll" "${ILASTIK_DEPENDENCY_DIR_DOS}\bin"
 gendef "${MINGW_PATH}\libgfortran-3.dll"
 lib /NOLOGO /MACHINE:X64 /DEF:libgfortran-3.def /OUT:${ILASTIK_DEPENDENCY_DIR}/lib/libgfortran-3.lib
+
+if exist "${MINGW_PATH}\libwinpthread-1.dll" copy "${MINGW_PATH}\libwinpthread-1.dll" "${ILASTIK_DEPENDENCY_DIR_DOS}\bin"
 
 copy "${MINGW_PATH}\libstdc++-6.dll" "${ILASTIK_DEPENDENCY_DIR_DOS}\bin"
 copy "${MINGW_PATH}\libquadmath-0.dll" "${ILASTIK_DEPENDENCY_DIR_DOS}\bin"
