@@ -241,6 +241,8 @@ SET(CPACK_PACKAGE_VERSION_PATCH "a")
 
 SET(CPACK_PACKAGE_INSTALL_DIRECTORY     "${PROJECT_NAME}-0.6.a")
 
+SET(CPACK_NSIS_INSTALL_ROOT "$PROGRAMFILES64")
+
 # cannot use SET(CPACK_PACKAGE_EXECUTABLES ...) for *.bat files because it appends .exe
 SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "
   CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\ilastik.lnk\\\" \\\"$INSTDIR\\\\ilastik.bat\\\" \\\"\\\" \\\"$INSTDIR\\\\ilastik-icon.ico\\\"
