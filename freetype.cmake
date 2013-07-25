@@ -24,6 +24,7 @@ set (freetype_PATCH ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/patches/patch_freetype.p
 
 message ("Installing ${freetype_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${freetype_NAME}
+    DEPENDS             ${python_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${freetype_URL}
     URL_MD5             ${freetype_MD5}

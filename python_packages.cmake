@@ -241,7 +241,7 @@ external_source (markupsafe
 # Download and install markupsafe
 message ("Installing ${markupsafe_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${markupsafe_NAME}
-    DEPENDS             ${python_NAME} 
+    DEPENDS             ${python_NAME} ${setuptools_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${markupsafe_URL}
     URL_MD5             ${markupsafe_MD5}
@@ -270,7 +270,7 @@ external_source (jinja2
 
 message ("Installing ${jinja2_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${jinja2_NAME}
-    DEPENDS             ${python_NAME} ${markupsafe_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME} ${markupsafe_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${jinja2_URL}
     URL_MD5             ${jinja2_MD5}
@@ -391,7 +391,7 @@ external_source (cython
 
 message ("Installing ${cython_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${cython_NAME}
-    DEPENDS             ${python_NAME}
+    DEPENDS             ${python_NAME} ${setuptools_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${cython_URL}
     URL_MD5             ${cython_MD5}
