@@ -10,14 +10,13 @@ set INSTALL_DIR=%~dp0
 set PATH=%INSTALL_DIR%bin;%INSTALL_DIR%Qt4\bin;%INSTALL_DIR%python
 
 rem re-insert CPLEX into the PATH if it was found
-if ["%CPLEX_PATH%"] EQU [""] (
-    rem issue a warning only when ilastik was compiled with CPLEX support
-    if EXIST "%INSTALL_DIR%python\Lib\site-packages\pgmlink.pyd" echo WARNING: CPLEX is not in the PATH -- chaingraph tracking will be unavailable.
-) else (
-    set PATH=%PATH%;%CPLEX_PATH%
-)
+rem (note: we cannot use 'if () else ()' here, because it conflicts with parentheses in the %PATH%)
+if DEFINED CPLEX_PATH set PATH=%PATH%;%CPLEX_PATH%
 
-rem set 
+rem otherwise, issue a warning when ilastik was compiled with chaingraph support
+if NOT DEFINED CPLEX_PATH if EXIST "%INSTALL_DIR%python\Lib\site-packages\pgmlink.pyd" echo WARNING: CPLEX is not in the PATH -- chaingraph tracking will be unavailable.
+
+rem set more paths
 set QTDIR=%INSTALL_DIR%Qt4
 IF ["%ILASTIK_DIR%"] EQU [""] set ILASTIK_DIR=%INSTALL_DIR%ilastik
 set PYTHONPATH=%ILASTIK_DIR%\lazyflow;%ILASTIK_DIR%\volumina;%ILASTIK_DIR%\ilastik
