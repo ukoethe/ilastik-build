@@ -1,10 +1,28 @@
 @echo OFF
 SETLOCAL
+
+rem find CPLEX in the original PATH. FIXME: do we need to be more specific, e.g. cplex125.dll ?
+where /Q cplex
+if NOT ERRORLEVEL 1 for /f "delims=" %%a in ('where cplex') do @set CPLEX_PATH=%%~dpa
+
+rem overwrite PATH with only what ilastik needs
 set INSTALL_DIR=%~dp0
 set PATH=%INSTALL_DIR%bin;%INSTALL_DIR%Qt4\bin;%INSTALL_DIR%python
+
+rem re-insert CPLEX into the PATH if it was found
+if ["%CPLEX_PATH%"] EQU [""] (
+    rem issue a warning only when ilastik was compiled with CPLEX support
+    if EXIST "%INSTALL_DIR%python\Lib\site-packages\pgmlink.pyd" echo WARNING: CPLEX is not in the PATH -- chaingraph tracking will be unavailable.
+) else (
+    set PATH=%PATH%;%CPLEX_PATH%
+)
+
+rem set 
 set QTDIR=%INSTALL_DIR%Qt4
-IF [%ILASTIK_DIR%] EQU [] set ILASTIK_DIR=%INSTALL_DIR%ilastik
-echo Loading ilastik from "%ILASTIK_DIR%"
+IF ["%ILASTIK_DIR%"] EQU [""] set ILASTIK_DIR=%INSTALL_DIR%ilastik
 set PYTHONPATH=%ILASTIK_DIR%\lazyflow;%ILASTIK_DIR%\volumina;%ILASTIK_DIR%\ilastik
+
+rem start ilastik
+echo Loading ilastik from "%ILASTIK_DIR%"
 "%INSTALL_DIR%python\python" "%ILASTIK_DIR%\ilastik\ilastik.py" %*
 ENDLOCAL
