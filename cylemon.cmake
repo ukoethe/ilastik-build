@@ -21,7 +21,7 @@ ExternalProject_Add(${cylemon_NAME}
     DEPENDS             ${python_NAME} ${numpy_NAME} ${lemon_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     GIT_REPOSITORY      ${cylemon_URL}
-    PATCH_COMMAND       ""
+    UPDATE_COMMAND      ${GIT_EXECUTABLE} pull
     CONFIGURE_COMMAND   ""
     BUILD_COMMAND       ${ADD_PATH} "${ILASTIK_DEPENDENCY_DIR}/bin"
                      \n ${PYTHON_EXE} setup.py build_ext -I ${ILASTIK_DEPENDENCY_DIR}/include -L ${ILASTIK_DEPENDENCY_DIR}/lib -c msvc

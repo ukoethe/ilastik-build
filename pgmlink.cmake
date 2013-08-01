@@ -27,8 +27,7 @@ ExternalProject_Add(${pgmlink_NAME}
     DEPENDS             ${ann_NAME} ${boost_NAME} ${vigra_NAME} ${opengm_NAME} ${lemon_NAME} ${python_NAME} ${hdf5_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     GIT_REPOSITORY      ${pgmlink_URL}
-    UPDATE_COMMAND      "" # git pull
-    PATCH_COMMAND       ""
+    UPDATE_COMMAND      git pull
     CONFIGURE_COMMAND   ${CMAKE_COMMAND} ${pgmlink_SRC_DIR}
                         -G ${CMAKE_GENERATOR}
 			-DCMAKE_BUILD_TYPE=Release

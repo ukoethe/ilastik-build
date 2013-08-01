@@ -138,7 +138,7 @@ ExternalProject_Add(${lazyflow_NAME}
     DOWNLOAD_DIR        ${ILASTIK_DEPENDENCY_DIR}/ilastik
     SOURCE_DIR          ${ILASTIK_DEPENDENCY_DIR}/ilastik/lazyflow
     GIT_REPOSITORY      https://github.com/ilastik/lazyflow.git
-    PATCH_COMMAND       ""
+    UPDATE_COMMAND      ${GIT_EXECUTABLE} pull
     BINARY_DIR          ${ILASTIK_DEPENDENCY_DIR}/src/drtile-build
     # Read the config information from ${ILASTIK_DEPENDENCY_DIR}/lib/vigranumpy/VigranumpyConfig.cmake
     CONFIGURE_COMMAND   ${CMAKE_COMMAND} ${ILASTIK_DEPENDENCY_DIR}/ilastik/lazyflow/lazyflow/drtile
@@ -166,7 +166,7 @@ ExternalProject_Add(${volumina_NAME}
     DOWNLOAD_DIR        ${ILASTIK_DEPENDENCY_DIR}/ilastik
     SOURCE_DIR          ${ILASTIK_DEPENDENCY_DIR}/ilastik/volumina
     GIT_REPOSITORY      https://github.com/ilastik/volumina.git
-    PATCH_COMMAND       ""
+    UPDATE_COMMAND      ${GIT_EXECUTABLE} pull
     CONFIGURE_COMMAND   ""
     BUILD_COMMAND       ""
     INSTALL_COMMAND     ""
@@ -191,7 +191,7 @@ ExternalProject_Add(${ilastik_NAME}
     DOWNLOAD_DIR        ${ILASTIK_DEPENDENCY_DIR}/ilastik
     SOURCE_DIR          ${ILASTIK_DEPENDENCY_DIR}/ilastik/ilastik
     GIT_REPOSITORY      https://github.com/ilastik/ilastik.git
-    PATCH_COMMAND       ""
+    UPDATE_COMMAND      ${GIT_EXECUTABLE} pull
     CONFIGURE_COMMAND   ""
     BUILD_COMMAND       ""
     INSTALL_COMMAND     ""
