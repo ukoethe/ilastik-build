@@ -28,31 +28,14 @@ FILE(WRITE ${ILASTIK_DEPENDENCY_DIR}/tmp/boost_patch.jam "using python : : ${PYT
 FILE(APPEND ${ILASTIK_DEPENDENCY_DIR}/tmp/boost_patch.jam "using msvc : ${VISUAL_STUDIO_VERSION}.0 ;\n")
 file(TO_NATIVE_PATH ${ILASTIK_DEPENDENCY_DIR}/tmp/boost_patch.jam boost_PATCH)
 
-message ("Installing ${boost_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
-message("${boost_NAME} environment for bootstrapping: ${VCVARSALL_BAT}")
-
-## generate install script
-SET(boost_INSTALL ${ILASTIK_DEPENDENCY_DIR}/tmp/boost_install.cmake)
-FILE(WRITE   ${boost_INSTALL} "file(INSTALL boost/ DESTINATION ${ILASTIK_DEPENDENCY_DIR}/include/boost)\n")
-
-# install boost-python
-FILE(APPEND  ${boost_INSTALL} "file(GLOB boost_PYTHON_BUILD_DIR ${boost_SRC_DIR}/bin.v2/libs/python/build/msvc-*/release/address-model-64/threading-multi)\n")
-FILE(APPEND  ${boost_INSTALL} "file(GLOB boost_PYTHON_DLL \${boost_PYTHON_BUILD_DIR}/boost*.dll)\n")
-FILE(APPEND  ${boost_INSTALL} "file(INSTALL \${boost_PYTHON_DLL} DESTINATION ${ILASTIK_DEPENDENCY_DIR}/bin)\n")
-FILE(APPEND  ${boost_INSTALL} "file(GLOB boost_PYTHON_LIB \${boost_PYTHON_BUILD_DIR}/boost*.lib)\n")
-FILE(APPEND  ${boost_INSTALL} "file(INSTALL \${boost_PYTHON_LIB} DESTINATION ${ILASTIK_DEPENDENCY_DIR}/lib)\n")
-
-# install boost-serialization
-FILE(APPEND  ${boost_INSTALL} "file(GLOB boost_SERIALIZATION_BUILD_DIR ${boost_SRC_DIR}/bin.v2/libs/serialization/build/msvc-*/release/address-model-64/threading-multi)\n")
-FILE(APPEND  ${boost_INSTALL} "file(GLOB boost_SERIALIZATION_DLL \${boost_SERIALIZATION_BUILD_DIR}/boost*.dll)\n")
-FILE(APPEND  ${boost_INSTALL} "file(INSTALL \${boost_SERIALIZATION_DLL} DESTINATION ${ILASTIK_DEPENDENCY_DIR}/bin)\n")
-FILE(APPEND  ${boost_INSTALL} "file(GLOB boost_SERIALIZATION_LIB \${boost_SERIALIZATION_BUILD_DIR}/boost*.lib)\n")
-FILE(APPEND  ${boost_INSTALL} "file(INSTALL \${boost_SERIALIZATION_LIB} DESTINATION ${ILASTIK_DEPENDENCY_DIR}/lib)\n")
-
+message("Installing ${boost_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
+message(STATUS "${boost_NAME} environment for bootstrapping: ${VCVARSALL_BAT}")
 
 ## generate toolset string
 set(BOOST_TOOLSET "msvc-${VISUAL_STUDIO_VERSION}.0")
-message("${boost_NAME} toolset: ${BOOST_TOOLSET}")
+message(STATUS "${boost_NAME} toolset: ${BOOST_TOOLSET}")
+
+set(BOOST_OPTIONS --layout=system --with-python --with-serialization --with-system --with-filesystem --with-test --with-timer variant=release threading=multi link=shared toolset=${BOOST_TOOLSET} address-model=64)
 
 ExternalProject_Add(${boost_NAME}
     DEPENDS             ${python_NAME}
@@ -62,12 +45,13 @@ ExternalProject_Add(${boost_NAME}
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ""
     CONFIGURE_COMMAND   call "${VCVARSALL_BAT}" x86   # bootstrap.bat needs the 32-bit compiler
-                        \nset CC=cl.exe               # bootstrap.bat cannot handel spaces in paths
+                        \nset CC=cl.exe               # bootstrap.bat cannot handle spaces in paths
                         \ncall bootstrap.bat vc${VISUAL_STUDIO_VERSION}
                         \nmore ${boost_PATCH} >> project-config.jam
-    BUILD_COMMAND       ./b2 --with-python --with-serialization variant=release threading=multi link=shared toolset=${BOOST_TOOLSET} address-model=64
+    BUILD_COMMAND       ./b2 ${BOOST_OPTIONS}
     BUILD_IN_SOURCE     1
-    INSTALL_COMMAND     ${CMAKE_COMMAND} -P ${boost_INSTALL}
+    INSTALL_COMMAND     ./b2 --prefix=${ILASTIK_DEPENDENCY_DIR} ${BOOST_OPTIONS} install
+                        \nmove ${ILASTIK_DEPENDENCY_DIR_DOS}\\lib\\boost*.dll ${ILASTIK_DEPENDENCY_DIR_DOS}\\bin
 )
 
 set_target_properties(${boost_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
