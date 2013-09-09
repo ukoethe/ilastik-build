@@ -15,13 +15,13 @@ include (zlib)
 include (jpeg)
 include (tiff)
 include (libpng)
-include (jom)
+#include (jom)
 
 external_source (qt
     4.8.3
     qt-everywhere-opensource-src-4.8.3.tar.gz
     a663b6c875f8d7caa8ac9c30e4a4ec3b
-    http://releases.qt-project.org/qt4/source
+    http://download.qt-project.org/archive/qt/4.8/4.8.3
     FORCE)
 
 message ("Installing ${qt_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
@@ -124,7 +124,7 @@ configure_file(build_qt.bat.in ${ILASTIK_DEPENDENCY_DIR}/tmp/build_qt.bat)
 file(TO_NATIVE_PATH ${ILASTIK_DEPENDENCY_DIR}/tmp/build_qt.bat QT_BUILD_BAT)
 
 ExternalProject_Add(${qt_NAME}
-    DEPENDS             ${python_NAME} ${zlib_NAME} ${jpeg_NAME} ${tiff_NAME} ${libpng_NAME} ${jom_NAME}
+    DEPENDS             ${python_NAME} ${zlib_NAME} ${jpeg_NAME} ${tiff_NAME} ${libpng_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${qt_URL}
     URL_MD5             ${qt_MD5}

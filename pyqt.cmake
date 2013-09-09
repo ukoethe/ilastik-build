@@ -12,7 +12,7 @@ include (ExternalSource)
 include (python)
 include (python_packages)
 include (qt)
-include (jom)
+#include (jom)
 
 message ("Installing ${pyqt_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 
