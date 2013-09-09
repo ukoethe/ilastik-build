@@ -5,13 +5,18 @@ rem find CPLEX in the original PATH. FIXME: do we need to be more specific, e.g.
 where /Q cplex
 if NOT ERRORLEVEL 1 for /f "delims=" %%a in ('where cplex') do @set CPLEX_PATH=%%~dpa
 
+rem find Gurobi in the original PATH. FIXME: do we need to be more specific, e.g. gurobi55.dll ?
+where /Q gurobi
+if NOT ERRORLEVEL 1 for /f "delims=" %%a in ('where gurobi') do @set GUROBI_PATH=%%~dpa
+
 rem overwrite PATH with only what ilastik needs
 set INSTALL_DIR=%~dp0
 set PATH=%INSTALL_DIR%bin;%INSTALL_DIR%Qt4\bin;%INSTALL_DIR%python
 
-rem re-insert CPLEX into the PATH if it was found
+rem re-insert CPLEX and Gurobi into the PATH if they were found
 rem (note: we cannot use 'if () else ()' here, because it conflicts with parentheses in the %PATH%)
 if DEFINED CPLEX_PATH set PATH=%PATH%;%CPLEX_PATH%
+if DEFINED GUROBI_PATH set PATH=%PATH%;%GUROBI_PATH%
 
 rem otherwise, issue a warning when ilastik was compiled with chaingraph support
 if NOT DEFINED CPLEX_PATH if EXIST "%INSTALL_DIR%python\Lib\site-packages\pgmlink.pyd" echo WARNING: CPLEX is not in the PATH -- chaingraph tracking will be unavailable.
