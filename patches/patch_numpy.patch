@@ -1,5 +1,45 @@
---- numpy/distutils/fcompiler/gnu.py	Tue Sep 13 20:39:16 2011
-+++ numpy/distutils/fcompiler/gnu.py	Wed Feb 20 21:12:07 2013
+--- numpy/core/setup.py	Wed Sep 18 17:41:35 2013
++++ numpy/core/setup.py	Wed Sep 18 18:09:06 2013
+@@ -117,6 +117,9 @@ def win32_checks(deflist):
+ 
+ def check_math_capabilities(config, moredefs, mathlibs):
+     def check_func(func_name):
++        print "Checking for", func_name
++        if func_name == "modff":
++            return 0
+         return config.check_func(func_name, libraries=mathlibs,
+                                  decl=True, call=True)
+ 
+--- numpy/distutils/command/build_ext.py	Wed Sep 18 17:41:35 2013
++++ numpy/distutils/command/build_ext.py	Wed Sep 18 18:09:28 2013
+@@ -445,10 +445,12 @@ class build_ext (old_build_ext):
+                     fileexists = True
+                     break
+             if fileexists: continue
+-            # make g77-compiled static libs available to MSVC
++            # make g77-compiled dynamic or static libs available to MSVC
+             fileexists = False
+             for libdir in c_library_dirs:
+-                libfile = os.path.join(libdir,'lib%s.a' % (libname))
++                libfile = os.path.join(libdir,'lib%s.dll.a' % (libname))
++                if not os.path.isfile(libfile):
++                    libfile = os.path.join(libdir,'lib%s.a' % (libname))
+                 if os.path.isfile(libfile):
+                     # copy libname.a file to name.lib so that MSVC linker
+                     # can find it
+@@ -478,7 +480,9 @@ class build_ext (old_build_ext):
+         for lib in fcompiler.libraries:
+             if not lib.startswith('msvc'):
+                 c_libraries.append(lib)
+-                p = combine_paths(f_lib_dirs, 'lib' + lib + '.a')
++                p = combine_paths(f_lib_dirs, 'lib' + lib + '.dll.a')
++                if not p:
++                    p = combine_paths(f_lib_dirs, 'lib' + lib + '.a')
+                 if p:
+                     dst_name = os.path.join(self.build_temp, lib + '.lib')
+                     if not os.path.isfile(dst_name):
+--- numpy/distutils/fcompiler/gnu.py	Wed Sep 18 17:41:35 2013
++++ numpy/distutils/fcompiler/gnu.py	Wed Sep 18 18:09:06 2013
 @@ -86,7 +86,8 @@ class GnuFCompiler(FCompiler):
      # use -mno-cygwin for g77 when Python is not Cygwin-Python
      if sys.platform == 'win32':
@@ -44,8 +84,8 @@
          else:
              return GnuFCompiler.get_flags_opt(self)
  
---- numpy/distutils/mingw32ccompiler.py	Sat May 19 13:51:55 2012
-+++ numpy/distutils/mingw32ccompiler.py	Wed Feb 20 21:12:07 2013
+--- numpy/distutils/mingw32ccompiler.py	Wed Sep 18 17:41:35 2013
++++ numpy/distutils/mingw32ccompiler.py	Wed Sep 18 18:09:06 2013
 @@ -106,17 +106,17 @@ class Mingw32CCompiler(distutils.cygwinc
          if get_build_architecture() == 'AMD64':
              if self.gcc_version < "4.":
@@ -81,14 +121,3 @@
      lib_dirs.append(os.path.join(sys.prefix, 'lib'))
      try:
          lib_dirs.append(os.path.join(os.environ['SYSTEMROOT'], 'system32'))
---- numpy/core/setup.py	Wed Feb 20 21:12:06 2013
-+++ numpy/core/setup.py	Thu Feb 21 11:40:32 2013
-@@ -117,6 +117,9 @@ def win32_checks(deflist):
- 
- def check_math_capabilities(config, moredefs, mathlibs):
-     def check_func(func_name):
-+        print "Checking for", func_name
-+        if func_name == "modff":
-+            return 0
-         return config.check_func(func_name, libraries=mathlibs,
-                                  decl=True, call=True)

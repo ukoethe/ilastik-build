@@ -7,6 +7,9 @@ make PREFIX=${ILASTIK_DEPENDENCY_DIR} install
 rem install the libraries in their proper places
 move "${ILASTIK_DEPENDENCY_DIR_DOS}\lib\libopenblas.dll" "${ILASTIK_DEPENDENCY_DIR_DOS}\bin"
 
+rem the following two gendef/lib commands may not be necessary
+rem because suitable link libs libgcc.dll.a and libgfortran.dll.a 
+rem are already in the mingw distribution and just need to be copied/renamed
 for /f "delims=" %%a in ('dir /b "${MINGW_PATH}\libgcc*.dll"') do @set LIBGCC=%%a
 set LIBGCC=%LIBGCC:.dll=%
 copy "${MINGW_PATH}\%LIBGCC%.dll" "${ILASTIK_DEPENDENCY_DIR_DOS}\bin"
