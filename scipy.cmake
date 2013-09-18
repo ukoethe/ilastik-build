@@ -19,6 +19,14 @@ external_source (scipy
     http://downloads.sourceforge.net/project/scipy/scipy/0.11.0
     FORCE)
 
+if(${ILASTIK_BITNESS} STREQUAL "32")
+#    set(OPENBLAS_PARALLEL_BUILD "")
+    set(SCIPY_MACHINE "/MACHINE:X86")
+else()
+#    set(OPENBLAS_PARALLEL_BUILD "-j6")
+    set(SCIPY_MACHINE "/MACHINE:X64")
+endif()
+
 configure_file(build_scipy.bat.in ${ILASTIK_DEPENDENCY_DIR}/tmp/build_scipy.bat)
 file(TO_NATIVE_PATH ${ILASTIK_DEPENDENCY_DIR}/tmp/build_scipy.bat SCIPY_BUILD_BAT)
 

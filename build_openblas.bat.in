@@ -1,7 +1,7 @@
 set PATH=${MSYS_PATH};${MINGW_PATH};%PATH%
 
 rem disable AVX so that the binaries can run on older processors
-make -j6 NO_AVX=1
+make ${OPENBLAS_PARALLEL_BUILD} NO_AVX=1 FC=${MINGW_PATH}\gfortran.exe BINARY=${ILASTIK_BITNESS}
 make PREFIX=${ILASTIK_DEPENDENCY_DIR} install
 
 rem install the libraries in their proper places
@@ -11,11 +11,11 @@ for /f "delims=" %%a in ('dir /b "${MINGW_PATH}\libgcc*.dll"') do @set LIBGCC=%%
 set LIBGCC=%LIBGCC:.dll=%
 copy "${MINGW_PATH}\%LIBGCC%.dll" "${ILASTIK_DEPENDENCY_DIR_DOS}\bin"
 gendef "${MINGW_PATH}\%LIBGCC%.dll"
-lib /NOLOGO /MACHINE:X64 /DEF:%LIBGCC%.def /OUT:${ILASTIK_DEPENDENCY_DIR}/lib/%LIBGCC%.lib
+lib /NOLOGO ${OPENBLAS_MACHINE} /DEF:%LIBGCC%.def /OUT:${ILASTIK_DEPENDENCY_DIR}/lib/%LIBGCC%.lib
 
 copy "${MINGW_PATH}\libgfortran-3.dll" "${ILASTIK_DEPENDENCY_DIR_DOS}\bin"
 gendef "${MINGW_PATH}\libgfortran-3.dll"
-lib /NOLOGO /MACHINE:X64 /DEF:libgfortran-3.def /OUT:${ILASTIK_DEPENDENCY_DIR}/lib/libgfortran-3.lib
+lib /NOLOGO ${OPENBLAS_MACHINE} /DEF:libgfortran-3.def /OUT:${ILASTIK_DEPENDENCY_DIR}/lib/libgfortran-3.lib
 
 if exist "${MINGW_PATH}\libwinpthread-1.dll" copy "${MINGW_PATH}\libwinpthread-1.dll" "${ILASTIK_DEPENDENCY_DIR_DOS}\bin"
 

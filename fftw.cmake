@@ -17,15 +17,23 @@ external_source (fftw
     http://www.fftw.org
     FORCE)
 
+if(${ILASTIK_BITNESS} STREQUAL "32")
+    set(FFTW_BITNESS "Win32")
+    set(FFTW_PATH_PREFIX ".")
+else()
+    set(FFTW_BITNESS "x64")
+    set(FFTW_PATH_PREFIX "x64")
+endif()
+
 # Install fftw-3.3-libs.sln and fix toolset specification 
 set (fftw_PATCH ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/patches/patch_fftw.py ${fftw_SRC_DIR})
 
 SET(fftw_BUILD_DIR ${fftw_SRC_DIR}/fftw-3.3-libs)
 SET(fftw_INSTALL ${ILASTIK_DEPENDENCY_DIR}/tmp/fftw_install.cmake)
 FILE(WRITE   ${fftw_INSTALL} "file(INSTALL ../api/fftw3.h DESTINATION ${ILASTIK_DEPENDENCY_DIR}/include)\n")
-FILE(APPEND  ${fftw_INSTALL} "file(GLOB fftw_DLL ${fftw_BUILD_DIR}/x64/Release/*.dll)\n")
+FILE(APPEND  ${fftw_INSTALL} "file(GLOB fftw_DLL ${fftw_BUILD_DIR}/${FFTW_PATH_PREFIX}/Release/*.dll)\n")
 FILE(APPEND  ${fftw_INSTALL} "file(INSTALL \${fftw_DLL} DESTINATION ${ILASTIK_DEPENDENCY_DIR}/bin)\n")
-FILE(APPEND  ${fftw_INSTALL} "file(GLOB fftw_LIB ${fftw_BUILD_DIR}/x64/Release/*.lib)\n")
+FILE(APPEND  ${fftw_INSTALL} "file(GLOB fftw_LIB ${fftw_BUILD_DIR}/${FFTW_PATH_PREFIX}/Release/*.lib)\n")
 FILE(APPEND  ${fftw_INSTALL} "file(INSTALL \${fftw_LIB} DESTINATION ${ILASTIK_DEPENDENCY_DIR}/lib)\n")
         
 message ("Installing ${fftw_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
@@ -38,8 +46,8 @@ ExternalProject_Add(${fftw_NAME}
     PATCH_COMMAND       ${fftw_PATCH}
     CONFIGURE_COMMAND   devenv fftw-3.3-libs.sln /upgrade
     BINARY_DIR          ${fftw_SRC_DIR}/fftw-3.3-libs
-    BUILD_COMMAND       devenv fftw-3.3-libs.sln /build Release /project libfftw-3.3
-                      \ndevenv fftw-3.3-libs.sln /build Release /project libfftwf-3.3
+    BUILD_COMMAND       devenv fftw-3.3-libs.sln /build "Release|${FFTW_BITNESS}" /project libfftw-3.3
+                      \ndevenv fftw-3.3-libs.sln /build "Release|${FFTW_BITNESS}" /project libfftwf-3.3
     INSTALL_COMMAND     ${CMAKE_COMMAND} -P ${fftw_INSTALL}
 )
 

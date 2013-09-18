@@ -9,12 +9,19 @@ rem find 64-bit libgcc.a and copy it to ilastik libdir (needed to get __chkstk_m
 for /f "delims=" %%a in ('dir /s /b "${MINGW_PATH}\..\lib\*libgcc.a" ^| find /v "\32\"') do @set LIBGCCA=%%a
 copy "%LIBGCCA%" ${ILASTIK_DEPENDENCY_DIR_DOS}\lib\libgcc.lib
 
-rem compile missing C99 functions
-cl /MD /O2 /c ${PROJECT_SOURCE_DIR}/c99.c
-lib /NOLOGO /MACHINE:X64 /OUT:${ILASTIK_DEPENDENCY_DIR}/lib/emulate_c99.lib c99.obj
+rem check if C99 functions are in libgfortran-3.lib and emulate them otherwise
+${MSYS_PATH}\grep.exe -q cabsf ${ILASTIK_DEPENDENCY_DIR}/lib/libgfortran-3.lib
+if ERRORLEVEL 1 (
+    echo emulating missing C99 functions
+    cl /MD /O2 /c ${PROJECT_SOURCE_DIR}/c99.c
+    lib /NOLOGO ${SCIPY_MACHINE} /OUT:${ILASTIK_DEPENDENCY_DIR}/lib/emulate_c99.lib c99.obj
+    set EMULATE_C99=emulate_c99
+) else (
+    set EMULATE_C99=
+)
 
 rem Do not build with '-c mingw32' because this would use gcc for linking, leading to crashes.
 rem For the same reason, never start 'devenv' in a git/msys bash shell!
 rem Without this flag, mingw will only be used for Fortran sources, and gfortran 
 rem is automatically found in the PATH.
-${PYTHON_EXE} setup.py build_ext -l "%LIBGCC% libgfortran-3 emulate_c99 libgcc" -L ${ILASTIK_DEPENDENCY_DIR}/lib install
+${PYTHON_EXE} setup.py build_ext -l "%LIBGCC% libgfortran-3 %EMULATE_C99% libgcc" -L ${ILASTIK_DEPENDENCY_DIR}/lib install

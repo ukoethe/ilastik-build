@@ -17,8 +17,14 @@ external_source (ann
     http://www.cs.umd.edu/~mount/ANN/Files/1.1.2
     FORCE)
 
-# patch to add x64 build platform
-set (ann_PATCH ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/patches/patch_ann.py ${ann_SRC_DIR})
+if(${ILASTIK_BITNESS} STREQUAL "32")
+    set(ANN_BITNESS "Win32")
+    set (ann_PATCH echo)
+else()
+    set(ANN_BITNESS "x64")
+    # patch to support x64 build platform
+    set (ann_PATCH ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/patches/patch_ann.py ${ann_SRC_DIR})
+endif()
 
 # install script
 SET(ann_BUILD_DIR ${ann_SRC_DIR}/MS_Win32)
@@ -39,7 +45,7 @@ ExternalProject_Add(${ann_NAME}
     PATCH_COMMAND       devenv MS_WIN32\\Ann.sln /upgrade
     CONFIGURE_COMMAND   ${ann_PATCH}
     BINARY_DIR          ${ann_SRC_DIR}/MS_Win32
-    BUILD_COMMAND       devenv Ann.sln /build "Release|x64" /project dll
+    BUILD_COMMAND       devenv Ann.sln /build "Release|${ANN_BITNESS}" /project dll
     INSTALL_COMMAND     ${CMAKE_COMMAND} -P ${ann_INSTALL}
 )
 

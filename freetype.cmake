@@ -16,11 +16,18 @@ external_source (freetype
     http://download-mirror.savannah.gnu.org/releases/freetype/
     FORCE)
 
+if(${ILASTIK_BITNESS} STREQUAL "32")
+    set(FREETYPE_BITNESS "Win32")
+    set (freetype_PATCH echo)
+else()
+    set(FREETYPE_BITNESS "x64")
+    set (freetype_PATCH ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/patches/patch_freetype.py ${freetype_BIN_DIR})
+endif()
+
 
 set(freetype_BIN_DIR  ${freetype_SRC_DIR}/builds/win32/vc2010)
 
 # Switch to x64 build (FIXME: the RE is very siplistic -- check)
-set (freetype_PATCH ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/patches/patch_freetype.py ${freetype_BIN_DIR})
 
 message ("Installing ${freetype_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${freetype_NAME}
@@ -32,7 +39,7 @@ ExternalProject_Add(${freetype_NAME}
     PATCH_COMMAND       ${freetype_PATCH}
     CONFIGURE_COMMAND   devenv freetype.sln /upgrade
     BINARY_DIR          ${freetype_BIN_DIR}
-    BUILD_COMMAND       devenv freetype.sln /build "Release Multithreaded|x64" /project freetype
+    BUILD_COMMAND       devenv freetype.sln /build "Release Multithreaded|${FREETYPE_BITNESS}" /project freetype
     INSTALL_COMMAND     ${CMAKE_COMMAND} -E copy_directory ../../../include ${ILASTIK_DEPENDENCY_DIR}/include
                       \n ${CMAKE_COMMAND} -E copy ../../../objs/win32/vc2010/freetype2411MT.lib ${ILASTIK_DEPENDENCY_DIR}/lib/freetype.lib
 )

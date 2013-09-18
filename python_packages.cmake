@@ -24,8 +24,8 @@ external_source (sqlite
 set (sqlite_CONFIG ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/patches/patch_python_sqlite.py ${PYTHON_BIN_DIR})
 
 SET(sqlite_INSTALL ${ILASTIK_DEPENDENCY_DIR}/tmp/sqlite_install.cmake)
-FILE(WRITE   ${sqlite_INSTALL} "file(INSTALL amd64/_sqlite3.pyd amd64/sqlite3.dll DESTINATION ${PYTHON_PREFIX}/DLLs)\n")
-FILE(APPEND  ${sqlite_INSTALL} "file(INSTALL amd64/sqlite3.lib DESTINATION ${PYTHON_PREFIX}/libs)\n")
+FILE(WRITE   ${sqlite_INSTALL} "file(INSTALL ${PYTHON_PATH_PREFIX}/_sqlite3.pyd ${PYTHON_PATH_PREFIX}/sqlite3.dll DESTINATION ${PYTHON_PREFIX}/DLLs)\n")
+FILE(APPEND  ${sqlite_INSTALL} "file(INSTALL ${PYTHON_PATH_PREFIX}/sqlite3.lib DESTINATION ${PYTHON_PREFIX}/libs)\n")
 
 message ("Installing ${sqlite_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${sqlite_NAME}
@@ -37,7 +37,7 @@ ExternalProject_Add(${sqlite_NAME}
     PATCH_COMMAND       ""
     BINARY_DIR          ${PYTHON_BIN_DIR}
     CONFIGURE_COMMAND   ${sqlite_CONFIG}
-    BUILD_COMMAND       devenv PCbuild.sln /build "Release|x64" /project _sqlite3
+    BUILD_COMMAND       devenv PCbuild.sln /build "Release|${PYTHON_BITNESS}" /project _sqlite3
     INSTALL_COMMAND     ${CMAKE_COMMAND} -P ${sqlite_INSTALL}
 )
 

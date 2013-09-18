@@ -1,4 +1,10 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+
+# check that we use a DOS shell
+if("$ENV{TERM}" MATCHES "cygwin")
+    MESSAGE(FATAL_ERROR "cmake must be executed in a DOS shell for the build to work properly.")
+endif()
+
 project (ilastik)
 
 # check that cmake generator and compiler path in the shell are consistent
@@ -15,12 +21,32 @@ if(NOT "${VSPATH_LOWER}" STREQUAL "${CMAKE_VSPATH_LOWER}")
    MESSAGE(FATAL_ERROR "Mismatch between generator (-G) and shell:\n  generator uses '${CMAKE_VISUAL_STUDIO_PATH}'\n  shell uses '${VISUAL_STUDIO_PATH}'")
 endif()
 
-if(NOT "${CL_PATH}" MATCHES "amd64")
-    MESSAGE(FATAL_ERROR "Compiler must be 64-bit, but shell uses\n  '${CL_PATH}'")
+if("${CMAKE_C_COMPILER}" MATCHES "amd64")
+    set(ILASTIK_DEFAULT_BITNESS "64")
+else()
+    set(ILASTIK_DEFAULT_BITNESS "32")
 endif()
 
-if(NOT "${CMAKE_C_COMPILER}" MATCHES "amd64")
-    MESSAGE(FATAL_ERROR "Compiler must be 64-bit, but generator uses\n  '${CMAKE_C_COMPILER}'")
+set(ILASTIK_BITNESS ${ILASTIK_DEFAULT_BITNESS} CACHE STRING "Address model: 32 or 64.")
+
+if(${ILASTIK_BITNESS} STREQUAL "32")
+    if("${CMAKE_C_COMPILER}" MATCHES "amd64")
+        MESSAGE(FATAL_ERROR "ILASTIK_BITNESS specifies a 32-bit build, but the cmake generator uses a 64-bit compiler at\n  '${CMAKE_C_COMPILER}'")
+    endif()
+
+    if("${CL_PATH}" MATCHES "amd64")
+        MESSAGE(FATAL_ERROR "ILASTIK_BITNESS specifies a 32-bit build, but the shell has a 64-bit compiler in the PATH at\n  '${CL_PATH}'")
+    endif()
+elseif(${ILASTIK_BITNESS} STREQUAL "64")
+    if(NOT "${CMAKE_C_COMPILER}" MATCHES "amd64")
+        MESSAGE(FATAL_ERROR "ILASTIK_BITNESS specifies a 64-bit build, but the cmake generator uses a 32-bit compiler at\n  '${CMAKE_C_COMPILER}'")
+    endif()
+
+    if(NOT "${CL_PATH}" MATCHES "amd64")
+        MESSAGE(FATAL_ERROR "ILASTIK_BITNESS specifies a 64-bit build, but the shell has a 32-bit compiler in the PATH at\n  '${CL_PATH}'")
+    endif()
+else()
+    MESSAGE(FATAL_ERROR "ILASTIK_BITNESS must be 32 or 64.")
 endif()
 
 # find compiler version
@@ -205,6 +231,33 @@ endif (NOT ilastik_NAME)
 
 ############################################################################
 
+if(${ILASTIK_BITNESS} STREQUAL "64" AND NOT counting_NAME)
+
+set (counting_NAME ${ilastik_NAME}-counting)
+
+ExternalProject_Add(${counting_NAME}
+    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+    SOURCE_DIR          ${ILASTIK_DEPENDENCY_DIR}/ilastik/ilastik
+    DOWNLOAD_COMMAND    ""
+    UPDATE_COMMAND      ""
+    PATCH_COMMAND       ""
+    BINARY_DIR ${ILASTIK_DEPENDENCY_DIR}/src/cwrapper-build
+    CONFIGURE_COMMAND   ${CMAKE_COMMAND} ${ILASTIK_DEPENDENCY_DIR}/ilastik/ilastik/ilastik/applets/counting/cwrapper
+    -G ${CMAKE_GENERATOR} -DWITH_CPLEX=1 -DWITH_GUROBI=1
+    BUILD_COMMAND       devenv cwrapper.sln /build "Release" /project ALL_BUILD
+    TEST_COMMAND        ""
+    INSTALL_COMMAND     ${CMAKE_COMMAND} -E copy gurobi/Release/gurobiwrapper.dll ${ILASTIK_DEPENDENCY_DIR}/ilastik/ilastik/ilastik/applets/counting/cwrapper/gurobi
+                     \n ${CMAKE_COMMAND} -E copy cplex/Release/cplexwrapper.dll ${ILASTIK_DEPENDENCY_DIR}/ilastik/ilastik/ilastik/applets/counting/cwrapper/cplex
+    )
+
+set_target_properties(${counting_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+set (APP_DEPENDENCIES ${APP_DEPENDENCIES} ${counting_NAME})
+
+
+endif () 
+
+############################################################################
+
 configure_file(ilastik.bat.in ${ILASTIK_DEPENDENCY_DIR}/ilastik.bat)
 configure_file(ilastik-icon.ico ${ILASTIK_DEPENDENCY_DIR}/ilastik-icon.ico COPYONLY)
 
@@ -227,7 +280,12 @@ INSTALL(DIRECTORY ${ILASTIK_DEPENDENCY_DIR}/Qt4/plugins/ DESTINATION Qt4/plugins
 # OpenMP runtimes are needed for cylemon
 file(TO_CMAKE_PATH "$ENV{VCINSTALLDIR}" MSVC_ROOT)
 string(REGEX REPLACE "\\." "" MSVC_VERSION "$ENV{VISUALSTUDIOVERSION}")
-INSTALL(DIRECTORY ${MSVC_ROOT}/redist/x64/Microsoft.VC${MSVC_VERSION}.OpenMP/ DESTINATION bin FILES_MATCHING PATTERN "vcomp*.dll")
+
+if(${ILASTIK_BITNESS} STREQUAL "32")
+    INSTALL(DIRECTORY ${MSVC_ROOT}/redist/x86/Microsoft.VC${MSVC_VERSION}.OpenMP/ DESTINATION bin FILES_MATCHING PATTERN "vcomp*.dll")
+else()
+    INSTALL(DIRECTORY ${MSVC_ROOT}/redist/x64/Microsoft.VC${MSVC_VERSION}.OpenMP/ DESTINATION bin FILES_MATCHING PATTERN "vcomp*.dll")
+endif()
 
 SET(CPACK_PACKAGE_VENDOR "The ilastik Team")
 SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY
@@ -235,13 +293,15 @@ SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY
 )
 
 # package version setup
-SET(CPACK_PACKAGE_VERSION_MAJOR "0")
-SET(CPACK_PACKAGE_VERSION_MINOR "6")
-SET(CPACK_PACKAGE_VERSION_PATCH "a")
+SET(CPACK_PACKAGE_VERSION_MAJOR "1")
+SET(CPACK_PACKAGE_VERSION_MINOR "0")
+SET(CPACK_PACKAGE_VERSION_PATCH "beta")
 
-SET(CPACK_PACKAGE_INSTALL_DIRECTORY     "${PROJECT_NAME}-0.6.a")
+SET(CPACK_PACKAGE_INSTALL_DIRECTORY     "${PROJECT_NAME}-1.0.beta")
 
-SET(CPACK_NSIS_INSTALL_ROOT "$PROGRAMFILES64")
+if(${ILASTIK_BITNESS} STREQUAL "64")
+    SET(CPACK_NSIS_INSTALL_ROOT "$PROGRAMFILES64")
+endif()
 
 # cannot use SET(CPACK_PACKAGE_EXECUTABLES ...) for *.bat files because it appends .exe
 SET(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "
@@ -264,5 +324,5 @@ SET(CPACK_PACKAGE_CONTACT "ilastik Team <team@ilastik.org>")
 
 INCLUDE (CPack)
 
-MESSAGE(STATUS "Using Visual Studio ${VISUAL_STUDIO_VERSION} at '${CMAKE_C_COMPILER}'")
+MESSAGE(STATUS "Using Visual Studio ${VISUAL_STUDIO_VERSION} at '${CMAKE_C_COMPILER}' for ${ILASTIK_BITNESS}-bit build.")
 

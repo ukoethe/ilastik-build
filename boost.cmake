@@ -35,7 +35,7 @@ message(STATUS "${boost_NAME} environment for bootstrapping: ${VCVARSALL_BAT}")
 set(BOOST_TOOLSET "msvc-${VISUAL_STUDIO_VERSION}.0")
 message(STATUS "${boost_NAME} toolset: ${BOOST_TOOLSET}")
 
-set(BOOST_OPTIONS --layout=system --with-python --with-serialization --with-system --with-filesystem --with-test --with-timer variant=release threading=multi link=shared toolset=${BOOST_TOOLSET} address-model=64)
+set(BOOST_OPTIONS --layout=system --with-python --with-serialization --with-system --with-filesystem --with-test --with-timer variant=release threading=multi link=shared toolset=${BOOST_TOOLSET} address-model=${ILASTIK_BITNESS})
 
 ExternalProject_Add(${boost_NAME}
     DEPENDS             ${python_NAME}

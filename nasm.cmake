@@ -9,7 +9,8 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 include (ExternalProject)
 
 set(nasm_NAME nasm-2.10)
-set(nasm_EXE ${ILASTIK_DEPENDENCY_DIR}/src/${nasm_NAME}/nasm.exe)
+set(nasm_PATH "${ILASTIK_DEPENDENCY_DIR}/src/${nasm_NAME}")
+set(nasm_EXE "${nasm_PATH}/nasm.exe")
 
 message ("Installing ${nasm_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${nasm_NAME}
