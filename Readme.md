@@ -10,14 +10,14 @@ Usage
 
 ### Preliminaries:
 
-* Install MS Visual Studio 2010 or 2012, git, cmake, and ActiveState perl. perl is not part of ilastik, but needed for the compilation of Qt.
-* If you want to build scipy and scikit-learn, MinGW and MSYS are needed to compile Fortran source. You must install the MinGW 64-bit compiler suite (e.g. from http://sourceforge.net/projects/mingwbuilds/files/host-windows/releases/) and the MSYS 64-bit tools (e.g. from http://sourceforge.net/projects/mingw-w64/files/External%20binary%20packages%20%28Win64%20hosted%29/MSYS%20%2832-bit%29/), or the corresponding 32-bit packages. When the MinGW download is compressed with 7-zip, you need this program as well. Make sure that `MINGW/bin` contains `gfortran.exe` and `gendef.exe`, and `MSYS/bin` contains `make.exe`, `wget.exe`, `patch.exe`, and `grep.exe`.
+* Install MS Visual Studio 2010 or 2012, git, cmake, and ActiveState perl. perl is not part of ilastik, but needed to compile Qt.
+* If you want to build scipy and scikit-learn, MinGW and MSYS are needed to compile Fortran source. You must install the MinGW 64-bit (e.g. from http://sourceforge.net/projects/mingwbuilds/files/host-windows/releases/) or 32-bit (e.g. from http://sourceforge.net/projects/mingw/files/Installer/mingw-get-inst/) compiler suite and the MSYS tools (e.g. from http://sourceforge.net/projects/mingw-w64/files/External%20binary%20packages%20%28Win64%20hosted%29/MSYS%20%2832-bit%29/). When the MinGW download is compressed with 7-zip, you need this program as well. Make sure that `MINGW/bin` contains `gfortran.exe` and `gendef.exe` (64-bit build only), and `MSYS/bin` contains `make.exe`, `wget.exe`, `patch.exe`, and `grep.exe`.
 * If you want to create an .exe installer, also install NSIS.
 * Remove possibly interfering software from your `PATH` variable (e.g. an existing Python or Qt installation, the MinGW gcc compiler).
 
 ### Configuration:
 
-* Open Visual Studio's 32-bit or 64-bit DOS command shell. It can usually be found in the Start menu under "Programs->Microsoft Visual Studio 2010->Visual Studio Tools->Visual Studio x64 Win64 Command Prompt". The choice of shell determines if you create a 32-bit or 64-bit installation.
+* Open Visual Studio's 32-bit or 64-bit DOS command shell. It can usually be found in the Start menu under "Programs->Microsoft Visual Studio 2010->Visual Studio Tools->Visual Studio x64 Win64 Command Prompt" or similar. The choice of shell determines if you create a 32-bit or 64-bit installation.
 * Create a directory for the cmake-created build scripts (e.g. `ilastik-build/build`) and goto this directory:
 
 ```

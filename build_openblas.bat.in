@@ -1,28 +1,33 @@
+@echo off
 set PATH=${MSYS_PATH};${MINGW_PATH};%PATH%
 
 rem disable AVX so that the binaries can run on older processors
-make ${OPENBLAS_PARALLEL_BUILD} NO_AVX=1 FC=${MINGW_PATH}\gfortran.exe BINARY=${ILASTIK_BITNESS}
+make -j6 NO_AVX=1 FC=${MINGW_PATH}\gfortran.exe BINARY=${ILASTIK_BITNESS}
 make PREFIX=${ILASTIK_DEPENDENCY_DIR} install
 
 rem install the libraries in their proper places
 move "${ILASTIK_DEPENDENCY_DIR_DOS}\lib\libopenblas.dll" "${ILASTIK_DEPENDENCY_DIR_DOS}\bin"
 
-rem the following two gendef/lib commands may not be necessary
-rem because suitable link libs libgcc.dll.a and libgfortran.dll.a 
-rem are already in the mingw distribution and just need to be copied/renamed
 for /f "delims=" %%a in ('dir /b "${MINGW_PATH}\libgcc*.dll"') do @set LIBGCC=%%a
 set LIBGCC=%LIBGCC:.dll=%
 copy "${MINGW_PATH}\%LIBGCC%.dll" "${ILASTIK_DEPENDENCY_DIR_DOS}\bin"
-gendef "${MINGW_PATH}\%LIBGCC%.dll"
-lib /NOLOGO ${OPENBLAS_MACHINE} /DEF:%LIBGCC%.def /OUT:${ILASTIK_DEPENDENCY_DIR}/lib/%LIBGCC%.lib
 
 copy "${MINGW_PATH}\libgfortran-3.dll" "${ILASTIK_DEPENDENCY_DIR_DOS}\bin"
-gendef "${MINGW_PATH}\libgfortran-3.dll"
-lib /NOLOGO ${OPENBLAS_MACHINE} /DEF:libgfortran-3.def /OUT:${ILASTIK_DEPENDENCY_DIR}/lib/libgfortran-3.lib
-
 if exist "${MINGW_PATH}\libwinpthread-1.dll" copy "${MINGW_PATH}\libwinpthread-1.dll" "${ILASTIK_DEPENDENCY_DIR_DOS}\bin"
 
 copy "${MINGW_PATH}\libstdc++-6.dll" "${ILASTIK_DEPENDENCY_DIR_DOS}\bin"
 copy "${MINGW_PATH}\libquadmath-0.dll" "${ILASTIK_DEPENDENCY_DIR_DOS}\bin"
 copy exports\libopenblas.lib "${ILASTIK_DEPENDENCY_DIR_DOS}\lib\blas.lib"
 copy exports\libopenblas.lib "${ILASTIK_DEPENDENCY_DIR_DOS}\lib\lapack.lib"
+
+if "${ILASTIK_BITNESS}" == "64" (
+    rem The following two gendef/lib commands are not necessary for 32-bit builds
+    rem because suitable link libs libgcc.dll.a and libgfortran.dll.a 
+    rem are already in the mingw distribution and just need to be copied.
+    rem This will be done automatically by suitably patched numpy/distutils.
+    
+    gendef "${MINGW_PATH}\%LIBGCC%.dll"
+    lib /NOLOGO ${OPENBLAS_MACHINE} /DEF:%LIBGCC%.def /OUT:${ILASTIK_DEPENDENCY_DIR}/lib/%LIBGCC%.lib
+    gendef "${MINGW_PATH}\libgfortran-3.dll"
+    lib /NOLOGO ${OPENBLAS_MACHINE} /DEF:libgfortran-3.def /OUT:${ILASTIK_DEPENDENCY_DIR}/lib/libgfortran-3.lib
+)

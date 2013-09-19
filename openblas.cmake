@@ -22,10 +22,8 @@ if(NOT EXISTS ${MSYS_PATH}/make.exe)
 endif()
 
 if(${ILASTIK_BITNESS} STREQUAL "32")
-    set(OPENBLAS_PARALLEL_BUILD "")  # parallel builds apparently don't work in mingw32
     set(OPENBLAS_MACHINE "/MACHINE:X86")
 else()
-    set(OPENBLAS_PARALLEL_BUILD "-j6")
     set(OPENBLAS_MACHINE "/MACHINE:X64")
 endif()
     
