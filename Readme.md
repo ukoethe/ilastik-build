@@ -30,11 +30,18 @@ Usage
     % cd <build-directory>
 ```
 
-* Configure the build system (use the generator `-G "Visual Studio 11 Win64"` if you have Visual Studio 2012, and drop `Win64` for a 32-bit build):
+* Configure the build system
+  (use the generator `-G "Visual Studio 11 Win64"` if you have Visual Studio 2012,
+   and drop `Win64` for a 32-bit build):
 
 ```
     % cmake -G "Visual Studio 10 Win64" -DILASTIK_DEPENDENCY_DIR=<prefix>  <path-to-build-system>
 ```
+
+* you may need to specify the `MINGW_PATH` cmake variable as the path to the *MinGW* binary directory
+  (for example `-DMINGW_PATH=C:\mingw-builds\x64-4.8.1-posix-seh-rev5\mingw64\bin`)
+  and the `MSYS_PATH`, which should point to the MSYS *binary* directory
+  (for example `-DMSYS_PATH=C:\msys\1.0\bin`).
 
   This will create a file `ilastik.sln` in the `<build-directory>` that can be opened with Visual Studio. In the above cmake call, `<path-to-build-system>` is the directory where ilastik-build has been checked out (typically just `..` when we are in `ilastik-build/build`), and `<prefix>` is the desired path where the dependencies will be installed. The actual installations will be located in the subdirectories `<prefix>\bin`, `<prefix>\lib`, `<prefix>\include`, `<prefix>\python`, and `<prefix>\Qt4`. The sources (including cached `tar` archives and intermediate files) go into `<prefix>\src`. The ilastik Python modules will be installed into `<prefix>\ilastik`.
  
