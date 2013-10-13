@@ -10,7 +10,8 @@ Usage
 
 ### Preliminaries:
 
-* Install MS Visual Studio 2010 or 2012, git,
+* Install MS Visual Studio 2010 or 2012 (MSVC Express will *not* work),
+  [git](http://msysgit.github.io/),
   [cmake](http://cmake.org/cmake/resources/software.html),
   and
   [ActiveState](http://www.activestate.com/activeperlActiveState perl).
@@ -23,6 +24,8 @@ Usage
 ### Configuration:
 
 * Open Visual Studio's 32-bit or 64-bit DOS command shell. It can usually be found in the Start menu under "Programs->Microsoft Visual Studio 2010->Visual Studio Tools->Visual Studio x64 Win64 Command Prompt" or similar. The choice of shell determines if you create a 32-bit or 64-bit installation.
+* Alternatively add the path to the desired `cl.exe` to your PATH (for example, ``C:\MSVC11\VC\bin\x86_amd64`)
+  and then launch `cmd.exe`
 * Create a directory for the cmake-created build scripts (e.g. `ilastik-build/build`) and goto this directory:
 
 ```
