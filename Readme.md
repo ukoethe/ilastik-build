@@ -14,7 +14,7 @@ Usage
   [git](http://msysgit.github.io/),
   [cmake](http://cmake.org/cmake/resources/software.html),
   and
-  [ActiveState](http://www.activestate.com/activeperlActiveState perl).
+  [ActiveState perl](http://www.activestate.com/activeperlActiveState perl).
   perl is not part of ilastik, but needed to compile Qt.
 * If you want to build scipy and scikit-learn, MinGW and MSYS are needed to compile Fortran source.
   You must install the MinGW 64-bit (e.g. from http://sourceforge.net/projects/mingwbuilds/files/host-windows/releases/) or 32-bit (e.g. from http://sourceforge.net/projects/mingw/files/Installer/mingw-get-inst/) compiler suite and the MSYS tools (e.g. from http://sourceforge.net/projects/mingw-w64/files/External%20binary%20packages%20%28Win64%20hosted%29/MSYS%20%2832-bit%29/). When the MinGW download is compressed with 7-zip, you need this program as well. Make sure that `MINGW/bin` contains `gfortran.exe` and `gendef.exe` (64-bit build only), and `MSYS/bin` contains `make.exe`, `wget.exe`, `patch.exe`, and `grep.exe`.
