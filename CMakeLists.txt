@@ -2,14 +2,19 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 # check that we use a DOS shell
 if("$ENV{TERM}" MATCHES "cygwin")
-    MESSAGE(FATAL_ERROR "cmake must be executed in a DOS shell for the build to work properly.")
+    MESSAGE(FATAL_ERROR "cmake must be executed in a VisualStudio command shell for the build to work properly (see the README for details).")
 endif()
 
 project (ilastik)
 
-# check that cmake generator and compiler path in the shell are consistent
+# check that cmake generator and compiler path in the shell are present and consistent
 execute_process(COMMAND where cl.exe
                   OUTPUT_VARIABLE CL_PATH OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+if(NOT CL_PATH)
+    message(FATAL_ERROR "Compiler is not in the PATH. cmake must be executed in a VisualStudio command shell for the build to work properly (see the README for details).")
+endif() 
+
 FILE(TO_CMAKE_PATH ${CL_PATH} CL_PATH)
 
 STRING(REGEX REPLACE "/VC/bin/.*" "" VISUAL_STUDIO_PATH ${CL_PATH})
