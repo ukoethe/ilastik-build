@@ -10,14 +10,22 @@ Usage
 
 ### Preliminaries:
 
-* Install MS Visual Studio 2010 or 2012, git, cmake, and ActiveState perl. perl is not part of ilastik, but needed to compile Qt.
-* If you want to build scipy and scikit-learn, MinGW and MSYS are needed to compile Fortran source. You must install the MinGW 64-bit (e.g. from http://sourceforge.net/projects/mingwbuilds/files/host-windows/releases/) or 32-bit (e.g. from http://sourceforge.net/projects/mingw/files/Installer/mingw-get-inst/) compiler suite and the MSYS tools (e.g. from http://sourceforge.net/projects/mingw-w64/files/External%20binary%20packages%20%28Win64%20hosted%29/MSYS%20%2832-bit%29/). When the MinGW download is compressed with 7-zip, you need this program as well. Make sure that `MINGW/bin` contains `gfortran.exe` and `gendef.exe` (64-bit build only), and `MSYS/bin` contains `make.exe`, `wget.exe`, `patch.exe`, and `grep.exe`.
+* Install MS Visual Studio 2010 or 2012 (MSVC Express will *not* work),
+  [git](http://msysgit.github.io/),
+  [cmake](http://cmake.org/cmake/resources/software.html),
+  and
+  [ActiveState](http://www.activestate.com/activeperlActiveState perl).
+  perl is not part of ilastik, but needed to compile Qt.
+* If you want to build scipy and scikit-learn, MinGW and MSYS are needed to compile Fortran source.
+  You must install the MinGW 64-bit (e.g. from http://sourceforge.net/projects/mingwbuilds/files/host-windows/releases/) or 32-bit (e.g. from http://sourceforge.net/projects/mingw/files/Installer/mingw-get-inst/) compiler suite and the MSYS tools (e.g. from http://sourceforge.net/projects/mingw-w64/files/External%20binary%20packages%20%28Win64%20hosted%29/MSYS%20%2832-bit%29/). When the MinGW download is compressed with 7-zip, you need this program as well. Make sure that `MINGW/bin` contains `gfortran.exe` and `gendef.exe` (64-bit build only), and `MSYS/bin` contains `make.exe`, `wget.exe`, `patch.exe`, and `grep.exe`.
 * If you want to create an .exe installer, also install NSIS.
 * Remove possibly interfering software from your `PATH` variable (e.g. an existing Python or Qt installation, the MinGW gcc compiler).
 
 ### Configuration:
 
 * Open Visual Studio's 32-bit or 64-bit DOS command shell. It can usually be found in the Start menu under "Programs->Microsoft Visual Studio 2010->Visual Studio Tools->Visual Studio x64 Win64 Command Prompt" or similar. The choice of shell determines if you create a 32-bit or 64-bit installation.
+* Alternatively add the path to the desired `cl.exe` to your PATH (for example, ``C:\MSVC11\VC\bin\x86_amd64`)
+  and then launch `cmd.exe`
 * Create a directory for the cmake-created build scripts (e.g. `ilastik-build/build`) and goto this directory:
 
 ```
@@ -25,11 +33,18 @@ Usage
     % cd <build-directory>
 ```
 
-* Configure the build system (use the generator `-G "Visual Studio 11 Win64"` if you have Visual Studio 2012, and drop `Win64` for a 32-bit build):
+* Configure the build system
+  (use the generator `-G "Visual Studio 11 Win64"` if you have Visual Studio 2012,
+   and drop `Win64` for a 32-bit build):
 
 ```
     % cmake -G "Visual Studio 10 Win64" -DILASTIK_DEPENDENCY_DIR=<prefix>  <path-to-build-system>
 ```
+
+* you may need to specify the `MINGW_PATH` cmake variable as the path to the *MinGW* binary directory
+  (for example `-DMINGW_PATH=C:\mingw-builds\x64-4.8.1-posix-seh-rev5\mingw64\bin`)
+  and the `MSYS_PATH`, which should point to the MSYS *binary* directory
+  (for example `-DMSYS_PATH=C:\msys\1.0\bin`).
 
   This will create a file `ilastik.sln` in the `<build-directory>` that can be opened with Visual Studio. In the above cmake call, `<path-to-build-system>` is the directory where ilastik-build has been checked out (typically just `..` when we are in `ilastik-build/build`), and `<prefix>` is the desired path where the dependencies will be installed. The actual installations will be located in the subdirectories `<prefix>\bin`, `<prefix>\lib`, `<prefix>\include`, `<prefix>\python`, and `<prefix>\Qt4`. The sources (including cached `tar` archives and intermediate files) go into `<prefix>\src`. The ilastik Python modules will be installed into `<prefix>\ilastik`.
  
