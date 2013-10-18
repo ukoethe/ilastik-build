@@ -24,8 +24,9 @@ Usage
 ### Configuration:
 
 * Open Visual Studio's 32-bit or 64-bit DOS command shell. It can usually be found in the Start menu under "Programs->Microsoft Visual Studio 2010->Visual Studio Tools->Visual Studio x64 Win64 Command Prompt" or similar. The choice of shell determines if you create a 32-bit or 64-bit installation.
-* Alternatively add the path to the desired `cl.exe` to your PATH (for example, ``C:\MSVC11\VC\bin\x86_amd64`)
-  and then launch `cmd.exe`
+  Simply adding `cl.exe` to your PATH does _NOT_  work because additional settings are required to ensure VisualStudio works properly
+  (for the curious: the VS installation contains a script `vcvarsall.bat` that is executed at the start of the VisualStudio shell to 
+   take care of this).
 * Create a directory for the cmake-created build scripts (e.g. `ilastik-build/build`) and goto this directory:
 
 ```
@@ -41,12 +42,9 @@ Usage
     % cmake -G "Visual Studio 10 Win64" -DILASTIK_DEPENDENCY_DIR=<prefix>  <path-to-build-system>
 ```
 
-* you may need to specify the `MINGW_PATH` cmake variable as the path to the *MinGW* binary directory
-  (for example `-DMINGW_PATH=C:\mingw-builds\x64-4.8.1-posix-seh-rev5\mingw64\bin`)
-  and the `MSYS_PATH`, which should point to the MSYS *binary* directory
-  (for example `-DMSYS_PATH=C:\msys\1.0\bin`).
+* You have to specify additional command line parameters if you want to include optional packages, see below.
 
-  This will create a file `ilastik.sln` in the `<build-directory>` that can be opened with Visual Studio. In the above cmake call, `<path-to-build-system>` is the directory where ilastik-build has been checked out (typically just `..` when we are in `ilastik-build/build`), and `<prefix>` is the desired path where the dependencies will be installed. The actual installations will be located in the subdirectories `<prefix>\bin`, `<prefix>\lib`, `<prefix>\include`, `<prefix>\python`, and `<prefix>\Qt4`. The sources (including cached `tar` archives and intermediate files) go into `<prefix>\src`. The ilastik Python modules will be installed into `<prefix>\ilastik`.
+This will create a file `ilastik.sln` in the `<build-directory>` that can be opened with Visual Studio. In the above cmake call, `<path-to-build-system>` is the directory where ilastik-build has been checked out (typically just `..` when we are in `ilastik-build/build`), and `<prefix>` is the desired path where the dependencies will be installed. The actual installations will be located in the subdirectories `<prefix>\bin`, `<prefix>\lib`, `<prefix>\include`, `<prefix>\python`, and `<prefix>\Qt4`. The sources (including cached `tar` archives and intermediate files) go into `<prefix>\src`. The ilastik Python modules will be installed into `<prefix>\ilastik`.
  
 #### VTK
 To include VTK into the build, use:
@@ -59,8 +57,13 @@ To include VTK into the build, use:
 If you want to compile scipy as well, use :
 
 ```
-    % cmake -G "Visual Studio 10 Win64" -DILASTIK_DEPENDENCY_DIR=<prefix> -DWITH_SCIPY=1 -DMSYS_PATH=<path-to-msys-binaries> -DMINGW_PATH=<path-to-mingw-binaries>  <path-to-build-system>
+    % cmake -G "Visual Studio 10 Win64" -DILASTIK_DEPENDENCY_DIR=<prefix> -DWITH_SCIPY=1 \
+      -DMSYS_PATH=<path-to-msys-binaries> -DMINGW_PATH=<path-to-mingw-binaries>  <path-to-build-system>
 ```
+The `MINGW_PATH` cmake variable must point to the MinGW *binary* directory
+  (for example `-DMINGW_PATH=C:\mingw-builds\x64-4.8.1-posix-seh-rev5\mingw64\bin`)
+  and the `MSYS_PATH` should point to the MSYS *binary* directory
+  (for example `-DMSYS_PATH=C:\msys\1.0\bin`).
 
 #### pgmLink
 pgmLink depends on the proprietary software [IBM ILOG CPLEX](http://www-01.ibm.com/software/integration/optimization/cplex-optimization-studio/). If you are an academic you can obtain a free license from the [IBM Academic Initiative](http://www-03.ibm.com/ibm/university/academic/pub/page/academic_initiative). As of CPLEX version 12.5.1, pgmLink can be compiled with both Visual Studio 2010 and 2012. Only 64-bit builds of pgmlink are currently supported.
