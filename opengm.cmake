@@ -11,7 +11,7 @@ include (ExternalSource)
 
 external_git_repo(opengm
     HEAD
-    http://github.com/ilastik/opengm.git)
+    https://github.com/opengm/opengm.git)
     
 message ("Installing ${opengm_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 
