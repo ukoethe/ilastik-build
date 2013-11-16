@@ -36,6 +36,7 @@ ExternalProject_Add(${vigra_NAME}
         -DDEPENDENCY_SEARCH_PREFIX=${ILASTIK_DEPENDENCY_DIR}
         -DPYTHON_EXECUTABLE=${PYTHON_EXE}
         -DHDF5_CPPFLAGS=-D_HDF5USEDLL_
+        -DTIFF_LIBRARY:FILEPATH=${ILASTIK_DEPENDENCY_DIR}/lib/libtiff_i.lib   # linklib for the DLL
     BUILD_COMMAND       devenv vigra.sln /build Release /project vigraimpex
                         \ndevenv vigra.sln /build Release /project vigranumpy
     TEST_COMMAND        "" # devenv vigra.sln /build Release /project check

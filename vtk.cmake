@@ -62,12 +62,13 @@ ExternalProject_Add(${vtk_NAME}
         -DVTK_USE_SYSTEM_JPEG:BOOL=ON
         -DVTK_USE_SYSTEM_PNG:BOOL=ON
         -DVTK_USE_SYSTEM_TIFF:BOOL=ON
+        -DTIFF_LIBRARY:FILEPATH=${ILASTIK_DEPENDENCY_DIR}/lib/libtiff_i.lib   # linklib for the DLL
         -DVTK_USE_SYSTEM_ZLIB:BOOL=ON
         -DVTK_WRAP_PYTHON:BOOL=ON
         -DVTK_WRAP_PYTHON_SIP:BOOL=ON
         -DVTK_USE_TK:BOOL=OFF
         -DVTK_WRAP_TCL:BOOL=OFF
-        -DNETCDF_ENABLE_NETCDF4:BOOL=ON
+        -DNETCDF_ENABLE_NETCDF4:BOOL=OFF
         -DHDF5_DIR:PATH=${ILASTIK_DEPENDENCY_DIR}/cmake/hdf5
         -DHDF5_hdf5_LIBRARY:FILEPATH=${ILASTIK_DEPENDENCY_DIR}/lib/hdf5dll.lib        # needed for vtkNetCDF
         -DHDF5_hdf5_hl_LIBRARY:FILEPATH=${ILASTIK_DEPENDENCY_DIR}/lib/hdf5_hldll.lib  # needed for vtkNetCDF
