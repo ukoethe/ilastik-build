@@ -10,10 +10,10 @@ include (ExternalProject)
 include (ExternalSource)
 
 external_source (numpy
-    1.6.2
-    numpy-1.6.2.tar.gz
-    95ed6c9dcc94af1fc1642ea2a33c1bba
-    http://downloads.sourceforge.net/project/numpy/NumPy/1.6.2
+    1.7.0 
+    numpy-1.7.0.tar.gz
+    4fa54e40b6a243416f0248123b6ec332
+    http://downloads.sourceforge.net/project/numpy/NumPy/1.7.0
     FORCE)
 message ("Installing ${numpy_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
     

@@ -1,23 +1,7 @@
---- numpy/core/setup.py	Wed Sep 18 17:41:35 2013
-+++ numpy/core/setup.py	Wed Sep 18 18:09:06 2013
-@@ -117,6 +117,9 @@ def win32_checks(deflist):
- 
- def check_math_capabilities(config, moredefs, mathlibs):
-     def check_func(func_name):
-+        print "Checking for", func_name
-+        if func_name == "modff":
-+            return 0
-         return config.check_func(func_name, libraries=mathlibs,
-                                  decl=True, call=True)
- 
---- numpy/distutils/command/build_ext.py	Wed Sep 18 17:41:35 2013
-+++ numpy/distutils/command/build_ext.py	Wed Sep 18 18:09:28 2013
-@@ -445,10 +445,12 @@ class build_ext (old_build_ext):
-                     fileexists = True
-                     break
-             if fileexists: continue
--            # make g77-compiled static libs available to MSVC
-+            # make g77-compiled dynamic or static libs available to MSVC
+--- numpy/distutils/command/build_ext.py	Sat Feb  9 21:04:56 2013
++++ numpy/distutils/command/build_ext.py	Fri Dec  6 10:33:41 2013
+@@ -448,7 +448,9 @@ class build_ext (old_build_ext):
+             # make g77-compiled static libs available to MSVC
              fileexists = False
              for libdir in c_library_dirs:
 -                libfile = os.path.join(libdir,'lib%s.a' % (libname))
@@ -38,35 +22,21 @@
                  if p:
                      dst_name = os.path.join(self.build_temp, lib + '.lib')
                      if not os.path.isfile(dst_name):
---- numpy/distutils/fcompiler/gnu.py	Wed Sep 18 17:41:35 2013
-+++ numpy/distutils/fcompiler/gnu.py	Wed Sep 18 18:09:06 2013
-@@ -86,7 +86,8 @@ class GnuFCompiler(FCompiler):
-     # use -mno-cygwin for g77 when Python is not Cygwin-Python
-     if sys.platform == 'win32':
-         for key in ['version_cmd', 'compiler_f77', 'linker_so', 'linker_exe']:
--            executables[key].append('-mno-cygwin')
-+            # executables[key].append('-mno-cygwin')
-+            pass
- 
-     g2c = 'g2c'
- 
-@@ -236,7 +237,8 @@ class Gnu95FCompiler(GnuFCompiler):
-             if sys.platform == 'win32':
-                 for key in ['version_cmd', 'compiler_f77', 'compiler_f90',
-                             'compiler_fix', 'linker_so', 'linker_exe']:
--                    self.executables[key].append('-mno-cygwin')
-+                    # self.executables[key].append('-mno-cygwin')
-+                    pass
-         return v
- 
-     # 'gfortran --version' results:
-@@ -322,13 +324,8 @@ class Gnu95FCompiler(GnuFCompiler):
-                     i = opt.index("gcc")
-                     opt.insert(i+1, "mingwex")
-                     opt.insert(i+1, "mingw32")
--            # XXX: fix this mess, does not work for mingw
+--- numpy/distutils/fcompiler/gnu.py	Sat Feb  9 21:04:56 2013
++++ numpy/distutils/fcompiler/gnu.py	Fri Dec  6 11:01:38 2013
+@@ -39,7 +39,7 @@ class GnuFCompiler(FCompiler):
+         m = re.match(r'GNU Fortran\s+95.*?([0-9-.]+)', version_string)
+         if m:
+             return ('gfortran', m.group(1))
+-        m = re.match(r'GNU Fortran.*?([0-9-.]+)', version_string)
++        m = re.match(r'GNU Fortran.*?([0-9]+[-.][0-9]+[-.][0-9]+)', version_string)
+         if m:
+             v = m.group(1)
+             if v.startswith('0') or v.startswith('2') or v.startswith('3'):
+@@ -325,10 +325,7 @@ class Gnu95FCompiler(GnuFCompiler):
+             # XXX: fix this mess, does not work for mingw
              if is_win64():
--                c_compiler = self.c_compiler
+                 c_compiler = self.c_compiler
 -                if c_compiler and c_compiler.compiler_type == "msvc":
 -                    return []
 -                else:
@@ -84,20 +54,9 @@
          else:
              return GnuFCompiler.get_flags_opt(self)
  
---- numpy/distutils/mingw32ccompiler.py	Wed Sep 18 17:41:35 2013
-+++ numpy/distutils/mingw32ccompiler.py	Wed Sep 18 18:09:06 2013
-@@ -106,17 +106,17 @@ class Mingw32CCompiler(distutils.cygwinc
-         if get_build_architecture() == 'AMD64':
-             if self.gcc_version < "4.":
-                 self.set_executables(
--                    compiler='gcc -g -DDEBUG -DMS_WIN64 -mno-cygwin -O0 -Wall',
--                    compiler_so='gcc -g -DDEBUG -DMS_WIN64 -mno-cygwin -O0 -Wall -Wstrict-prototypes',
--                    linker_exe='gcc -g -mno-cygwin',
--                    linker_so='gcc -g -mno-cygwin -shared')
-+                    compiler='gcc -O2 -DMS_WIN64 -mno-cygwin -Wall',
-+                    compiler_so='gcc -O2 -DMS_WIN64 -mno-cygwin -Wall -Wstrict-prototypes',
-+                    linker_exe='gcc -mno-cygwin',
-+                    linker_so='gcc -mno-cygwin -shared')
+--- numpy/distutils/mingw32ccompiler.py	Sat Feb  9 21:04:55 2013
++++ numpy/distutils/mingw32ccompiler.py	Fri Dec  6 10:33:41 2013
+@@ -124,10 +124,10 @@ class Mingw32CCompiler(distutils.cygwinc
              else:
                  # gcc-4 series releases do not support -mno-cygwin option
                  self.set_executables(
@@ -107,17 +66,8 @@
 -                    linker_so='gcc -g -shared')
 +                    compiler='gcc -O2 -DMS_WIN64 -Wall',
 +                    compiler_so='gcc -O2 -DMS_WIN64 -Wall -Wstrict-prototypes',
-+                    linker_exe='gcc',
-+                    linker_so='gcc -shared')
++                    linker_exe='gcc -O2',
++                    linker_so='gcc -O2 -shared')
          else:
              if self.gcc_version <= "3.0.0":
                  self.set_executables(compiler='gcc -mno-cygwin -O2 -w',
-@@ -238,7 +238,7 @@ def find_python_dll():
-     # - find it in python main dir
-     # - in system32,
-     # - ortherwise (Sxs), I don't know how to get it.
--    lib_dirs = []
-+    lib_dirs = [sys.prefix]
-     lib_dirs.append(os.path.join(sys.prefix, 'lib'))
-     try:
-         lib_dirs.append(os.path.join(os.environ['SYSTEMROOT'], 'system32'))
