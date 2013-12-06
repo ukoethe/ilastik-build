@@ -12,12 +12,9 @@ include (ExternalSource)
 include (numpy)
 include (pyqt)
 
-external_source (qimage2ndarray
-    1.0
-    qimage2ndarray-1.0.tar.gz
-    1f59c1c42395709a58c43ed74a866375    
-    http://kogs-www.informatik.uni-hamburg.de/~meine/software/qimage2ndarray/dist
-    FORCE)
+external_git_repo (qimage2ndarray
+    release-1.3
+    https://github.com/hmeine/qimage2ndarray.git)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     # This patch does no harm on non-mac builds, but there's no need to apply it on linux.
@@ -34,10 +31,9 @@ message ("Installing ${qimage2ndarray_NAME} into ilastik build area: ${ILASTIK_D
 ExternalProject_Add(${qimage2ndarray_NAME}
     DEPENDS             ${numpy_NAME} ${pyqt_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
-    URL                 ${qimage2ndarray_URL}
-    URL_MD5             ${qimage2ndarray_MD5}
+    GIT_REPOSITORY      ${qimage2ndarray_URL}
     UPDATE_COMMAND      ""
-    PATCH_COMMAND       ${qimage2ndarray_PATCH}
+#    PATCH_COMMAND       ${qimage2ndarray_PATCH}
     CONFIGURE_COMMAND   ""
     BUILD_COMMAND       ${ADD_PATH} "${ILASTIK_DEPENDENCY_DIR}/bin"
                      \n ${PYTHON_EXE} setup.py build
