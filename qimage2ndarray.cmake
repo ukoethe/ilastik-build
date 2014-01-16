@@ -35,9 +35,9 @@ ExternalProject_Add(${qimage2ndarray_NAME}
     UPDATE_COMMAND      ""
 #    PATCH_COMMAND       ${qimage2ndarray_PATCH}
     CONFIGURE_COMMAND   ""
-    BUILD_COMMAND       ${ADD_PATH} "${ILASTIK_DEPENDENCY_DIR}/bin"
+    BUILD_COMMAND       ${ADD_PATH} "${ILASTIK_DEPENDENCY_DIR}/bin" "${ILASTIK_DEPENDENCY_DIR}/Qt4/bin"
                      \n ${PYTHON_EXE} setup.py build
-    INSTALL_COMMAND     ${ADD_PATH} "${ILASTIK_DEPENDENCY_DIR}/bin"
+    INSTALL_COMMAND     ${ADD_PATH} "${ILASTIK_DEPENDENCY_DIR}/bin" "${ILASTIK_DEPENDENCY_DIR}/Qt4/bin"
                      \n ${PYTHON_EXE} setup.py install
     BUILD_IN_SOURCE     1
 )
