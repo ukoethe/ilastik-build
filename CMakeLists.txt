@@ -140,6 +140,7 @@ include(freetype)
 include(matplotlib)
 include(lemon)
 include(cylemon)
+include(snappy)
 # include(spyder)
 
 if(WITH_SCIPY)
