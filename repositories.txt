@@ -1,0 +1,215 @@
+debian-science
+    https://wiki.debian.org/DebianScience
+    git://git.debian.org/git/debian-science/packages/
+    * may already contain git repositories for much of what we need
+    * I havn't yet found a full list of the supported packages
+    
+C/C++ packages
+--------------
+    
+ann.cmake
+    * LGPL
+    * no official repo
+    * inofficial: git://git.debian.org/git/debian-science/packages/ann.git
+                  http://anonscm.debian.org/gitweb/?p=pkg-scicomp/ann.git
+boost.cmake
+    * Boost Software License (permissive)
+    * https://github.com/boostorg/boost (super-project with submodules for
+                                         individual libraries)
+bzip2.cmake
+    * BSD
+    * no official repo
+cylemon.cmake
+    * no license yet
+    * https://github.com/cstraehl/cylemon.git
+fftw.cmake
+    * GPL v2
+    * https://github.com/FFTW/fftw3
+freetype.cmake
+    * FreeType Project license (similar to BSD, permissive)
+    * git://git.sv.nongnu.org/freetype/freetype2.git
+      http://git.savannah.gnu.org/cgit/freetype/
+h5py.cmake
+    * BSD
+    * https://github.com/h5py/h5py
+hdf5.cmake
+    * HDF5 license (similar to BSD, permissive)
+    * no official repo
+jom.cmake
+    * GPL v2
+    * https://git.gitorious.org/qt-labs/jom.git
+jpeg.cmake (libjpeg-turbo)
+    * BSD
+    * svn://svn.code.sf.net/p/libjpeg-turbo/code/trunk
+    * git://git.code.sf.net/p/libjpeg-turbo/code
+lemon.cmake
+    * Boost Software License
+    * http://lemon.cs.elte.hu/hg/lemon
+libpng.cmake
+    * libpng license (similar to BSD, permissive)
+    * http://sourceforge.net/p/libpng/code/ci/master/tree/
+      git://git.code.sf.net/p/libpng/code 
+matplotlib.cmake
+    * matplotlib license (based on PSF)
+    * https://github.com/matplotlib/matplotlib
+nasm.cmake
+    * BSD
+    * http://repo.or.cz/w/nasm.git
+numpy.cmake
+    * BSD
+    * http://github.com/numpy/numpy.git
+openblas.cmake
+    * BSD
+    * http://github.com/xianyi/OpenBLAS
+opengm.cmake
+    * MIT
+    * https://github.com/opengm/opengm
+openssl.cmake
+    * OpenSSL License (BSD style, permissive)
+    * https://github.com/openssl/openssl
+pgmlink.cmake
+    * MIT
+    * http://github.com/ilastik/pgmlink.git
+pil.cmake
+    * old Python license (permissive)
+    * https://bitbucket.org/effbot/pil-117
+pyqt.cmake
+    * GPL v2 and v3
+    * no official repo
+python.cmake
+    * PSF (Python license, permissive)
+    * http://hg.python.org/cpython/ (see branch 2.7)
+qimage2ndarray.cmake
+    * BSD
+    * https://github.com/hmeine/qimage2ndarray.git
+qt.cmake
+    * LGPL v2, GPL v3
+    * subprojects below https://qt.gitorious.org/qt
+scikit_image.cmake
+    * BSD
+    * https://github.com/scikit-image/scikit-image
+scikit_learn.cmake
+    * BSD
+    * https://github.com/scikit-learn/scikit-learn
+scipy.cmake
+    * BSD
+    * http://github.com/scipy/scipy.git
+snappy.cmake
+    * BSD
+    * http://snappy.googlecode.com/svn/trunk/
+      inofficial: https://github.com/ukoethe/snappy.git
+sqlite (see python_packages.cmake)
+    * public domain
+    * Fossil repository only
+tiff.cmake
+    * MIT
+    * CVS: CVSROOT=:pserver:cvsanon@cvs.maptools.org:/cvs/maptools/cvsroot 
+vigra.cmake
+    * MIT
+    * https://github.com/ukoethe/vigra
+vigraqt.cmake
+    * GPL v2
+    * https://github.com/hmeine/vigraqt
+vtk.cmake
+    * BSD
+    * http://vtk.org/VTK.git
+zlib.cmake
+    * BSD
+    * https://github.com/madler/zlib
+    
+Python Packages:
+----------------
+
+argparse
+    * PSF
+    * HG: https://code.google.com/p/argparse/
+blist
+    * BSD
+    * https://github.com/DanielStutzbach/blist
+colorama
+    * BSD
+    * HG: http://code.google.com/p/colorama
+cython
+    * Apache license
+    * https://github.com/cython/cython
+distribute (deprecated setuptools version)
+    * PSF
+    * HG: https://bitbucket.org/tarek/distribute
+docopt
+    * MIT
+    * https://github.com/docopt/docopt
+docutils
+    * public domain, BSD, PSF
+    * http://svn.code.sf.net/p/docutils/code/trunk
+futures
+    * BSD
+    * HG: https://code.google.com/p/pythonfutures/
+greenlet
+    * MIT
+    * https://github.com/python-greenlet/greenlet
+grin
+    * BSD
+    * https://svn.enthought.com/svn/sandbox/grin/trunk/
+ipython
+    * BSD
+    * https://github.com/ipython/ipython
+jinja2
+    * BSD
+    * http://github.com/mitsuhiko/jinja2
+logilab_astng
+    * LGPL
+    * HG: https://bitbucket.org/logilab/astroid
+logilab_common
+    * LGPL
+    * HG: https://bitbucket.org/logilab/logilab-common
+markupsafe
+    * BSD
+    * http://github.com/mitsuhiko/markupsafe
+nose
+    * LGPL
+    * https://github.com/nose-devs/nose/
+pep8
+    * MIT
+    * https://github.com/jcrocholl/pep8
+pip
+    * MIT
+    * https://github.com/pypa/pip
+psutil
+    * BSD
+    * HG: https://code.google.com/p/psutil/
+pyflakes
+    * MIT
+    * https://github.com/pyflakes/pyflakes
+pygments
+    * BSD
+    * HG: http://bitbucket.org/birkenfeld/pygments-main
+pylint
+    * GPL
+    * HG: https://bitbucket.org/logilab/pylint
+pyopengl
+    * BSD
+    * CVS: CVSROOT=:pserver:anonymous@pyopengl.cvs.sourceforge.net:/cvsroot/pyopengl 
+pyreadline
+    * BSD
+    * https://github.com/pyreadline/pyreadline
+pyzmq
+    * BSD
+    * https://github.com/zeromq/pyzmq/
+rope
+    * GPL
+    * https://github.com/python-rope/rope
+setuptools
+    * PSF
+    * HG: https://bitbucket.org/pypa/setuptools
+sip
+    * PSF
+    * HG: http://www.riverbankcomputing.com/hg/sip
+sphinx
+    * BSD
+    * HG: https://bitbucket.org/birkenfeld/sphinx/
+tornado
+    * Apache license
+    * https://github.com/facebook/tornado
+yapsy
+    * BSD
+    * HG: http://hg.code.sf.net/p/yapsy/code
