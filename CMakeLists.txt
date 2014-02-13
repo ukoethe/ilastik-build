@@ -141,6 +141,7 @@ include(matplotlib)
 include(lemon)
 include(cylemon)
 include(snappy)
+include(armadillo)
 # include(spyder)
 
 if(WITH_SCIPY)
