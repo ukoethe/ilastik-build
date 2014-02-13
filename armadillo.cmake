@@ -10,7 +10,6 @@ include (ExternalProject)
 include (ExternalSource)
 
 include (openblas)
-include (emulate_c99)
 
 external_source (armadillo
     4.0.4
@@ -19,9 +18,13 @@ external_source (armadillo
     http://sourceforge.net/projects/arma/files
     FORCE)
     
+if(${ILASTIK_BITNESS} STREQUAL "64")
+    set(ARMA_USE_64BIT_WORD "-DARMA_64BIT_WORD=1")
+endif()
+    
 message ("Installing ${armadillo_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${armadillo_NAME}
-    DEPENDS             ${openblas_NAME} ${emulate_c99_NAME}
+    DEPENDS             ${openblas_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${armadillo_URL}
     URL_MD5             ${armadillo_MD5}
@@ -33,7 +36,8 @@ ExternalProject_Add(${armadillo_NAME}
         -DCMAKE_INSTALL_PREFIX=${ILASTIK_DEPENDENCY_DIR}
         -DCMAKE_PREFIX_PATH=${ILASTIK_DEPENDENCY_DIR}
         -DOpenBLAS_NAMES=libopenblas
-        -DARMA_LIBS=${ILASTIK_DEPENDENCY_DIR}/lib/emulate_c99.lib^^${ILASTIK_DEPENDENCY_DIR}/lib/libgfortran-3.lib^^${ILASTIK_DEPENDENCY_DIR}/lib/libgcc.lib
+        -DCMAKE_MODULE_PATH=${ILASTIK_DEPENDENCY_DIR}/cmake/hdf5/
+        ${ARMA_USE_64BIT_WORD}
     BUILD_COMMAND       devenv armadillo.sln /build Release /project ALL_BUILD
     INSTALL_COMMAND     devenv armadillo.sln /build Release /project INSTALL
 )
