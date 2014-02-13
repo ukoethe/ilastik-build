@@ -11,6 +11,7 @@ include (ExternalSource)
 
 include (python)
 include (numpy)
+include (emulate_c99)
 
 external_source (scipy
     0.11.0
@@ -33,7 +34,7 @@ file(TO_NATIVE_PATH ${ILASTIK_DEPENDENCY_DIR}/tmp/build_scipy.bat SCIPY_BUILD_BA
 # Download and install scipy
 message ("Installing ${scipy_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
 ExternalProject_Add(${scipy_NAME}
-    DEPENDS             ${python_NAME} ${numpy_NAME}
+    DEPENDS             ${python_NAME} ${numpy_NAME} ${emulate_c99_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
     URL                 ${scipy_URL}
     URL_MD5             ${scipy_MD5}

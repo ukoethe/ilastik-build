@@ -10,10 +10,7 @@ for /f "delims=" %%a in ('dir /s /b "${MINGW_PATH}\..\lib\*libgcc.a" ^| find /v 
 copy "%LIBGCCA%" ${ILASTIK_DEPENDENCY_DIR_DOS}\lib\libgcc.lib
 
 if "${ILASTIK_BITNESS}" == "64" (
-    rem emulate missing C99 functions
-    cl /MD /O2 /c ${PROJECT_SOURCE_DIR}/c99.c
-    lib /NOLOGO ${SCIPY_MACHINE} /OUT:${ILASTIK_DEPENDENCY_DIR}/lib/emulate_c99.lib c99.obj
-
+    rem 64-bit mingw needs emulate_c99
     ${PYTHON_EXE} setup.py build_ext -l "%LIBGCC% libgfortran-3 emulate_c99 libgcc" -L ${ILASTIK_DEPENDENCY_DIR}/lib install
 ) else (
     rem 32-bit mingw already contains the C99 functions. libgcc and libgfortran are

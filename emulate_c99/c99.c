@@ -29,6 +29,13 @@ long NAME(lround)( double t )
                 : (long)ceil(t - 0.5);
 }
 
+long NAME(lroundf)( float t )
+{
+     return t >= 0.0
+                ? (long)floor(t + 0.5)
+                : (long)ceil(t - 0.5);
+}
+
 float NAME(cabsf)(fcomplex x)
 {
     double absa = fabs(x.re);
@@ -80,12 +87,12 @@ fcomplex NAME(csqrtf)(fcomplex x)
 
     if (x.re == 0.0f)
     {
-        r.re = sqrt(0.5 * fabs(x.im));
+        r.re = (float)sqrt(0.5 * fabs(x.im));
         r.im = x.im < 0.0f ? -r.re : r.re;
     }
     else
     {
-        float __t = sqrt(2.0 * (NAME(cabsf)(x) + fabs(x.re)));
+        float __t = (float)sqrt(2.0 * (NAME(cabsf)(x) + fabs(x.re)));
         float __u = 0.5f * __t;
         if (x.re > 0.0f)
         {
@@ -94,7 +101,7 @@ fcomplex NAME(csqrtf)(fcomplex x)
         }
         else
         {
-            r.re = fabs(x.im) / __t;
+            r.re = (float)fabs(x.im) / __t;
             r.im = x.im < 0.0f ? -__u : __u;
         }
     }
@@ -112,7 +119,7 @@ dcomplex NAME(csqrt)(dcomplex x)
     }
     else
     {
-        double __t = sqrt(2.0 * (cabs(*(native_complex *)&x) + fabs(x.re)));
+        double __t = sqrt(2.0 * (_cabs(*(native_complex *)&x) + fabs(x.re)));
         double __u = 0.5 * __t;
         if (x.re > 0.0)
         {
@@ -140,7 +147,7 @@ dcomplex NAME(cexp)(dcomplex x)
 dcomplex NAME(clog)(dcomplex x)
 {
     dcomplex r;
-    r.re = log(cabs(*(native_complex *)&x));
+    r.re = log(_cabs(*(native_complex *)&x));
     r.im = atan2(x.im, x.re);
     return r;
 }
