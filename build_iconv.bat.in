@@ -1,0 +1,8 @@
+@echo off
+set PATH=${MSYS_PATH};${MINGW_PATH};%PATH%
+
+make
+copy include\iconv.h ${ILASTIK_DEPENDENCY_DIR_DOS}\include
+copy lib\.libs\libiconv-2.dll ${ILASTIK_DEPENDENCY_DIR_DOS}\bin
+gendef "lib\.libs\libiconv-2.dll"
+lib /NOLOGO ${ILASTIK_MACHINE} /DEF:libiconv-2.def /OUT:"${ILASTIK_DEPENDENCY_DIR_DOS}\lib\iconv.lib"
