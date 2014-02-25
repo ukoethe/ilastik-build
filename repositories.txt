@@ -9,16 +9,21 @@ C/C++ packages
     
 ann.cmake
     * LGPL
-    * no official repo
+    * no official repository
     * inofficial: git://git.debian.org/git/debian-science/packages/ann.git
                   http://anonscm.debian.org/gitweb/?p=pkg-scicomp/ann.git
+armadillo.cmake
+    * Mozilla Public License 2.0 (MPL) 
+    * svn://svn.code.sf.net/p/arma/code/
 boost.cmake
     * Boost Software License (permissive)
     * https://github.com/boostorg/boost (super-project with submodules for
                                          individual libraries)
 bzip2.cmake
     * BSD
-    * no official repo
+    * no official repository
+    * inofficial: git://git.debian.org/collab-maint/bzip2.git
+                  http://anonscm.debian.org/gitweb/?p=collab-maint/bzip2.git
 cylemon.cmake
     * no license yet
     * https://github.com/cstraehl/cylemon.git
@@ -34,24 +39,34 @@ h5py.cmake
     * https://github.com/h5py/h5py
 hdf5.cmake
     * HDF5 license (similar to BSD, permissive)
-    * no official repo
+    * https://git.gitorious.org/hdf5/hdf5-v18.git
+iconv.cmake
+    * GPL v3
+    * git://git.savannah.gnu.org/libiconv.git 
 jom.cmake
     * GPL v2
     * https://git.gitorious.org/qt-labs/jom.git
 jpeg.cmake (libjpeg-turbo)
     * BSD
     * svn://svn.code.sf.net/p/libjpeg-turbo/code/trunk
-    * git://git.code.sf.net/p/libjpeg-turbo/code
+      git://git.code.sf.net/p/libjpeg-turbo/code
 lemon.cmake
     * Boost Software License
-    * http://lemon.cs.elte.hu/hg/lemon
+    * HG: http://lemon.cs.elte.hu/hg/lemon
 libpng.cmake
     * libpng license (similar to BSD, permissive)
     * http://sourceforge.net/p/libpng/code/ci/master/tree/
       git://git.code.sf.net/p/libpng/code 
+libxml2.cmake
+    * MIT
+    * git://git.gnome.org/libxml2
+      http://git.gnome.org/browse/libxml2/
 matplotlib.cmake
     * matplotlib license (based on PSF)
     * https://github.com/matplotlib/matplotlib
+mlpack.cmake
+    * LGPL
+    * http://svn.cc.gatech.edu/fastlab/mlpack/trunk/
 nasm.cmake
     * BSD
     * http://repo.or.cz/w/nasm.git
@@ -75,10 +90,10 @@ pil.cmake
     * https://bitbucket.org/effbot/pil-117
 pyqt.cmake
     * GPL v2 and v3
-    * no official repo
+    * no public repository
 python.cmake
     * PSF (Python license, permissive)
-    * http://hg.python.org/cpython/ (see branch 2.7)
+    * HG: http://hg.python.org/cpython/ (see branch 2.7)
 qimage2ndarray.cmake
     * BSD
     * https://github.com/hmeine/qimage2ndarray.git
@@ -104,6 +119,7 @@ sqlite (see python_packages.cmake)
 tiff.cmake
     * MIT
     * CVS: CVSROOT=:pserver:cvsanon@cvs.maptools.org:/cvs/maptools/cvsroot 
+      inofficial: https://github.com/vadz/libtiff
 vigra.cmake
     * MIT
     * https://github.com/ukoethe/vigra
@@ -188,7 +204,8 @@ pylint
     * HG: https://bitbucket.org/logilab/pylint
 pyopengl
     * BSD
-    * CVS: CVSROOT=:pserver:anonymous@pyopengl.cvs.sourceforge.net:/cvsroot/pyopengl 
+    * CVS (outdated?): CVSROOT=:pserver:anonymous@pyopengl.cvs.sourceforge.net:/cvsroot/pyopengl
+      BZR: bzr branch lp:pyopengl
 pyreadline
     * BSD
     * https://github.com/pyreadline/pyreadline

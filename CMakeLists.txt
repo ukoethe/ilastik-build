@@ -148,6 +148,7 @@ include(lemon)
 include(cylemon)
 include(snappy)
 include(armadillo)
+include(mlpack)
 # include(spyder)
 
 if(WITH_SCIPY)
