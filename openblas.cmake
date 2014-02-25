@@ -21,12 +21,6 @@ if(NOT EXISTS ${MSYS_PATH}/make.exe)
     MESSAGE(FATAL_ERROR "ERROR: make.exe not found in MSYS_PATH '${MSYS_PATH}'")
 endif()
 
-if(${ILASTIK_BITNESS} STREQUAL "32")
-    set(OPENBLAS_MACHINE "/MACHINE:X86")
-else()
-    set(OPENBLAS_MACHINE "/MACHINE:X64")
-endif()
-    
 configure_file(build_openblas.bat.in ${ILASTIK_DEPENDENCY_DIR}/tmp/build_openblas.bat)
 file(TO_NATIVE_PATH ${ILASTIK_DEPENDENCY_DIR}/tmp/build_openblas.bat OPENBLAS_BUILD_BAT)
 

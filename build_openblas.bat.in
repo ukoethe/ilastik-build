@@ -28,7 +28,7 @@ if "${ILASTIK_BITNESS}" == "64" (
     rem This will be done automatically by suitably patched numpy/distutils.
     
     gendef "${MINGW_PATH}\%LIBGCC%.dll"
-    lib /NOLOGO ${OPENBLAS_MACHINE} /DEF:%LIBGCC%.def /OUT:${ILASTIK_DEPENDENCY_DIR}/lib/%LIBGCC%.lib
+    lib /NOLOGO ${ILASTIK_MACHINE} /DEF:%LIBGCC%.def /OUT:${ILASTIK_DEPENDENCY_DIR}/lib/%LIBGCC%.lib
     gendef "${MINGW_PATH}\libgfortran-3.dll"
-    lib /NOLOGO ${OPENBLAS_MACHINE} /DEF:libgfortran-3.def /OUT:${ILASTIK_DEPENDENCY_DIR}/lib/libgfortran-3.lib
+    lib /NOLOGO ${ILASTIK_MACHINE} /DEF:libgfortran-3.def /OUT:${ILASTIK_DEPENDENCY_DIR}/lib/libgfortran-3.lib
 )

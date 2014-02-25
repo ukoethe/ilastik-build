@@ -42,6 +42,9 @@ if(${ILASTIK_BITNESS} STREQUAL "32")
     if("${CL_PATH}" MATCHES "amd64")
         MESSAGE(FATAL_ERROR "ILASTIK_BITNESS specifies a 32-bit build, but the shell has a 64-bit compiler in the PATH at\n  '${CL_PATH}'")
     endif()
+    
+    set(ILASTIK_MACHINE "/MACHINE:X86")
+    
 elseif(${ILASTIK_BITNESS} STREQUAL "64")
     if(NOT "${CMAKE_C_COMPILER}" MATCHES "amd64")
         MESSAGE(FATAL_ERROR "ILASTIK_BITNESS specifies a 64-bit build, but the cmake generator uses a 32-bit compiler at\n  '${CMAKE_C_COMPILER}'")
@@ -50,9 +53,12 @@ elseif(${ILASTIK_BITNESS} STREQUAL "64")
     if(NOT "${CL_PATH}" MATCHES "amd64")
         MESSAGE(FATAL_ERROR "ILASTIK_BITNESS specifies a 64-bit build, but the shell has a 32-bit compiler in the PATH at\n  '${CL_PATH}'")
     endif()
+    
+    set(ILASTIK_MACHINE "/MACHINE:X64")
+    
 else()
     MESSAGE(FATAL_ERROR "ILASTIK_BITNESS must be 32 or 64.")
-endif()
+endif()    
 
 # find compiler version
 STRING(REGEX MATCH "Studio [0-9]+" VISUAL_STUDIO_VERSION ${VISUAL_STUDIO_PATH})
