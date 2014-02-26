@@ -1,0 +1,10 @@
+file(READ @ILASTIK_VERSION_FILE@ ILASTIK_VERSION_FILE)
+string(REGEX MATCH "__version_info__[^)]*\\)" ILASTIK_VERSION ${ILASTIK_VERSION_FILE})
+string(REGEX REPLACE ".*\\(\\s*([^,]*).*" "\\1" ILASTIK_VERSION_MAJOR ${ILASTIK_VERSION})
+string(REGEX REPLACE "[^,]*, *([^,]*).*" "\\1" ILASTIK_VERSION_MINOR ${ILASTIK_VERSION})
+string(REGEX REPLACE "[^,]*,[^,]*, *([^)]*).*" "\\1" ILASTIK_VERSION_PATCH ${ILASTIK_VERSION})
+
+message(STATUS "found version ${ILASTIK_VERSION_MAJOR}.${ILASTIK_VERSION_MINOR}.${ILASTIK_VERSION_PATCH}")
+
+configure_file(@PROJECT_BINARY_DIR@/CPackConfig.cmake.in @PROJECT_BINARY_DIR@/CPackConfig.cmake @ONLY)
+configure_file(@PROJECT_BINARY_DIR@/CPackSourceConfig.cmake.in @PROJECT_BINARY_DIR@/CPackSourceConfig.cmake @ONLY)
