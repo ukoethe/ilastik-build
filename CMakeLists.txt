@@ -241,6 +241,9 @@ ExternalProject_Add(${ilastik_NAME}
 
 set_target_properties(${ilastik_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 set (APP_DEPENDENCIES ${APP_DEPENDENCIES} ${ilastik_NAME})
+
+# a file that contains something like "__version_info__ = (1, 0, 4)"
+# (needed in CPackUpdateVersion.cmake below)
 set(ILASTIK_VERSION_FILE "${ILASTIK_DEPENDENCY_DIR}/ilastik/ilastik/ilastik/__init__.py")
 
 endif (NOT ilastik_NAME)
@@ -310,12 +313,17 @@ SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY
     "Interactive image labeling and segmentation toolkit."
 )
 
-# package version setup
-SET(CPACK_PACKAGE_VERSION_MAJOR "@ILASTIK_VERSION_MAJOR@")
-SET(CPACK_PACKAGE_VERSION_MINOR "@ILASTIK_VERSION_MINOR@")
-SET(CPACK_PACKAGE_VERSION_PATCH "@ILASTIK_VERSION_PATCH@")
+# package version setup - true version number will be inserted by
+# CPack using CPackUpdateVersion.cmake 
+set(CPACK_PROJECT_CONFIG_FILE ${PROJECT_BINARY_DIR}/CPackUpdateVersion.cmake)
+CONFIGURE_FILE(${PROJECT_SOURCE_DIR}/CPackUpdateVersion.cmake.in 
+               ${PROJECT_BINARY_DIR}/CPackUpdateVersion.cmake @ONLY)
 
-SET(CPACK_PACKAGE_INSTALL_DIRECTORY     "${PROJECT_NAME}-@ILASTIK_VERSION_MAJOR@.@ILASTIK_VERSION_MINOR@.@ILASTIK_VERSION_PATCH@")
+SET(CPACK_PACKAGE_VERSION_MAJOR "0")  # will be set at runtime
+SET(CPACK_PACKAGE_VERSION_MINOR "0")  # will be set at runtime
+SET(CPACK_PACKAGE_VERSION_PATCH "0")  # will be set at runtime
+
+SET(CPACK_PACKAGE_INSTALL_DIRECTORY  "${PROJECT_NAME}-0.0.0")
 
 if(${ILASTIK_BITNESS} STREQUAL "64")
     SET(CPACK_NSIS_INSTALL_ROOT "$PROGRAMFILES64")
@@ -341,10 +349,6 @@ SET(CPACK_STRIP_FILES TRUE)
 SET(CPACK_PACKAGE_CONTACT "ilastik Team <team@ilastik.org>")
 
 INCLUDE (CPack)
-
-CONFIGURE_FILE(${PROJECT_SOURCE_DIR}/CPackUpdateVersion.cmake.in ${PROJECT_BINARY_DIR}/CPackUpdateVersion.cmake @ONLY)
-CONFIGURE_FILE(${PROJECT_BINARY_DIR}/CPackConfig.cmake ${PROJECT_BINARY_DIR}/CPackConfig.cmake.in COPYONLY)
-CONFIGURE_FILE(${PROJECT_BINARY_DIR}/CPackSourceConfig.cmake ${PROJECT_BINARY_DIR}/CPackSourceConfig.cmake.in COPYONLY)
 
 MESSAGE(STATUS "Using Visual Studio ${VISUAL_STUDIO_VERSION} at '${CMAKE_C_COMPILER}' for ${ILASTIK_BITNESS}-bit build.")
 
