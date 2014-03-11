@@ -503,10 +503,10 @@ endif (NOT psutil_NAME)
 if (NOT sip_NAME)
 
 external_source (sip
-    4.14.2
-    sip-4.14.2.tar.gz
-    b93442e745b3be2fad89de0686a76ce9
-    http://sourceforge.net/projects/pyqt/files/sip/sip-4.14.2
+    4.15.4
+    sip-4.15.4.tar.gz
+    1d5c9e92bc7fca5ac11e088a4cf6c83d
+    http://hivelocity.dl.sourceforge.net/project/pyqt/sip/sip-4.15.4
     FORCE)
 
 message ("Installing ${sip_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")
