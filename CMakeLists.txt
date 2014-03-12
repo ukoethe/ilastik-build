@@ -277,6 +277,7 @@ endif ()
 ############################################################################
 
 configure_file(ilastik.bat.in ${ILASTIK_DEPENDENCY_DIR}/ilastik.bat)
+configure_file(ilastik-tests.bat.in ${ILASTIK_DEPENDENCY_DIR}/ilastik-tests.bat)
 configure_file(LICENSE.txt ${ILASTIK_DEPENDENCY_DIR}/LICENSE.txt COPYONLY)
 configure_file(ilastik-icon.ico ${ILASTIK_DEPENDENCY_DIR}/ilastik-icon.ico COPYONLY)
 
@@ -290,6 +291,7 @@ install(CODE "execute_process(COMMAND ${PYTHON_EXE} ${PROJECT_SOURCE_DIR}/compil
 INSTALL(FILES ${ILASTIK_DEPENDENCY_DIR}/LICENSE.txt DESTINATION .)
 INSTALL(FILES ${ILASTIK_DEPENDENCY_DIR}/ilastik-icon.ico DESTINATION .)
 INSTALL(FILES ${ILASTIK_DEPENDENCY_DIR}/ilastik.bat DESTINATION .)
+INSTALL(FILES ${ILASTIK_DEPENDENCY_DIR}/ilastik-tests.bat DESTINATION .)
 # INSTALL(FILES ${ILASTIK_DEPENDENCY_DIR}/spyder.bat DESTINATION .)
 INSTALL(DIRECTORY ${ILASTIK_DEPENDENCY_DIR}/ilastik/ DESTINATION ilastik)
 INSTALL(DIRECTORY ${ILASTIK_DEPENDENCY_DIR}/bin/ DESTINATION bin FILES_MATCHING PATTERN "*.dll")
