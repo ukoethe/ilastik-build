@@ -32,7 +32,7 @@ ExternalProject_Add(${mlpack_NAME}
         -DCMAKE_INSTALL_PREFIX=${ILASTIK_DEPENDENCY_DIR}
         -DCMAKE_PREFIX_PATH=${ILASTIK_DEPENDENCY_DIR}
         -DHDF5_DIR=${ILASTIK_DEPENDENCY_DIR}/cmake/hdf5
-        -DHDF5_C_LIBRARY=${ILASTIK_DEPENDENCY_DIR}/lib/hdf5dll.lib
+        -DHDF5_C_LIBRARY=${ILASTIK_DEPENDENCY_DIR}/lib/hdf5.lib
         -DICONV_LIBRARY=${ILASTIK_DEPENDENCY_DIR}/lib/iconv.lib
         -DZLIB_LIBRARY=${ILASTIK_DEPENDENCY_DIR}/lib/zlib.lib
     BUILD_COMMAND       devenv mlpack.sln /build Release /project mlpack

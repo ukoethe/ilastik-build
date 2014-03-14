@@ -12,10 +12,10 @@ include (ExternalSource)
 include (zlib)
 
 external_source (hdf5
-    1.8.10
-    hdf5-1.8.10-patch1.tar.gz
-    2147a289fb33c887464ad2b6c5a8ae4c
-    http://www.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8.10-patch1/src/
+    1.8.12
+    hdf5-1.8.12.tar.gz
+    d804802feb99b87fc668a90e6fa34411
+    http://www.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8.12/src
     FORCE)
 
 message ("Installing ${hdf5_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR} ...")

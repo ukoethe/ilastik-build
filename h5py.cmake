@@ -14,10 +14,10 @@ include (hdf5)
 #include (numpy)
 
 external_source (h5py
-    2.1.3
-    h5py-2.1.3.tar.gz
-    afd3c14f763339e186dd9cd24eb2eb74
-    http://h5py.googlecode.com/files
+    2.2.1
+    h5py-2.2.1.tar.gz
+    07ac707287b4be7d77b73f1afac6980b
+    https://pypi.python.org/packages/source/h/h5py
     FORCE)
 
 # Fix library and path names in setup.py

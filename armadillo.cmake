@@ -10,6 +10,7 @@ include (ExternalProject)
 include (ExternalSource)
 
 include (openblas)
+include (hdf5)
 
 external_source (armadillo
     4.0.4

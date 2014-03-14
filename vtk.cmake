@@ -70,8 +70,8 @@ ExternalProject_Add(${vtk_NAME}
         -DVTK_WRAP_TCL:BOOL=OFF
         -DNETCDF_ENABLE_NETCDF4:BOOL=OFF
         -DHDF5_DIR:PATH=${ILASTIK_DEPENDENCY_DIR}/cmake/hdf5
-        -DHDF5_hdf5_LIBRARY:FILEPATH=${ILASTIK_DEPENDENCY_DIR}/lib/hdf5dll.lib        # needed for vtkNetCDF
-        -DHDF5_hdf5_hl_LIBRARY:FILEPATH=${ILASTIK_DEPENDENCY_DIR}/lib/hdf5_hldll.lib  # needed for vtkNetCDF
+        -DHDF5_hdf5_LIBRARY:FILEPATH=${ILASTIK_DEPENDENCY_DIR}/lib/hdf5.lib        # needed for vtkNetCDF
+        -DHDF5_hdf5_hl_LIBRARY:FILEPATH=${ILASTIK_DEPENDENCY_DIR}/lib/hdf5_hl.lib  # needed for vtkNetCDF
         -DQT_QMAKE_EXECUTABLE:FILEPATH=${QMAKE_PATH}/qmake.exe
         -DVTK_INSTALL_QT_DIR:STRING=${ILASTIK_DEPENDENCY_DIR}/Qt4                     # seems to be unused
         -DVTK_INSTALL_QT_PLUGIN_DIR:STRING=${ILASTIK_DEPENDENCY_DIR}/Qt4/plugins/designer

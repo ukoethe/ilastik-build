@@ -413,9 +413,9 @@ endif (NOT cython_NAME)
 if (NOT greenlet_NAME)
 
 external_source (greenlet
-    0.4.0
-    greenlet-0.4.0.zip
-    87887570082caadc08fb1f8671dbed71
+    0.4.2
+    greenlet-0.4.2.zip
+    580a8a5e833351f7abdaedb1a877f7ac
     http://pypi.python.org/packages/source/g/greenlet
     FORCE)
 
