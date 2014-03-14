@@ -26,7 +26,45 @@ set QTDIR=%INSTALL_DIR%Qt4
 IF ["%ILASTIK_DIR%"] EQU [""] set ILASTIK_DIR=%INSTALL_DIR%ilastik
 set PYTHONPATH=%ILASTIK_DIR%\lazyflow;%ILASTIK_DIR%\volumina;%ILASTIK_DIR%\ilastik
 
-rem start ilastik
+rem check if this script was called as 'lastik test'
+if /I "%1" EQU "test" goto :testing
+ 
+rem if not, start ilastik normally
 echo Loading ilastik from "%ILASTIK_DIR%"
 "%INSTALL_DIR%python\python" "%ILASTIK_DIR%\ilastik\ilastik.py" %*
+goto :end
+
+:testing
+
+rem run selected tests
+set failed=0
+
+echo ----------------------------
+echo Running volumina tests...
+cd "%ILASTIK_DIR%\volumina\tests"
+"%INSTALL_DIR%python\python" -c "import nose; nose.run()"
+if %errorlevel% neq 0 set failed=1
+
+echo ----------------------------
+echo Running lazyflow tests...
+cd "%ILASTIK_DIR%\lazyflow\tests"
+"%INSTALL_DIR%python\python" -c "import nose; nose.run()"
+if %errorlevel% neq 0 set failed=1
+
+echo ----------------------------
+echo Running ilastik headless tests...
+cd "%ILASTIK_DIR%\ilastik\tests"
+"%INSTALL_DIR%python\python" -c "import nose; nose.run()"
+if %errorlevel% neq 0 set failed=1
+
+rem Do not run all GUI tests, but run just one to verify there are no major problems with app startup.
+echo ----------------------------
+echo Running basic pixel classification GUI test...
+cd "%ILASTIK_DIR%\ilastik\tests"
+"%INSTALL_DIR%python\python" test_applets\pixelClassification\testPixelClassificationGui.py
+if %errorlevel% neq 0 set failed=1
+
+if %failed% NEQ 0 ENDLOCAL & exit /b 1
+
+:end
 ENDLOCAL
