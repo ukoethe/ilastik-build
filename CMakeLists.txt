@@ -111,7 +111,6 @@ message ("ilastik downloads and builds will be placed here: ${ILASTIK_DEPENDENCY
 FILE(MAKE_DIRECTORY ${ILASTIK_DEPENDENCY_DIR}/bin 
                     ${ILASTIK_DEPENDENCY_DIR}/lib 
                     ${ILASTIK_DEPENDENCY_DIR}/include
-                    ${ILASTIK_DEPENDENCY_DIR}/ilastik
                     ${ILASTIK_DEPENDENCY_DIR}/tmp )
 
 file(TO_NATIVE_PATH ${ILASTIK_DEPENDENCY_DIR}     ILASTIK_INSTALL_PATH)
@@ -166,18 +165,91 @@ endif()
 
 #############################################################################
 
+set(DEFAULT_ILASTIK_GIT_COMMIT "origin/release")
+IF(NOT DEFINED ILASTIK_GIT_COMMIT)
+    SET(ILASTIK_GIT_COMMIT "${DEFAULT_ILASTIK_GIT_COMMIT}")
+ENDIF()
+SET(ILASTIK_GIT_COMMIT ${ILASTIK_GIT_COMMIT}
+    CACHE STRING "Specify ilastik branch/tag/commit to be used (default: ${DEFAULT_ILASTIK_GIT_COMMIT})"
+    FORCE)
+
+if (NOT ilastik_NAME)
+
+set(ilastik_NAME ilastik-HEAD)
+
+message ("Installing ${ilastik_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR}/ilastik ...")
+
+set(ILASTIK_META_DIR "${ILASTIK_DEPENDENCY_DIR_DOS}\\ilastik")
+
+if("${ILASTIK_GIT_COMMIT}" STREQUAL "master")
+    ExternalProject_Add(${ilastik_NAME}
+        DEPENDS             ${python_NAME}
+        PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+        DOWNLOAD_COMMAND    ${GIT_EXECUTABLE} clone https://github.com/ilastik/ilastik-meta ${ILASTIK_DEPENDENCY_DIR}/ilastik
+                         \n cd ${ILASTIK_META_DIR}
+                         \n ${GIT_EXECUTABLE} checkout ${ILASTIK_GIT_COMMIT} 
+                         \n ${GIT_EXECUTABLE} submodule update --init --recursive
+        DOWNLOAD_DIR        ""
+        SOURCE_DIR          ""
+        UPDATE_COMMAND      cd ${ILASTIK_META_DIR}\\lazyflow 
+                         \n ${GIT_EXECUTABLE} checkout master 
+                         \n ${GIT_EXECUTABLE} pull origin master 
+                         \n cd ${ILASTIK_META_DIR}\\volumina 
+                         \n ${GIT_EXECUTABLE} checkout master 
+                         \n ${GIT_EXECUTABLE} pull origin master 
+                         \n cd ${ILASTIK_META_DIR}\\ilastik 
+                         \n ${GIT_EXECUTABLE} checkout master 
+                         \n ${GIT_EXECUTABLE} pull origin master 
+        CONFIGURE_COMMAND   ""
+        BUILD_COMMAND       ""
+        INSTALL_COMMAND     ""
+        BUILD_IN_SOURCE     1
+    )
+else()
+    ExternalProject_Add(${ilastik_NAME}
+        DEPENDS             ${python_NAME}
+        PREFIX              ${ILASTIK_DEPENDENCY_DIR}
+        DOWNLOAD_COMMAND    ${GIT_EXECUTABLE} clone https://github.com/ilastik/ilastik-meta ${ILASTIK_DEPENDENCY_DIR}/ilastik
+                         \n cd ${ILASTIK_META_DIR}
+                         \n ${GIT_EXECUTABLE} checkout ${ILASTIK_GIT_COMMIT} 
+                         \n ${GIT_EXECUTABLE} submodule update --init --recursive
+        DOWNLOAD_DIR        ""
+        SOURCE_DIR          ""
+        UPDATE_COMMAND      cd ${ILASTIK_META_DIR}
+                         \n ${GIT_EXECUTABLE} fetch 
+                         \n ${GIT_EXECUTABLE} checkout ${ILASTIK_GIT_COMMIT} 
+                         \n ${GIT_EXECUTABLE} submodule update --init --recursive
+        CONFIGURE_COMMAND   ""
+        BUILD_COMMAND       ""
+        INSTALL_COMMAND     ""
+        BUILD_IN_SOURCE     1
+    )
+endif()
+
+set_target_properties(${ilastik_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
+set (APP_DEPENDENCIES ${APP_DEPENDENCIES} ${ilastik_NAME})
+
+# a file that contains something like "__version_info__ = (1, 0, 4)"
+# (needed in CPackUpdateVersion.cmake below)
+set(ILASTIK_VERSION_FILE "${ILASTIK_DEPENDENCY_DIR}/ilastik/ilastik/ilastik/__init__.py")
+
+endif (NOT ilastik_NAME)
+
+#############################################################################
+
 if (NOT lazyflow_NAME)
 
-set(lazyflow_NAME lazyflow-HEAD)
+set(lazyflow_NAME lazyflow-HEAD-drtile)
 
 message ("Installing ${lazyflow_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR}/ilastik ...")
 ExternalProject_Add(${lazyflow_NAME}
-    DEPENDS             ${python_NAME} ${vigra_NAME}
+    DEPENDS             ${python_NAME} ${vigra_NAME} ${ilastik_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
-    DOWNLOAD_DIR        ${ILASTIK_DEPENDENCY_DIR}/ilastik
-    SOURCE_DIR          ${ILASTIK_DEPENDENCY_DIR}/ilastik/lazyflow
-    GIT_REPOSITORY      https://github.com/ilastik/lazyflow.git
-    UPDATE_COMMAND      ${GIT_EXECUTABLE} pull
+    DOWNLOAD_COMMAND    ""
+    DOWNLOAD_DIR        ""
+    SOURCE_DIR          ""
+    GIT_REPOSITORY      ""
+    UPDATE_COMMAND      ""
     BINARY_DIR          ${ILASTIK_DEPENDENCY_DIR}/src/drtile-build
     # Read the config information from ${ILASTIK_DEPENDENCY_DIR}/lib/vigranumpy/VigranumpyConfig.cmake
     CONFIGURE_COMMAND   ${CMAKE_COMMAND} ${ILASTIK_DEPENDENCY_DIR}/ilastik/lazyflow/lazyflow/drtile
@@ -192,61 +264,6 @@ set (APP_DEPENDENCIES ${APP_DEPENDENCIES} ${lazyflow_NAME})
 
 endif (NOT lazyflow_NAME)
 
-#############################################################################
-
-if (NOT volumina_NAME)
-
-set(volumina_NAME volumina-HEAD)
-
-message ("Installing ${volumina_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR}/ilastik ...")
-ExternalProject_Add(${volumina_NAME}
-    DEPENDS             ${python_NAME}
-    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
-    DOWNLOAD_DIR        ${ILASTIK_DEPENDENCY_DIR}/ilastik
-    SOURCE_DIR          ${ILASTIK_DEPENDENCY_DIR}/ilastik/volumina
-    GIT_REPOSITORY      https://github.com/ilastik/volumina.git
-    UPDATE_COMMAND      ${GIT_EXECUTABLE} pull
-    CONFIGURE_COMMAND   ""
-    BUILD_COMMAND       ""
-    INSTALL_COMMAND     ""
-    BUILD_IN_SOURCE     1
-)
-
-set_target_properties(${volumina_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
-set (APP_DEPENDENCIES ${APP_DEPENDENCIES} ${volumina_NAME})
-
-endif (NOT volumina_NAME)
-
-#############################################################################
-
-if (NOT ilastik_NAME)
-
-set(ilastik_NAME ilastik-HEAD)
-
-message ("Installing ${ilastik_NAME} into ilastik build area: ${ILASTIK_DEPENDENCY_DIR}/ilastik ...")
-ExternalProject_Add(${ilastik_NAME}
-    DEPENDS             ${python_NAME}
-    PREFIX              ${ILASTIK_DEPENDENCY_DIR}
-    DOWNLOAD_DIR        ${ILASTIK_DEPENDENCY_DIR}/ilastik
-    SOURCE_DIR          ${ILASTIK_DEPENDENCY_DIR}/ilastik/ilastik
-    GIT_REPOSITORY      https://github.com/ilastik/ilastik.git
-    UPDATE_COMMAND      ${GIT_EXECUTABLE} pull
-    CONFIGURE_COMMAND   ""
-    BUILD_COMMAND       ""
-    INSTALL_COMMAND     echo updating ilastik version information
-                     \n ${CMAKE_COMMAND} -P ${PROJECT_BINARY_DIR}/CPackUpdateVersion.cmake
-    BUILD_IN_SOURCE     1
-)
-
-set_target_properties(${ilastik_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
-set (APP_DEPENDENCIES ${APP_DEPENDENCIES} ${ilastik_NAME})
-
-# a file that contains something like "__version_info__ = (1, 0, 4)"
-# (needed in CPackUpdateVersion.cmake below)
-set(ILASTIK_VERSION_FILE "${ILASTIK_DEPENDENCY_DIR}/ilastik/ilastik/ilastik/__init__.py")
-
-endif (NOT ilastik_NAME)
-
 ############################################################################
 
 if(${ILASTIK_BITNESS} STREQUAL "64" AND NOT counting_NAME)
@@ -254,8 +271,9 @@ if(${ILASTIK_BITNESS} STREQUAL "64" AND NOT counting_NAME)
 set (counting_NAME ${ilastik_NAME}-counting)
 
 ExternalProject_Add(${counting_NAME}
+    DEPENDS             ${ilastik_NAME}
     PREFIX              ${ILASTIK_DEPENDENCY_DIR}
-    SOURCE_DIR          ${ILASTIK_DEPENDENCY_DIR}/ilastik/ilastik
+    SOURCE_DIR          ""
     DOWNLOAD_COMMAND    ""
     UPDATE_COMMAND      ""
     PATCH_COMMAND       ""
@@ -270,7 +288,6 @@ ExternalProject_Add(${counting_NAME}
 
 set_target_properties(${counting_NAME} PROPERTIES EXCLUDE_FROM_ALL ON)
 set (APP_DEPENDENCIES ${APP_DEPENDENCIES} ${counting_NAME})
-
 
 endif () 
 
